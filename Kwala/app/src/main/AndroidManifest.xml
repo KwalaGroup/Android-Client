@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
         android:name=".KwalaApplication">
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
