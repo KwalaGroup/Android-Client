@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Kwala</string>
+    <string name="login_email">email</string>
+    <string name="login_password">password</string>
+    <string name="login_title">Kwala</string>
+    <string name="login_button">login</string>
 </resources>
