@@ -1,4 +1,4 @@
-package com.kwala.app.service;
+package com.kwala.app.service.endpoints;
 
 /**
  * @author muchow@hello.com
@@ -55,8 +55,8 @@ public class EndpointRequest<Result> {
         return isSuccessful() || isFailed() || isCancelled();
     }
 
-    public interface Callback<R> {
-        void success(int code, String response);
-        void failure(Error error);
+    public interface Callback<Result> {
+        void success(Result result);
+        void failure(Exception e);
     }
 }

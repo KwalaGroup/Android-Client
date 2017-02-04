@@ -1,5 +1,10 @@
 package com.kwala.app.service;
 
+import android.util.Log;
+
+import com.kwala.app.service.endpoints.Endpoint;
+import com.kwala.app.service.endpoints.EndpointRequest;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -20,19 +25,25 @@ public class NetworkStore {
                 .build();
     }
 
-    public <T> EndpointRequest<T> performRequest(Endpoint<T> endpoint, final EndpointRequest.Callback callback) {
+    public <T> EndpointRequest<T> performRequest(final Endpoint<T> endpoint, final EndpointRequest.Callback<T> callback) {
 
         Request request = OkRequestFactory.createRequest(endpoint);
 
         okhttp3.Callback responseCallback = new okhttp3.Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                callback.success(response.code(), response.body().toString());
+                Log.d(TAG, "onResponse: " + response);
+                try {
+                    T result = endpoint.parse(response.code(), response.body().string());
+                    callback.success(result);
+                } catch (Exception e) {
+                    callback.failure(e);
+                }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.failure(new Error(e));
+                callback.failure(e);
             }
         };
 

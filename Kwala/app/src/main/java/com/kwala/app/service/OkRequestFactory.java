@@ -1,5 +1,9 @@
 package com.kwala.app.service;
 
+import android.support.annotation.Nullable;
+
+import com.kwala.app.service.endpoints.Endpoint;
+
 import java.util.Map;
 
 import okhttp3.FormBody;
@@ -9,7 +13,7 @@ import okhttp3.RequestBody;
 /**
  * @author jacobamuchow@gmail.com
  */
-class OkRequestFactory {
+public class OkRequestFactory {
     private static final String TAG = OkRequestFactory.class.getSimpleName();
 
     public static <T> Request createRequest(Endpoint<T> endpoint) {
@@ -29,7 +33,12 @@ class OkRequestFactory {
         }
     }
 
+    @Nullable
     private static <T> RequestBody getOkBody(Endpoint<T> endpoint) {
+        if (endpoint.getParams() == null) {
+            return null;
+        }
+
         FormBody.Builder builder = new FormBody.Builder();
 
         for (Map.Entry<String, String> param : endpoint.getParams().entrySet()) {

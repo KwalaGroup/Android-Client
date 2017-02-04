@@ -10,8 +10,13 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.kwala.app.matches.MatchesFragment;
+import com.kwala.app.service.tasks.ITunesRssTask;
+import com.kwala.app.service.tasks.Task;
+
+import org.json.JSONObject;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -63,6 +68,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         updateTabColor(tabLayout.getTabAt(0), true);
+
+        new ITunesRssTask().start(new Task.Callback<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject jsonObject) {
+                Log.d(TAG, "UI success: " + jsonObject.toString());
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d(TAG, "UI failure", e);
+            }
+        });
     }
 
     private void updateTabColor(TabLayout.Tab tab, boolean selected) {
