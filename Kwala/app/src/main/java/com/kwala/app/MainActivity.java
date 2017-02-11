@@ -12,9 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.kwala.app.filters.FiltersFragment;
 import com.kwala.app.matches.MatchesFragment;
+import com.kwala.app.profile.MyProfileFragment;
+import com.kwala.app.quiz.QuizFragment;
 import com.kwala.app.service.tasks.ITunesRssTask;
 import com.kwala.app.service.tasks.Task;
+import com.kwala.app.settings.SettingsFragment;
 
 import org.json.JSONObject;
 
@@ -105,7 +109,14 @@ public class MainActivity extends AppCompatActivity {
         return new FragmentStatePagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return MatchesFragment.newInstance();
+                switch (position) {
+                    case 0: return QuizFragment.newInstance();
+                    case 1: return FiltersFragment.newInstance();
+                    case 2: return MatchesFragment.newInstance();
+                    case 3: return MyProfileFragment.newInstance();
+                    case 4: return SettingsFragment.newInstance();
+                    default: return null;
+                }
             }
 
             @Override

@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
 
-        android:text="Matches"
-        />
+        android:text="Quiz"/>
 
 </RelativeLayout>
