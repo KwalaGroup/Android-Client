@@ -46,7 +46,7 @@ public class FilterCell extends RelativeLayout {
         if (filter == null) {
             nameTextView.setText("");
         } else {
-            nameTextView.setText(filter.getCategory());
+            nameTextView.setText(filter.getCategory().getDisplayString());
         }
     }
 }

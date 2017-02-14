@@ -1,5 +1,6 @@
 package com.kwala.app.models;
 
+import com.kwala.app.enums.FilterCategory;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
 
 import java.util.Date;
@@ -21,7 +22,7 @@ public class RFilter extends RealmObject {
 
     @Required private Date createdAt;
     private boolean active;
-    @Required private String category; //TODO: enum?
+    @Required private String categoryValue;
     private String gender; //TODO: enum?, required?
 
     public String getFilterId() {
@@ -48,12 +49,20 @@ public class RFilter extends RealmObject {
         this.active = active;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoryValue() {
+        return categoryValue;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryValue(String categoryValue) {
+        this.categoryValue = categoryValue;
+    }
+
+    public FilterCategory getCategory() {
+        return FilterCategory.fromNetworkString(getCategoryValue());
+    }
+
+    public void setCategory(FilterCategory category) {
+        setCategoryValue(category.getNetworkString());
     }
 
     public String getGender() {
@@ -77,28 +86,28 @@ public class RFilter extends RealmObject {
                     RFilter filter = realm.createObject(RFilter.class, "1");
                     filter.setCreatedAt(new Date());
                     filter.setActive(true);
-                    filter.setCategory("Study Buddy");
+                    filter.setCategory(FilterCategory.LOVE_INTEREST);
                     filter.setGender("Both");
                     filters.add(filter);
 
                     filter = realm.createObject(RFilter.class, "2");
                     filter.setCreatedAt(new Date());
                     filter.setActive(true);
-                    filter.setCategory("F*** Buddy");
+                    filter.setCategory(FilterCategory.COFFEE_BUDDY);
                     filter.setGender("Female");
                     filters.add(filter);
 
                     filter = realm.createObject(RFilter.class, "3");
                     filter.setCreatedAt(new Date());
                     filter.setActive(true);
-                    filter.setCategory("Lifting Buddy");
+                    filter.setCategory(FilterCategory.WORKOUT_BUDDY);
                     filter.setGender("Male");
                     filters.add(filter);
 
                     filter = realm.createObject(RFilter.class, "4");
                     filter.setCreatedAt(new Date());
                     filter.setActive(false);
-                    filter.setCategory("Drinking Buddy");
+                    filter.setCategory(FilterCategory.ONE_NIGHT_STAND);
                     filter.setGender("Male");
                     filters.add(filter);
 
