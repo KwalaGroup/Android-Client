@@ -8,11 +8,11 @@ import com.kwala.app.R;
  * @author muchow@hello.com
  */
 public enum FilterCategory {
-    UNKNOWN("UNKNOWN", "Unknown", R.drawable.brain_icon),
-    LOVE_INTEREST("LOVE_INTEREST", "Love Interest", R.drawable.brain_icon),
-    COFFEE_BUDDY("COFFEE_BUDDY", "Coffee Buddy", R.drawable.brain_icon),
-    WORKOUT_BUDDY("WORKOUT_BUDDY", "Workout Buddy", R.drawable.brain_icon),
-    ONE_NIGHT_STAND("ONE_NIGHT_STAND", "One Night Stand ;)", R.drawable.brain_icon);
+    UNKNOWN("UNKNOWN", "Unknown", 0),
+    LOVE_INTEREST("LOVE_INTEREST", "Love Interest", R.drawable.filter_heart_icon),
+    COFFEE_BUDDY("COFFEE_BUDDY", "Coffee Buddy", R.drawable.filter_coffee_icon),
+    WORKOUT_BUDDY("WORKOUT_BUDDY", "Workout Buddy", R.drawable.filter_weights_icon),
+    ONE_NIGHT_STAND("ONE_NIGHT_STAND", "One Night Stand ;)", R.drawable.filter_lips_icon);
     //TODO: add icons
 
     private String networkString;

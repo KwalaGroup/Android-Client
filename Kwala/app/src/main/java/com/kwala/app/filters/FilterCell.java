@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.kwala.app.models.RFilter;
 public class FilterCell extends RelativeLayout {
     private static final String TAG = FilterCell.class.getSimpleName();
 
+    private ImageView iconImageView;
     private TextView nameTextView;
 
     /*
@@ -39,6 +41,7 @@ public class FilterCell extends RelativeLayout {
     private void initialize() {
         LayoutInflater.from(getContext()).inflate(R.layout.filter_cell, this);
 
+        iconImageView = (ImageView) findViewById(R.id.filter_cell_icon_image);
         nameTextView = (TextView) findViewById(R.id.filter_cell_name_text);
     }
 
@@ -46,6 +49,8 @@ public class FilterCell extends RelativeLayout {
         if (filter == null) {
             nameTextView.setText("");
         } else {
+            iconImageView.setImageResource(filter.getCategory().getIconId());
+
             nameTextView.setText(filter.getCategory().getDisplayString());
         }
     }
