@@ -1,5 +1,7 @@
 package com.kwala.app.service;
 
+import io.realm.Realm;
+
 /**
  * @author jacobamuchow@gmail.com
  */
@@ -10,11 +12,14 @@ public class DataStore {
 
     private NetworkStore networkStore;
 
+    private Realm realm;
+
     /*
         Constructors
      */
     private DataStore() {
         networkStore = new NetworkStore();
+        realm = Realm.getDefaultInstance();
     }
 
     public static synchronized DataStore getInstance() {
