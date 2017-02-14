@@ -32,4 +32,8 @@ public class DataStore {
     public NetworkStore getNetworkStore() {
         return networkStore;
     }
+
+    public Realm getRealm() {
+        return realm;
+    }
 }
