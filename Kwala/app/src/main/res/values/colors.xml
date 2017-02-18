@@ -3,4 +3,11 @@
     <color name="colorPrimary">#449C51</color>
     <color name="colorPrimaryDark">#449C51</color>
     <color name="colorAccent">#36B4E9</color>
+
+    <color name="kPink">#FFD5D5</color>
+    <color name="kYellow">#EBE974</color>
+    <color name="kLightBlue">#A9DEEF</color>
+    <color name="kOrange">#FFA274</color>
+    <color name="kWhite">#DDFFFFFF</color>
+
 </resources>
