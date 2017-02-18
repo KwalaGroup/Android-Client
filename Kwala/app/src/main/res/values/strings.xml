@@ -5,4 +5,5 @@
     <string name="login_title">Kwala</string>
     <string name="login_button">login</string>
     <string name="registration_button">continue</string>
+    <string name="sign_up">Not a member yet? Sign up!</string>
 </resources>
