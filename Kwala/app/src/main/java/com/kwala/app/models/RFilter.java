@@ -73,7 +73,7 @@ public class RFilter extends RealmObject {
         this.gender = gender;
     }
 
-    public static void generateTestData() {
+    public static void generateTestData(final boolean clearAll) {
         Realm realm = Realm.getDefaultInstance();
         try {
             realm.executeTransaction(new Realm.Transaction() {
@@ -82,6 +82,9 @@ public class RFilter extends RealmObject {
                     RealmList<RFilter> filters = new RealmList<>();
 
                     realm.delete(RFilter.class);
+                    if (clearAll) {
+                        return;
+                    }
 
                     RFilter filter = realm.createObject(RFilter.class, "1");
                     filter.setCreatedAt(new Date());
@@ -110,8 +113,6 @@ public class RFilter extends RealmObject {
                     filter.setCategory(FilterCategory.ONE_NIGHT_STAND);
                     filter.setGender("Male");
                     filters.add(filter);
-
-                    realm.copyToRealmOrUpdate(filters);
                 }
             });
 

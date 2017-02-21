@@ -4,14 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.kwala.app.R;
+import com.kwala.app.helpers.BaseToolbarActivity;
 
 /**
  * @author jacobamuchow@gmail.com
  */
-public class CreateFilterActivity extends AppCompatActivity {
+public class CreateFilterActivity extends BaseToolbarActivity {
     private static final String TAG = CreateFilterActivity.class.getSimpleName();
 
     public static Intent newIntent(Context context) {
@@ -22,5 +22,7 @@ public class CreateFilterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_filter_activity);
+
+        setTitle("Create Filter");
     }
 }

@@ -50,6 +50,6 @@ public class KwalaApplication extends Application {
          * Generate test data
          * TODO: remove as needed
          */
-        RFilter.generateTestData();
+        RFilter.generateTestData(true);
     }
 }
