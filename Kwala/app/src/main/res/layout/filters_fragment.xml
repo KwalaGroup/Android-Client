@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    tools:background="@drawable/background">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/filters_fragment_recycler_view"
@@ -11,5 +15,40 @@
 
         app:layoutManager="LinearLayoutManager"
         />
+
+    <LinearLayout
+        android:id="@+id/filters_fragment_empty_state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="80dp"
+
+            android:text="@string/filters_empty_state_string"
+            android:textSize="24sp"
+            android:textColor="#fff"
+            android:alpha="0.8"
+            android:gravity="center"
+            />
+
+        <Button
+            android:id="@+id/filters_fragment_empty_state_create_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/common_create"
+            android:textAllCaps="false"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>

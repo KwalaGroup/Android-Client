@@ -1,9 +1,31 @@
 <resources>
     <string name="app_name">Kwala</string>
+
+    <!-- Common -->
+    <string name="common_begin">Begin</string>
+    <string name="common_create">Create</string>
+
+    <!-- Login -->
     <string name="login_email">email</string>
     <string name="login_password">password</string>
     <string name="login_title">Kwala</string>
     <string name="login_button">login</string>
     <string name="registration_button">continue</string>
     <string name="sign_up">Not a member yet? Sign up!</string>
+
+    <!-- Quiz -->
+    <string name="quiz_empty_state_string">Take a personality quiz to determine your compatibility with others.</string>
+
+    <!-- Filters -->
+    <string name="filters_empty_state_string">Looks like you don\’t have any filters set up yet.\n\nCreate your first to get started!</string>
+
+    <!-- Matches -->
+    <string name="matches_empty_state_string">No matches yet!</string>
+
+    <!-- Profile -->
+
+    <!-- Settings -->
+    <string name="settings_do_not_disturb">Do not disturb</string>
+    <string name="settings_sign_out">Sign out</string>
+
 </resources>

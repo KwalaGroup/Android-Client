@@ -23,7 +23,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="80dp"
 
-            android:text="Take a personality quiz to determine your compatability with others."
+            android:text="@string/quiz_empty_state_string"
             android:textSize="24sp"
             android:textColor="#fff"
             android:alpha="0.8"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:text="begin"
+            android:text="@string/common_begin"
             android:textAllCaps="false"
             />
 

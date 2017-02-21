@@ -27,7 +27,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
 
-            android:text="No matches yet!"
+            android:text="@string/matches_empty_state_string"
             android:textSize="24sp"
             android:textColor="@color/kWhite"
             />
