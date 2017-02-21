@@ -8,11 +8,11 @@ import org.json.JSONObject;
  * @author jacobamuchow@gmail.com
  */
 
-public class ITunesRssEndpoint extends Endpoint<JSONObject> {
-    private static final String TAG = ITunesRssEndpoint.class.getSimpleName();
+public class QuestionsEndpoint extends Endpoint<JSONObject> {
+    private static final String TAG = QuestionsEndpoint.class.getSimpleName();
 
-    public ITunesRssEndpoint() {
-        super("https://itunes.apple.com/us/rss/topaudiobooks/limit=10/json", Method.GET, null);
+    public QuestionsEndpoint() {
+        super("https://kwala.herokuapp.com/questions/", Method.GET, null);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.kwala.app;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -40,18 +39,6 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = createAdapter();
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
-//        new ITunesRssTask().start(new Task.Callback<JSONObject>() {
-//            @Override
-//            public void onSuccess(JSONObject jsonObject) {
-//                Log.d(TAG, "UI success: " + jsonObject.toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Exception e) {
-//                Log.d(TAG, "UI failure", e);
-//            }
-//        });
     }
 
     private PagerAdapter createAdapter() {
