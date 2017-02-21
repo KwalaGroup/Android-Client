@@ -1,6 +1,7 @@
 package com.kwala.app.models;
 
 import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.service.realm.RealmWrites;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
 
 import java.util.Date;
@@ -74,50 +75,47 @@ public class RFilter extends RealmObject {
     }
 
     public static void generateTestData(final boolean clearAll) {
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    RealmList<RFilter> filters = new RealmList<>();
 
-                    realm.delete(RFilter.class);
-                    if (clearAll) {
-                        return;
-                    }
+        RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
+            @Override
+            public Void execute(Realm realm) {
+                RealmList<RFilter> filters = new RealmList<>();
 
-                    RFilter filter = realm.createObject(RFilter.class, "1");
-                    filter.setCreatedAt(new Date());
-                    filter.setActive(true);
-                    filter.setCategory(FilterCategory.LOVE_INTEREST);
-                    filter.setGender("Both");
-                    filters.add(filter);
-
-                    filter = realm.createObject(RFilter.class, "2");
-                    filter.setCreatedAt(new Date());
-                    filter.setActive(true);
-                    filter.setCategory(FilterCategory.COFFEE_BUDDY);
-                    filter.setGender("Female");
-                    filters.add(filter);
-
-                    filter = realm.createObject(RFilter.class, "3");
-                    filter.setCreatedAt(new Date());
-                    filter.setActive(true);
-                    filter.setCategory(FilterCategory.WORKOUT_BUDDY);
-                    filter.setGender("Male");
-                    filters.add(filter);
-
-                    filter = realm.createObject(RFilter.class, "4");
-                    filter.setCreatedAt(new Date());
-                    filter.setActive(false);
-                    filter.setCategory(FilterCategory.ONE_NIGHT_STAND);
-                    filter.setGender("Male");
-                    filters.add(filter);
+                realm.delete(RFilter.class);
+                if (clearAll) {
+                    return null;
                 }
-            });
 
-        } finally {
-            realm.close();
-        }
+                RFilter filter = realm.createObject(RFilter.class, "1");
+                filter.setCreatedAt(new Date());
+                filter.setActive(true);
+                filter.setCategory(FilterCategory.LOVE_INTEREST);
+                filter.setGender("Both");
+                filters.add(filter);
+
+                filter = realm.createObject(RFilter.class, "2");
+                filter.setCreatedAt(new Date());
+                filter.setActive(true);
+                filter.setCategory(FilterCategory.COFFEE_BUDDY);
+                filter.setGender("Female");
+                filters.add(filter);
+
+                filter = realm.createObject(RFilter.class, "3");
+                filter.setCreatedAt(new Date());
+                filter.setActive(true);
+                filter.setCategory(FilterCategory.WORKOUT_BUDDY);
+                filter.setGender("Male");
+                filters.add(filter);
+
+                filter = realm.createObject(RFilter.class, "4");
+                filter.setCreatedAt(new Date());
+                filter.setActive(false);
+                filter.setCategory(FilterCategory.ONE_NIGHT_STAND);
+                filter.setGender("Male");
+                filters.add(filter);
+
+                return null;
+            }
+        });
     }
 }

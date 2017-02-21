@@ -23,6 +23,8 @@ public abstract class Task<Result> {
 
     protected abstract Endpoint<Result> buildEndpoint();
 
+    protected abstract void Parse(Result result);
+
     public void start(Callback<Result> callback) {
         synchronized (this) {
             mStatus = Status.READY;

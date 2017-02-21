@@ -10,9 +10,16 @@ import org.json.JSONObject;
  */
 
 public class QuestionsTask extends Task<JSONObject> {
+    private static final String TAG = QuestionsTask.class.getSimpleName();
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
         return new QuestionsEndpoint();
+    }
+
+    @Override
+    protected void Parse(JSONObject jsonObject) {
+
+
     }
 }
