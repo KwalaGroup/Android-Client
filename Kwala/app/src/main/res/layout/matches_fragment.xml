@@ -7,12 +7,31 @@
 
     tools:background="@drawable/background">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-        android:text="Matches"
-        />
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:src="@drawable/kwala_head"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+
+            android:text="No matches yet!"
+            android:textSize="24sp"
+            android:textColor="@color/kWhite"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
