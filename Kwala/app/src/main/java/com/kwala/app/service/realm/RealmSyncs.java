@@ -2,8 +2,8 @@ package com.kwala.app.service.realm;
 
 import android.util.Log;
 
+import com.kwala.app.models.RQuizAnswer;
 import com.kwala.app.models.RQuizQuestion;
-import com.kwala.app.models.generic.RString;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,15 +56,17 @@ public class RealmSyncs {
         question.setQuestion(jsonObject.getString("question"));
 
         JSONArray answersJsonArray = jsonObject.getJSONArray("answers");
-        RealmList<RString> answers = new RealmList<>();
+        RealmList<RQuizAnswer> answers = new RealmList<>();
 
         for (int i = 0; i < answersJsonArray.length(); i++) {
             JSONObject answerJsonObject = answersJsonArray.getJSONObject(i);
 
-            RString string = realm.createObject(RString.class);
-            string.setValue(answerJsonObject.getString("description"));
+            String answerId = answerJsonObject.getString("id");
+            RQuizAnswer answer = RealmWrites.withRealm(realm).findOrCreate(RQuizAnswer.class, answerId);
 
-            answers.add(string);
+            answer.setAnswer(answerJsonObject.getString("description"));
+
+            answers.add(answer);
         }
 
         question.setAnswers(answers);

@@ -3,10 +3,11 @@ package com.kwala.app.quiz.take_quiz;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.kwala.app.R;
+import com.kwala.app.models.RQuizAnswer;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -15,7 +16,7 @@ import com.kwala.app.R;
 public class AnswerCell extends RelativeLayout {
     private static final String TAG = AnswerCell.class.getSimpleName();
 
-    private TextView answerTextView;
+    private Button answerButton;
 
     public AnswerCell(Context context) {
         super(context);
@@ -35,11 +36,18 @@ public class AnswerCell extends RelativeLayout {
     private void initialize() {
         LayoutInflater.from(getContext()).inflate(R.layout.quiz_answer_cell, this);
 
-        answerTextView = (TextView) findViewById(R.id.quiz_answer_cell_answer_text);
+        answerButton = (Button) findViewById(R.id.quiz_answer_cell_answer_text);
     }
 
-    public void setViewData(String answerText) {
+    public void setViewData(RQuizAnswer answer) {
 
-        answerTextView.setText(answerText);
+        answerButton.setText(answer.getAnswer());
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        if (answerButton != null) {
+            answerButton.setOnClickListener(l);
+        }
     }
 }
