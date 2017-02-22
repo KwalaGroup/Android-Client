@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import io.realm.Realm;
+import io.realm.RealmModel;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -29,6 +30,14 @@ public class RealmWrites {
 
     public static RealmWrites withDefaultRealm() {
         return new RealmWrites(Realm.getDefaultInstance(), true);
+    }
+
+    public <T extends RealmModel> T findOrCreate(Class<T> clazz, String primaryKey) {
+        T object = RealmQueries.withRealm(realm).get(clazz, primaryKey);
+        if (object == null) {
+            object = realm.createObject(clazz, primaryKey);
+        }
+        return object;
     }
 
     @Nullable

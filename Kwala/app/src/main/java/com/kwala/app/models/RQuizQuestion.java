@@ -3,8 +3,12 @@ package com.kwala.app.models;
 import com.kwala.app.models.generic.RString;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 /**
@@ -14,16 +18,16 @@ import io.realm.annotations.Required;
 public class RQuizQuestion extends RealmObject {
     private static final String TAG = RQuizQuestion.class.getSimpleName();
 
-    @Required private String quizId;
+    @PrimaryKey private String questionId;
     @Required private String question;
     private RealmList<RString> answers;
 
-    public String getQuizId() {
-        return quizId;
+    public String getQuestionId() {
+        return questionId;
     }
 
-    public void setQuizId(String quizId) {
-        this.quizId = quizId;
+    public void setQuestionId(String questionId) {
+        this.questionId = questionId;
     }
 
     public String getQuestion() {
@@ -40,5 +44,8 @@ public class RQuizQuestion extends RealmObject {
 
     public void setAnswers(RealmList<RString> answers) {
         this.answers = answers;
+    }
+
+    public static void mapJson(RQuizQuestion question, JSONObject jsonObject) throws JSONException {
     }
 }

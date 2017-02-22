@@ -6,6 +6,8 @@ import com.kwala.app.service.DataStore;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
 
+import org.json.JSONObject;
+
 /**
  * @author jacobamuchow@gmail.com
  */
@@ -21,9 +23,9 @@ public abstract class Task<Result> {
 
     private Callback<Result> mCallback;
 
-    protected abstract Endpoint<Result> buildEndpoint();
+    protected abstract Endpoint<JSONObject> buildEndpoint();
 
-    protected abstract void Parse(Result result);
+    protected abstract Result parse(JSONObject jsonObject);
 
     public void start(Callback<Result> callback) {
         synchronized (this) {
@@ -39,13 +41,13 @@ public abstract class Task<Result> {
     protected void run() {
         mStatus = Status.PENDING;
 
-        DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<Result>() {
+        DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<JSONObject>() {
             @Override
-            public void success(Result result) {
-                mResult = result;
+            public void success(JSONObject result) {
+                mResult = parse(result);
                 mStatus = Status.SUCCESS;
 
-                mCallback.onSuccess(result);
+                mCallback.onSuccess(mResult);
             }
 
             @Override

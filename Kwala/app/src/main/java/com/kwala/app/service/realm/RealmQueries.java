@@ -3,6 +3,7 @@ package com.kwala.app.service.realm;
 import android.support.annotation.MainThread;
 
 import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
@@ -33,7 +34,7 @@ public class RealmQueries {
     /*
         Generics
      */
-    public <T extends RealmObject> T get(Class<T> clazz, String primaryKey) {
+    public <T extends RealmModel> T get(Class<T> clazz, String primaryKey) {
         String primaryKeyFieldName = realm.getSchema().get(clazz.getSimpleName()).getPrimaryKey();
         return realm.where(clazz).equalTo(primaryKeyFieldName, primaryKey).findFirst();
     }

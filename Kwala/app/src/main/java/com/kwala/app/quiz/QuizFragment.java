@@ -13,8 +13,6 @@ import com.kwala.app.R;
 import com.kwala.app.service.tasks.QuestionsTask;
 import com.kwala.app.service.tasks.Task;
 
-import org.json.JSONObject;
-
 /**
  * @author jacobamuchow@gmail.com
  */
@@ -49,10 +47,10 @@ public class QuizFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        new QuestionsTask().start(new Task.Callback<JSONObject>() {
+        new QuestionsTask().start(new Task.Callback<Void>() {
             @Override
-            public void onSuccess(JSONObject jsonObject) {
-                Log.d(TAG, "UI success: " + jsonObject.toString());
+            public void onSuccess(Void result) {
+
             }
 
             @Override
