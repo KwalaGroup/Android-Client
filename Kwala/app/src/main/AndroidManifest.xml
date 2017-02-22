@@ -24,6 +24,9 @@
         <activity android:name=".filters.create_filter.CreateFilterActivity">
         </activity>
 
+        <activity android:name=".quiz.take_quiz.TakeQuizActivity">
+        </activity>
+
     </application>
 
 </manifest>

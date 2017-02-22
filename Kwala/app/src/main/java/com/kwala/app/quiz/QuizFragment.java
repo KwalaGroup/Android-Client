@@ -1,6 +1,7 @@
 package com.kwala.app.quiz;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.kwala.app.R;
+import com.kwala.app.quiz.take_quiz.TakeQuizActivity;
 import com.kwala.app.service.tasks.QuestionsTask;
 import com.kwala.app.service.tasks.Task;
 
@@ -35,10 +37,13 @@ public class QuizFragment extends Fragment {
 
         Button beginButton = (Button) view.findViewById(R.id.quiz_fragment_begin_button);
 
+        //TODO: lock quiz in some cases
+
         beginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: start quiz
+                Intent intent = TakeQuizActivity.newIntent(getActivity());
+                startActivity(intent);
             }
         });
     }
