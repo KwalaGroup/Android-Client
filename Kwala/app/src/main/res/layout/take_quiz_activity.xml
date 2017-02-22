@@ -17,45 +17,11 @@
         android:elevation="10dp"
         />
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/take_quiz_activity_content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/base_toolbar_activity_toolbar"
-        android:orientation="vertical"
-        android:weightSum="10">
-        
-        <TextView
-            android:id="@+id/take_quiz_question_text"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="Who would you want most to be your dinner guest?"
-            android:textSize="24sp"
-            android:textColor="@color/kWhite"
-            android:gravity="center"
-            />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/take_quiz_answer_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-
-                app:layoutManager="LinearLayoutManager"
-                android:paddingBottom="6dp"
-                android:clipToPadding="false"
-                />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        />
 
 </RelativeLayout>

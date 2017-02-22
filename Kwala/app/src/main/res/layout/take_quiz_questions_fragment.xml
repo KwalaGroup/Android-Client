@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/take_quiz_question_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        tools:text="Who would you want most to be your dinner guest?"
+        android:textSize="24sp"
+        android:textColor="@color/kWhite"
+        android:gravity="center"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/take_quiz_answer_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+
+            app:layoutManager="LinearLayoutManager"
+            android:paddingBottom="6dp"
+            android:clipToPadding="false"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>
