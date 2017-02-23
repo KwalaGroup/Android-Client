@@ -3,6 +3,11 @@ package com.kwala.app;
 import android.app.Application;
 import android.util.Log;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.kwala.app.models.RFilter;
 import com.kwala.app.service.DataStore;
 
