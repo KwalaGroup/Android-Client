@@ -2,13 +2,14 @@ package com.kwala.app.profile;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.BaseFragment;
@@ -26,6 +27,8 @@ import pl.tajchert.nammu.PermissionCallback;
 
 public class MyProfileFragment extends BaseFragment {
     private static final String TAG = MyProfileFragment.class.getSimpleName();
+
+    private ImageView profileImageView;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -45,6 +48,7 @@ public class MyProfileFragment extends BaseFragment {
         EasyImage.configuration(getActivity())
                 .setImagesFolderName("Kwala");
 
+        profileImageView = (ImageView) view.findViewById(R.id.my_profile_fragment_profile_image);
         Button takePhotoButton = (Button) view.findViewById(R.id.my_profile_fragment_take_photo_button);
 
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +77,8 @@ public class MyProfileFragment extends BaseFragment {
         EasyImage.handleActivityResult(requestCode, resultCode, data, getActivity(), new DefaultCallback() {
             @Override
             public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
-                Toast.makeText(getActivity(), imageFile.getPath(), Toast.LENGTH_SHORT).show();
+
+                profileImageView.setImageURI(Uri.fromFile(imageFile));
             }
         });
     }

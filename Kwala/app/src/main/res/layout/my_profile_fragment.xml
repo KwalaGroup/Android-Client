@@ -7,6 +7,14 @@
 
     tools:background="@drawable/background">
 
+    <ImageView
+        android:id="@+id/my_profile_fragment_profile_image"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        />
+
     <Button
         android:id="@+id/my_profile_fragment_take_photo_button"
         android:layout_width="match_parent"
