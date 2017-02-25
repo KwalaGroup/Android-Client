@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.kwala.app.filters.FiltersFragment;
+import com.kwala.app.helpers.BaseActivity;
 import com.kwala.app.matches.MatchesFragment;
 import com.kwala.app.profile.MyProfileFragment;
 import com.kwala.app.quiz.QuizFragment;
@@ -17,7 +17,7 @@ import com.kwala.app.settings.SettingsFragment;
 /**
  * @author jacobamuchow@gmail.com
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     /*

@@ -3,7 +3,6 @@ package com.kwala.app.helpers;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -13,7 +12,7 @@ import com.kwala.app.R;
  * @author jacobamuchow@gmail.com
  */
 
-public abstract class BaseToolbarActivity extends AppCompatActivity {
+public abstract class BaseToolbarActivity extends BaseActivity {
     private static final String TAG = BaseToolbarActivity.class.getSimpleName();
 
     @Override

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <TextView
-        android:layout_width="wrap_content"
+    tools:background="@drawable/background">
+
+    <Button
+        android:id="@+id/my_profile_fragment_take_photo_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
 
-        android:text="Profile"
+        android:background="@drawable/button_background"
+        android:text="Take / select photo"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:textColor="@color/kWhite"
         />
 
 </RelativeLayout>
