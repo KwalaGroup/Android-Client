@@ -39,6 +39,8 @@ public class MainActivity extends BaseActivity {
         pagerAdapter = createAdapter();
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.setCurrentItem(2);
     }
 
     private PagerAdapter createAdapter() {
@@ -60,5 +62,14 @@ public class MainActivity extends BaseActivity {
                 return 5;
             }
         };
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() != 2) {
+            viewPager.setCurrentItem(2);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
