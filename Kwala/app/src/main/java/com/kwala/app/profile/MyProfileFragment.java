@@ -23,7 +23,6 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.File;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import pl.aprilapps.easyphotopicker.EasyImage;
 import pl.tajchert.nammu.Nammu;
 import pl.tajchert.nammu.PermissionCallback;
 
@@ -51,9 +50,6 @@ public class MyProfileFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         Nammu.init(getActivity());
 
-        EasyImage.configuration(getActivity())
-                .setImagesFolderName("Kwala");
-
         profileImageView = (ImageView) view.findViewById(R.id.my_profile_fragment_profile_image);
         Button takePhotoButton = (Button) view.findViewById(R.id.my_profile_fragment_take_photo_button);
 
@@ -64,8 +60,6 @@ public class MyProfileFragment extends BaseFragment {
                 Nammu.askForPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
                     @Override
                     public void permissionGranted() {
-//                        EasyImage.openChooserWithDocuments(MyProfileFragment.this, "", 0);
-
                         Intent intent = CropImage.getPickImageChooserIntent(getActivity());
                         startActivityForResult(intent, CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE);
                     }
