@@ -80,6 +80,10 @@ public class RMatch extends RealmObject {
         this.lastName = lastName;
     }
 
+    public String getFullName() {
+        return String.format("%s %s", getFirstName(), getLastName());
+    }
+
     public String getProfileImageId() {
         return profileImageId;
     }

@@ -107,7 +107,7 @@
                 android:paddingRight="100dp"
                 android:paddingLeft="10dp"
 
-                android:hint="birthDate"
+                android:hint="age"
                 android:background="@drawable/edit_text_background"
                 />
 
