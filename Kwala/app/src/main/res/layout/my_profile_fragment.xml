@@ -4,28 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:background="@drawable/background">
 
-    <ImageView
-        android:id="@+id/my_profile_fragment_profile_image"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        />
-
-    <Button
-        android:id="@+id/my_profile_fragment_take_photo_button"
+    <com.kwala.app.MainTabLayout
+        android:id="@+id/main_activity_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-
-        android:background="@drawable/button_background"
-        android:text="Take / select photo"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:textColor="@color/kWhite"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#CCC4C3C3"
+        android:elevation="10dp"
         />
+
+    <LinearLayout
+        android:id="@+id/profile_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/main_activity_tab_layout"
+        android:weightSum="11"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            />
+
+        <TextView
+            android:id="@+id/profile_first_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:hint="first name"
+            />
+
+        <TextView
+            android:id="@+id/profile_last_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:textSize="20dp"
+
+            android:hint="last name"
+            />
+
+        <TextView
+            android:id="@+id/profile_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:hint="age"
+            />
+
+        <ImageView
+            android:id="@+id/profile_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="2"
+            android:src="@drawable/profile_oval"
+            />
+
+        <TextView
+            android:id="@+id/profile_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            android:textSize="17dp"
+            android:hint="description"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
