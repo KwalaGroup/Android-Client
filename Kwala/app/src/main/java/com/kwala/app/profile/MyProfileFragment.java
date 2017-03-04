@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.kwala.app.R;
 import com.kwala.app.helpers.BaseFragment;
 import com.kwala.app.service.DataStore;
@@ -75,6 +76,10 @@ public class MyProfileFragment extends BaseFragment {
                 });
             }
         });
+
+        Glide.with(this)
+                .load("https://s3.amazonaws.com/kwala-uploads/f89c8f68-69da-4def-8776-885f9fbe71b3")
+                .into(profileImageView);
     }
 
     @Override
