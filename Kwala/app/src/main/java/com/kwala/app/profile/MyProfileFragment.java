@@ -22,6 +22,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import pl.tajchert.nammu.Nammu;
 import pl.tajchert.nammu.PermissionCallback;
@@ -79,6 +80,7 @@ public class MyProfileFragment extends BaseFragment {
 
         Glide.with(this)
                 .load("https://s3.amazonaws.com/kwala-uploads/f89c8f68-69da-4def-8776-885f9fbe71b3")
+                .bitmapTransform(new CropCircleTransformation(getActivity()))
                 .into(profileImageView);
     }
 
