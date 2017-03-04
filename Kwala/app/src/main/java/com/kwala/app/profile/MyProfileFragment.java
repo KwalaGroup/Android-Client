@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kwala.app.R;
@@ -34,6 +34,11 @@ public class MyProfileFragment extends BaseFragment {
     private static final String TAG = MyProfileFragment.class.getSimpleName();
 
     private ImageView profileImageView;
+    private TextView firstNameTextView;
+    private TextView lastNameTextView;
+    private TextView ageTextView;
+    private ImageView colorImageView;
+    private TextView descriptionTextView;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -50,10 +55,14 @@ public class MyProfileFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         Nammu.init(getActivity());
 
-        profileImageView = (ImageView) view.findViewById(R.id.my_profile_fragment_profile_image);
-        Button takePhotoButton = (Button) view.findViewById(R.id.my_profile_fragment_take_photo_button);
+        profileImageView = (ImageView) view.findViewById(R.id.profile_image);
+        firstNameTextView = (TextView) view.findViewById(R.id.profile_first_name);
+        lastNameTextView = (TextView) view.findViewById(R.id.profile_last_name);
+        ageTextView = (TextView) view.findViewById(R.id.profile_age);
+        colorImageView = (ImageView) view.findViewById(R.id.profile_circle);
+        descriptionTextView = (TextView) view.findViewById(R.id.profile_description);
 
-        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+        profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -111,14 +120,5 @@ public class MyProfileFragment extends BaseFragment {
                 DataStore.getInstance().getNetworkStore().uploadImage(file);
             }
         }
-
-//        EasyImage.handleActivityResult(requestCode, resultCode, data, getActivity(), new DefaultCallback() {
-//            @Override
-//            public void onImagePicked(File imageFile, EasyImage.ImageSource source, int type) {
-//
-////                CropImage.
-////                profileImageView.setImageURI(Uri.fromFile(imageFile));
-//            }
-//        });
     }
 }
