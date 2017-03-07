@@ -51,7 +51,7 @@ public class KwalaApplication extends Application {
          * Generate test data
          * TODO: remove as needed
          */
-        RFilter.generateTestData(true);
-        RMatch.generateTestData(true);
+        RFilter.generateTestData(false);
+        RMatch.generateTestData(false);
     }
 }

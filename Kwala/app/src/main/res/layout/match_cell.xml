@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     android:paddingLeft="30dp"
     android:paddingRight="10dp"
 
@@ -15,8 +15,8 @@
 
     <ImageView
         android:id="@+id/match_cell_profile_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp"
 
@@ -37,14 +37,14 @@
 
             tools:text="Brittany Something"
             android:textSize="24sp"
-            android:textColor="#fff"
-            android:alpha="0.9"
+            android:textColor="@color/kWhite"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -57,8 +57,7 @@
 
                 tools:text="89% match"
                 android:textSize="14sp"
-                android:textColor="#fff"
-                android:alpha="0.9"
+                android:textColor="@color/kWhite"
                 />
 
             <ImageView
@@ -79,8 +78,7 @@
 
                 tools:text="Age: 22"
                 android:textSize="14sp"
-                android:textColor="#fff"
-                android:alpha="0.9"
+                android:textColor="@color/kWhite"
                 />
 
         </LinearLayout>
