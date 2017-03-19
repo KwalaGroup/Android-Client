@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.kwala.app.R;
+import com.kwala.app.enums.FilterCategory;
 import com.kwala.app.filters.create_filter.CreateFilterActivity;
 import com.kwala.app.helpers.KRealmRecyclerViewAdapter;
 import com.kwala.app.models.RFilter;
@@ -67,6 +69,30 @@ public class FiltersFragment extends Fragment {
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 FilterCell filterCell = (FilterCell) holder.itemView;
                 filterCell.setViewData(getItem(position));
+            }
+        };
+
+        final FilterCategory[] categories = FilterCategory.supportedCategories;
+
+        RecyclerView.Adapter<RecyclerView.ViewHolder> adapter1 = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_cell, null);
+                Button button = new Button(parent.getContext());
+                return new RecyclerView.ViewHolder(button) {};
+            }
+
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                Button button = (Button) holder.itemView;
+
+                FilterCategory category = categories[position];
+                button.setText(category.getDisplayString());
+            }
+
+            @Override
+            public int getItemCount() {
+                return categories.length;
             }
         };
 
