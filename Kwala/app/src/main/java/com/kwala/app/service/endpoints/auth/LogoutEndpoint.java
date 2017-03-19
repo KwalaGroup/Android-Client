@@ -1,4 +1,7 @@
-package com.kwala.app.service.endpoints;
+package com.kwala.app.service.endpoints.auth;
+
+import com.kwala.app.service.endpoints.APIPaths;
+import com.kwala.app.service.endpoints.JSONEndpoint;
 
 /**
  * @author jacobamuchow@gmail.com

@@ -1,6 +1,8 @@
-package com.kwala.app.service.endpoints;
+package com.kwala.app.service.endpoints.auth;
 
 import com.kwala.app.service.RegistrationData;
+import com.kwala.app.service.endpoints.APIPaths;
+import com.kwala.app.service.endpoints.JSONEndpoint;
 
 import java.util.HashMap;
 

@@ -1,12 +1,13 @@
-package com.kwala.app.service.tasks;
+package com.kwala.app.service.tasks.auth;
 
 import android.util.Log;
 
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.RegisterEndpoint;
+import com.kwala.app.service.endpoints.auth.RegisterEndpoint;
 import com.kwala.app.service.realm.RealmSyncs;
 import com.kwala.app.service.realm.RealmWrites;
+import com.kwala.app.service.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
