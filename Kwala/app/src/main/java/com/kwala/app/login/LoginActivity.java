@@ -26,7 +26,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        Button loginButton = (Button) findViewById(R.id.user_login_button);
+        Button loginButton = (Button) findViewById(R.id.login_login_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
