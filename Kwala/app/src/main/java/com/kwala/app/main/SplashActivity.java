@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.BaseActivity;
+import com.kwala.app.login.LoginActivity;
 import com.kwala.app.service.UserData;
 
 /**
@@ -22,7 +23,7 @@ public class SplashActivity extends BaseActivity {
         if (UserData.getInstance().isLoggedIn()) {
             startActivity(MainActivity.newIntent(this));
         } else {
-            //Login
+            startActivity(LoginActivity.newIntent(this));
         }
     }
 }

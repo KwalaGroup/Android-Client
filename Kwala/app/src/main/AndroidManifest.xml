@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         android:name=".main.KwalaApplication">
 
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".main.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
