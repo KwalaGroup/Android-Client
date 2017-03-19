@@ -13,6 +13,10 @@ import java.util.Map;
 public abstract class JSONEndpoint extends Endpoint<JSONObject> {
     private static final String TAG = JSONEndpoint.class.getSimpleName();
 
+    public JSONEndpoint(String url, Method method) {
+        super(url, method);
+    }
+
     public JSONEndpoint(String url, Method method, @Nullable Map<String, String> params) {
         super(url, method, params);
     }

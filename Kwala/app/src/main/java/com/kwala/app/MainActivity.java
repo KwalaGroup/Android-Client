@@ -1,9 +1,6 @@
 package com.kwala.app;
 
-import android.*;
-import android.Manifest;
 import android.app.Fragment;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,16 +19,13 @@ import com.kwala.app.profile.MyProfileFragment;
 import com.kwala.app.quiz.QuizFragment;
 import com.kwala.app.settings.SettingsFragment;
 
-import pl.tajchert.nammu.Nammu;
-import pl.tajchert.nammu.PermissionCallback;
-
 /**
  * @author jacobamuchow@gmail.com
  */
 public class MainActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
 
     /*
         References
@@ -109,22 +103,29 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Nammu.askForPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, new PermissionCallback() {
-            @Override
-            public void permissionGranted() {
-                if (mGoogleApiClient.isConnected()) {
-                    Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                    if (mLastLocation != null) {
-                        Log.d(TAG, "" + mLastLocation.getLatitude() + "," + mLastLocation.getLongitude());
-                    }
-                }
-            }
-
-            @Override
-            public void permissionRefused() {
-                // :(
-            }
-        });
+//        Nammu.askForPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, new PermissionCallback() {
+//            @Override
+//            public void permissionGranted() {
+//                if (mGoogleApiClient.isConnected()) {
+//                    Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//                    if (mLastLocation != null) {
+//                        Log.d(TAG, "" + mLastLocation.getLatitude() + "," + mLastLocation.getLongitude());
+//                    }
+//                }
+//
+//                LocationRequest locationRequest = new LocationRequest();
+//                locationRequest.setInterval(10000);
+//                locationRequest.setFastestInterval(5000);
+//                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//
+//                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+//            }
+//
+//            @Override
+//            public void permissionRefused() {
+//                // :(
+//            }
+//        });
     }
 
     @Override
