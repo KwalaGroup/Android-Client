@@ -9,7 +9,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.kwala.app.KwalaApplication;
+import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.helpers.KwalaConstants;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;

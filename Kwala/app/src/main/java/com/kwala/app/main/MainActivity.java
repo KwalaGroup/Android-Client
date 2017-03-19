@@ -1,6 +1,8 @@
-package com.kwala.app;
+package com.kwala.app.main;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.kwala.app.R;
 import com.kwala.app.filters.FiltersFragment;
 import com.kwala.app.helpers.BaseActivity;
 import com.kwala.app.matches.MatchesFragment;
@@ -34,6 +37,13 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.Connec
     private ViewPager viewPager;
 
     private PagerAdapter pagerAdapter;
+
+    /*
+        Constructors
+     */
+    public static Intent newIntent(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

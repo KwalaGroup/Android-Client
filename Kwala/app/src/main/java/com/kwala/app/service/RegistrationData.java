@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
-import com.kwala.app.KwalaApplication;
+import com.kwala.app.main.KwalaApplication;
 
 /**
  * @author jacobamuchow@gmail.com

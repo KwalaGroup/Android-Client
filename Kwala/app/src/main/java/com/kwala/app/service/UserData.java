@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
-import com.kwala.app.KwalaApplication;
+import com.kwala.app.main.KwalaApplication;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -47,6 +47,10 @@ public class UserData {
     public UserData setUserId(@Nullable String userId) {
         sharedPreferences.edit().putString(Keys.USER_ID, userId).apply();
         return this;
+    }
+
+    public boolean isLoggedIn() {
+        return getUserId() != null;
     }
 
     @Nullable

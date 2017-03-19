@@ -1,4 +1,4 @@
-package com.kwala.app;
+package com.kwala.app.main;
 
 import android.app.Application;
 import android.util.Log;
