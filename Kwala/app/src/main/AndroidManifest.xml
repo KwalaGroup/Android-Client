@@ -27,10 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".filters.create_filter.CreateFilterActivity">
-        </activity>
-
-        <activity android:name=".quiz.take_quiz.TakeQuizActivity">
+        <activity android:name=".login.LandingActivity">
         </activity>
         <activity android:name=".login.LoginActivity">
         </activity>
@@ -38,7 +35,12 @@
         </activity>
         <activity android:name=".registration.RegistrationActivity2">
         </activity>
-        <activity android:name=".login.LandingActivity">
+
+        <activity android:name=".main.MainActivity">
+        </activity>
+        <activity android:name=".filters.create_filter.CreateFilterActivity">
+        </activity>
+        <activity android:name=".quiz.take_quiz.TakeQuizActivity">
         </activity>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

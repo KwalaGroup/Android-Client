@@ -9,16 +9,20 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.helpers.KwalaConstants;
+import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.UUID;
 
 import okhttp3.Call;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -29,12 +33,20 @@ import okhttp3.Response;
 public class NetworkStore {
     private static final String TAG = NetworkStore.class.getSimpleName();
 
+    private KwalaCookieStore kwalaCookieStore;
     private OkHttpClient okHttpClient;
+
     private AmazonS3Client s3Client;
     private TransferUtility transferUtility;
 
     public NetworkStore() {
+
+        kwalaCookieStore = new KwalaCookieStore(KwalaApplication.getInstance());
+        CookieManager cookieManager = new CookieManager(kwalaCookieStore, CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+        CookieHandler.setDefault(cookieManager);
+
         okHttpClient = new OkHttpClient.Builder()
+                .cookieJar(new JavaNetCookieJar(cookieManager))
                 .build();
 
         KwalaApplication application = KwalaApplication.getInstance();
@@ -50,9 +62,15 @@ public class NetworkStore {
         transferUtility = new TransferUtility(s3Client, application);
     }
 
+    public void clearData() {
+        kwalaCookieStore.removeAll();
+    }
+
     public <T> EndpointRequest<T> performRequest(final Endpoint<T> endpoint, final EndpointRequest.Callback<T> callback) {
 
         Request request = OkRequestFactory.createRequest(endpoint);
+
+        Log.d(TAG, "Request: " + request.toString());
 
         okhttp3.Callback responseCallback = new okhttp3.Callback() {
             @Override

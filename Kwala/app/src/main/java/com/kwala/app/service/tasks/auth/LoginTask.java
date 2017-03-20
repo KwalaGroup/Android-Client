@@ -2,10 +2,12 @@ package com.kwala.app.service.tasks.auth;
 
 import android.util.Log;
 
+import com.kwala.app.service.UserData;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.LoginEndpoint;
 import com.kwala.app.service.tasks.Task;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -29,8 +31,13 @@ public class LoginTask extends Task<Void> {
     }
 
     @Override
-    protected Void parse(JSONObject jsonObject) {
-        Log.d(TAG, jsonObject.toString());
+    protected Void parse(JSONObject jsonObject) throws JSONException {
+
+        String userId = jsonObject.getString("user_id");
+        Log.e(TAG, "userId: " + userId);
+
+        UserData.getInstance().setUserId(userId);
+
         return null;
     }
 }

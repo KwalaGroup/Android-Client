@@ -25,17 +25,19 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     //Android support
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:support-v13:25.2.0'
-    compile 'com.android.support:support-v4:25.2.0'
-    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:support-v13:25.3.0'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:design:25.3.0'
 
     //Location Services
     compile 'com.google.android.gms:play-services-location:10.2.0'
 
     //Networking
     compile 'com.android.volley:volley:1.0.0'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
+    compile 'com.google.code.gson:gson:2.8.0'
 
     //RealmTypeSafeQuery
     provided('com.github.quarkworks.RealmTypeSafeQuery-Android:annotationprocessor:0.9.2') {

@@ -1,11 +1,13 @@
 package com.kwala.app.service.tasks;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.kwala.app.service.DataStore;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -21,13 +23,13 @@ public abstract class Task<Result> {
     private Status mStatus = Status.READY;
     @Nullable private Result mResult;
 
-    private Callback<Result> mCallback;
+    @Nullable private Callback<Result> mCallback;
 
     protected abstract Endpoint<JSONObject> buildEndpoint();
 
-    protected abstract Result parse(JSONObject jsonObject);
+    protected abstract Result parse(JSONObject jsonObject) throws JSONException;
 
-    public void start(Callback<Result> callback) {
+    public void start(@Nullable Callback<Result> callback) {
         synchronized (this) {
             mStatus = Status.READY;
             mResult = null;
@@ -44,10 +46,19 @@ public abstract class Task<Result> {
         DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<JSONObject>() {
             @Override
             public void success(JSONObject result) {
-                mResult = parse(result);
+                try {
+                    mResult = parse(result);
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error parsing result", e);
+                    failure(e);
+                    return;
+                }
+
                 mStatus = Status.SUCCESS;
 
-                mCallback.onSuccess(mResult);
+                if (mCallback != null) {
+                    mCallback.onSuccess(mResult);
+                }
             }
 
             @Override
@@ -55,7 +66,9 @@ public abstract class Task<Result> {
                 mResult = null;
                 mStatus = Status.FAILURE;
 
-                mCallback.onFailure(e);
+                if (mCallback != null) {
+                    mCallback.onFailure(e);
+                }
             }
         });
     }

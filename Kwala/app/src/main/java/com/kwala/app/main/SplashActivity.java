@@ -25,5 +25,7 @@ public class SplashActivity extends BaseActivity {
         } else {
             startActivity(LandingActivity.newIntent(this));
         }
+
+        finishAffinity();
     }
 }

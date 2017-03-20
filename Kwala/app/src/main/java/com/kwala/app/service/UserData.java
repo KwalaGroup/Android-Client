@@ -39,6 +39,10 @@ public class UserData {
         return userData;
     }
 
+    public void clearData() {
+        sharedPreferences.edit().clear().apply();
+    }
+
     @Nullable
     public String getUserId() {
         return sharedPreferences.getString(Keys.USER_ID, null);
