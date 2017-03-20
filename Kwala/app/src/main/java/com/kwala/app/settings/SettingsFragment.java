@@ -40,9 +40,9 @@ public class SettingsFragment extends Fragment {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataStore.getInstance().clearAllData();
-
                 new LogoutTask().start(null);
+
+                DataStore.getInstance().clearAllData();
 
                 Intent intent = LandingActivity.newIntent(getActivity());
                 startActivity(intent);
