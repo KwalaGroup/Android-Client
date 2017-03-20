@@ -3,7 +3,7 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.kwala.app"
@@ -40,10 +40,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
 
     //RealmTypeSafeQuery
-    provided('com.github.quarkworks.RealmTypeSafeQuery-Android:annotationprocessor:0.9.2') {
+    provided('com.github.quarkworks.RealmTypeSafeQuery-Android:annotationprocessor:0.9.4') {
         exclude group: 'com.android.support';
     }
-    compile('com.github.QuarkWorks.RealmTypeSafeQuery-Android:query:0.9.2') {
+    compile('com.github.QuarkWorks.RealmTypeSafeQuery-Android:query:0.9.4') {
         exclude group: 'com.android.support';
     }
 
