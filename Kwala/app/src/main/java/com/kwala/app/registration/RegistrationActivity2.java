@@ -1,5 +1,6 @@
 package com.kwala.app.registration;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,10 @@ public class RegistrationActivity2 extends AppCompatActivity {
 
     private boolean maleIconClicked = false;
     private boolean femaleIconClicked = false;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, RegistrationActivity2.class);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

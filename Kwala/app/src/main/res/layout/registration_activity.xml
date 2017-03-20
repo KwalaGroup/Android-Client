@@ -17,7 +17,7 @@
         />
 
     <EditText
-        android:id="@+id/login_email"
+        android:id="@+id/registration_email_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
@@ -32,13 +32,14 @@
 
         android:hint="@string/login_email"
         android:background="@drawable/edit_text_background"
+        android:inputType="textEmailAddress"
         />
 
     <EditText
-        android:id="@+id/login_password"
+        android:id="@+id/registration_password_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_email"
+        android:layout_below="@id/registration_email_text"
 
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
@@ -51,10 +52,11 @@
 
         android:hint="@string/login_password"
         android:background="@drawable/edit_text_background"
+        android:inputType="textPassword"
         />
 
     <Button
-        android:id="@+id/registration_button"
+        android:id="@+id/registration_continue_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

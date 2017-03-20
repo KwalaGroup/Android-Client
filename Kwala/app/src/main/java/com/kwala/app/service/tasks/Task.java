@@ -1,5 +1,7 @@
 package com.kwala.app.service.tasks;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -46,6 +48,8 @@ public abstract class Task<Result> {
         DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<JSONObject>() {
             @Override
             public void success(JSONObject result) {
+                Log.d(TAG, "response: " + result);
+
                 try {
                     mResult = parse(result);
                 } catch (JSONException e) {
@@ -57,17 +61,27 @@ public abstract class Task<Result> {
                 mStatus = Status.SUCCESS;
 
                 if (mCallback != null) {
-                    mCallback.onSuccess(mResult);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onSuccess(mResult);
+                        }
+                    });
                 }
             }
 
             @Override
-            public void failure(Exception e) {
+            public void failure(final Exception e) {
                 mResult = null;
                 mStatus = Status.FAILURE;
 
                 if (mCallback != null) {
-                    mCallback.onFailure(e);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onFailure(e);
+                        }
+                    });
                 }
             }
         });

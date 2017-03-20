@@ -1,18 +1,17 @@
 package com.kwala.app.service.tasks.auth;
 
-import android.util.Log;
-
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.EmailAvailabilityEndpoint;
 import com.kwala.app.service.tasks.Task;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * @author jacobamuchow@gmail.com
  */
 
-public class EmailAvailabilityTask extends Task<Void> {
+public class EmailAvailabilityTask extends Task<Boolean> {
     private static final String TAG = EmailAvailabilityTask.class.getSimpleName();
 
     private String email;
@@ -27,8 +26,7 @@ public class EmailAvailabilityTask extends Task<Void> {
     }
 
     @Override
-    protected Void parse(JSONObject jsonObject) {
-        Log.d(TAG, jsonObject.toString());
-        return null;
+    protected Boolean parse(JSONObject jsonObject) throws JSONException {
+        return jsonObject.getBoolean("is_available");
     }
 }
