@@ -1,12 +1,13 @@
 package com.kwala.app.service;
 
-import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.kwala.app.service.endpoints.Endpoint;
 
-import java.util.Map;
+import org.json.JSONObject;
 
-import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
@@ -16,14 +17,30 @@ import okhttp3.RequestBody;
 public class OkRequestFactory {
     private static final String TAG = OkRequestFactory.class.getSimpleName();
 
+    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+
     public static <T> Request createRequest(Endpoint<T> endpoint) {
+
         return new Request.Builder()
-                .url(endpoint.getUrl())
-                .method(getOkMethod(endpoint), getOkBody(endpoint))
+                .url(getUrl(endpoint))
+                .method(getMethod(endpoint), getBody(endpoint))
                 .build();
     }
 
-    private static <T> String getOkMethod(Endpoint<T> endpoint) {
+    private static <T> HttpUrl getUrl(Endpoint<T> endpoint) {
+
+        HttpUrl.Builder builder = HttpUrl.parse(endpoint.getUrl()).newBuilder();
+
+        if (endpoint.getMethod() == Endpoint.Method.GET && endpoint.getParams() != null) {
+            for (String key : endpoint.getParams().keySet()) {
+                builder.addQueryParameter(key, endpoint.getParams().get(key));
+            }
+        }
+
+        return builder.build();
+    }
+
+    private static <T> String getMethod(Endpoint<T> endpoint) {
         switch (endpoint.getMethod()) {
             case GET: return "GET";
             case POST: return "POST";
@@ -33,18 +50,16 @@ public class OkRequestFactory {
         }
     }
 
-    @Nullable
-    private static <T> RequestBody getOkBody(Endpoint<T> endpoint) {
-        if (endpoint.getParams() == null) {
+    private static <T> RequestBody getBody(Endpoint<T> endpoint) {
+        if (endpoint.getMethod() == Endpoint.Method.GET) {
             return null;
         }
 
-        FormBody.Builder builder = new FormBody.Builder();
+        JSONObject jsonObject = endpoint.getParams() == null ? new JSONObject()
+                : new JSONObject(endpoint.getParams());
 
-        for (Map.Entry<String, String> param : endpoint.getParams().entrySet()) {
-            builder.add(param.getKey(), param.getValue());
-        }
+        Log.d(TAG, "body: " + jsonObject.toString());
 
-        return builder.build();
+        return RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString());
     }
 }

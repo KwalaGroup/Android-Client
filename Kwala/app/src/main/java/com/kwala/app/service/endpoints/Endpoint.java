@@ -20,6 +20,10 @@ public abstract class Endpoint<Result> {
     @Nullable
     private Map<String, String> params = null;
 
+    public Endpoint(String url, Method method) {
+        this(url, method, null);
+    }
+
     public Endpoint(String url, Method method, @Nullable Map<String, String> params) {
         this.url = url;
         this.method = method;
@@ -42,5 +46,9 @@ public abstract class Endpoint<Result> {
     @Nullable
     public Map<String, String> getParams() {
         return params;
+    }
+
+    public void setParams(@Nullable Map<String, String> params) {
+        this.params = params;
     }
 }

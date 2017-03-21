@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.kwala.app.MainActivity;
 import com.kwala.app.R;
+import com.kwala.app.main.MainActivity;
 
 /**
  * Created by sijaebrown on 2/4/17.

@@ -1,45 +1,49 @@
 package com.kwala.app.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.kwala.app.R;
+import com.kwala.app.helpers.BaseActivity;
 import com.kwala.app.registration.RegistrationActivity;
 
 /**
  * Created by sijaebrown on 2/18/17.
  */
 
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends BaseActivity {
+    private static final String TAG = LandingActivity.class.getSimpleName();
 
     private TextView textView;
     private Button loginButton;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, LandingActivity.class);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_activity);
 
-        textView = (TextView) findViewById(R.id.sign_up_textview);
+        textView = (TextView) findViewById(R.id.landing_register_button);
         loginButton = (Button) findViewById(R.id.login_button);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
-                startActivity(intent);
+                startActivity(RegistrationActivity.newIntent(LandingActivity.this));
             }
         });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                startActivity(LoginActivity.newIntent(LandingActivity.this));
             }
         });
 

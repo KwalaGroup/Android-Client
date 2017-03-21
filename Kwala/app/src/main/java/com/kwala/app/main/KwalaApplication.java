@@ -1,14 +1,10 @@
-package com.kwala.app;
+package com.kwala.app.main;
 
 import android.app.Application;
 import android.util.Log;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.kwala.app.models.RFilter;
+import com.kwala.app.models.RMatch;
 import com.kwala.app.service.DataStore;
 
 import io.realm.Realm;
@@ -55,6 +51,7 @@ public class KwalaApplication extends Application {
          * Generate test data
          * TODO: remove as needed
          */
-        RFilter.generateTestData(true);
+        RFilter.generateTestData(false);
+        RMatch.generateTestData(false);
     }
 }

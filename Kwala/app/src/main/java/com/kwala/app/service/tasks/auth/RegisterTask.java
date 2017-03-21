@@ -1,11 +1,13 @@
-package com.kwala.app.service.tasks;
+package com.kwala.app.service.tasks.auth;
 
 import android.util.Log;
 
+import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.QuestionsEndpoint;
+import com.kwala.app.service.endpoints.auth.RegisterEndpoint;
 import com.kwala.app.service.realm.RealmSyncs;
 import com.kwala.app.service.realm.RealmWrites;
+import com.kwala.app.service.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +19,18 @@ import io.realm.Realm;
  * @author jacobamuchow@gmail.com
  */
 
-public class QuestionsTask extends Task<Void> {
-    private static final String TAG = QuestionsTask.class.getSimpleName();
+public class RegisterTask extends Task<Void> {
+    private static final String TAG = RegisterTask.class.getSimpleName();
+
+    private RegistrationData registrationData;
+
+    public RegisterTask(RegistrationData registrationData) {
+        this.registrationData = registrationData;
+    }
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new QuestionsEndpoint();
+        return new RegisterEndpoint(registrationData);
     }
 
     @Override

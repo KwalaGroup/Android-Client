@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.kwala.app.R;
 import com.kwala.app.quiz.take_quiz.TakeQuizActivity;
-import com.kwala.app.service.tasks.QuestionsTask;
+import com.kwala.app.service.tasks.GetQuizTask;
 import com.kwala.app.service.tasks.Task;
 
 /**
@@ -52,7 +52,7 @@ public class QuizFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        new QuestionsTask().start(new Task.Callback<Void>() {
+        new GetQuizTask().start(new Task.Callback<Void>() {
             @Override
             public void onSuccess(Void result) {
 

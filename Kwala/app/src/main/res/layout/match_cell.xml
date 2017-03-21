@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="10dp"
+
+    tools:background="@drawable/background">
+
+    <ImageView
+        android:id="@+id/match_cell_profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+
+        tools:src="@drawable/brittany"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/match_cell_profile_image"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/match_cell_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="Brittany Something"
+            android:textSize="24sp"
+            android:textColor="@color/kWhite"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/match_cell_score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+
+                tools:text="89% match"
+                android:textSize="14sp"
+                android:textColor="@color/kWhite"
+                />
+
+            <ImageView
+                android:id="@+id/match_cell_filter_image"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+
+                tools:src="@drawable/filter_heart_icon"
+                />
+
+            <TextView
+                android:id="@+id/match_cell_age_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+
+                tools:text="Age: 22"
+                android:textSize="14sp"
+                android:textColor="@color/kWhite"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

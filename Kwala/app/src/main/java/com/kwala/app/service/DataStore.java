@@ -1,5 +1,7 @@
 package com.kwala.app.service;
 
+import com.kwala.app.service.realm.RealmWrites;
+
 import io.realm.Realm;
 
 /**
@@ -27,6 +29,19 @@ public class DataStore {
             dataStore = new DataStore();
         }
         return dataStore;
+    }
+
+    public void clearAllData() {
+        RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
+            @Override
+            public Void execute(Realm realm) {
+                realm.deleteAll();
+                return null;
+            }
+        });
+
+        UserData.getInstance().clearData();
+        networkStore.clearData();
     }
 
     public NetworkStore getNetworkStore() {

@@ -1,4 +1,4 @@
-package com.kwala.app;
+package com.kwala.app.main;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+
+import com.kwala.app.R;
 
 /**
  * @author jacobamuchow@gmail.com

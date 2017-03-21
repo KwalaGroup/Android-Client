@@ -9,15 +9,20 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.kwala.app.KwalaApplication;
+import com.kwala.app.helpers.KwalaConstants;
+import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.UUID;
 
 import okhttp3.Call;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,38 +33,44 @@ import okhttp3.Response;
 public class NetworkStore {
     private static final String TAG = NetworkStore.class.getSimpleName();
 
+    private KwalaCookieStore kwalaCookieStore;
     private OkHttpClient okHttpClient;
+
     private AmazonS3Client s3Client;
     private TransferUtility transferUtility;
 
     public NetworkStore() {
+
+        kwalaCookieStore = new KwalaCookieStore(KwalaApplication.getInstance());
+        CookieManager cookieManager = new CookieManager(kwalaCookieStore, CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+        CookieHandler.setDefault(cookieManager);
+
         okHttpClient = new OkHttpClient.Builder()
+                .cookieJar(new JavaNetCookieJar(cookieManager))
                 .build();
 
         KwalaApplication application = KwalaApplication.getInstance();
 
         // Initialize the Amazon Cognito credentials provider
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(application,
-                "us-east-1:71571279-c071-43d0-a35e-dd583addf4ee", // Identity Pool ID
-                Regions.US_EAST_1 // Region
+                KwalaConstants.Network.AWS_IDENTITY_POOL_ID,
+                Regions.US_EAST_1
         );
 
         // Initialize Amazon S3 and transfer utility
         s3Client = new AmazonS3Client(credentialsProvider);
         transferUtility = new TransferUtility(s3Client, application);
+    }
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                boolean exists = s3Client.doesBucketExist("kwala-images");
-//                Log.e(TAG, "bucket exists: " + exists);
-//            }
-//        }).start();
+    public void clearData() {
+        kwalaCookieStore.removeAll();
     }
 
     public <T> EndpointRequest<T> performRequest(final Endpoint<T> endpoint, final EndpointRequest.Callback<T> callback) {
 
         Request request = OkRequestFactory.createRequest(endpoint);
+
+        Log.d(TAG, "Request: " + request.toString());
 
         okhttp3.Callback responseCallback = new okhttp3.Callback() {
             @Override
@@ -88,7 +99,7 @@ public class NetworkStore {
 
         String imageId = UUID.randomUUID().toString();
 
-        TransferObserver observer = transferUtility.upload("kwala-uploads", imageId, file);
+        TransferObserver observer = transferUtility.upload(KwalaConstants.Network.S3_BUCKET_NAME, imageId, file);
 
         observer.setTransferListener(new TransferListener() {
             @Override
