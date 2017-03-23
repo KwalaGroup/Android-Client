@@ -45,7 +45,7 @@ public class RegistrationActivity extends BaseActivity {
     private final View.OnClickListener continueClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            final String email = emailEditText.getText().toString().trim();
+            String email = emailEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
 
             RegistrationData.getInstance()

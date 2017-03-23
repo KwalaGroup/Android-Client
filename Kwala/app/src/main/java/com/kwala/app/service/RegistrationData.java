@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import com.kwala.app.enums.Gender;
 import com.kwala.app.main.KwalaApplication;
 
-import java.util.Date;
-
 /**
  * @author jacobamuchow@gmail.com
  */
@@ -96,16 +94,16 @@ public class RegistrationData {
      * Age
      */
     @Nullable
-    public Date getAge() {
-        long time = sharedPreferences.getLong(Keys.AGE, 0);
-        return time == 0 ? null : new Date(time);
+    public Integer getAge() {
+        int age = sharedPreferences.getInt(Keys.AGE, 0);
+        return age == 0 ? null : age;
     }
 
-    public RegistrationData setAge(@Nullable Date date) {
-        if (date == null) {
+    public RegistrationData setAge(@Nullable Integer age) {
+        if (age == null) {
             sharedPreferences.edit().remove(Keys.AGE).apply();
         } else {
-            sharedPreferences.edit().putLong(Keys.AGE, date.getTime()).apply();
+            sharedPreferences.edit().putInt(Keys.AGE, age).apply();
         }
         return this;
     }
@@ -124,7 +122,7 @@ public class RegistrationData {
     }
 
     /**
-     * Age
+     * Gender
      */
     public Gender getGender() {
         String genderValue = sharedPreferences.getString(Keys.GENDER, Gender.UNKNOWN.getNetworkValue());
