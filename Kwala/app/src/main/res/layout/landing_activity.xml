@@ -21,7 +21,7 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
 
-        <Button
+        <com.kwala.app.helpers.views.KwalaButton
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,10 +30,7 @@
             android:layout_marginBottom="10dp"
 
             android:text="@string/login_button"
-            android:textAllCaps="false"
             android:textSize="20sp"
-            android:textColor="@color/buttonText"
-            android:background="@drawable/button_background"
             />
 
         <TextView

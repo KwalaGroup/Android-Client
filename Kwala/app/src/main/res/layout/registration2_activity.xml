@@ -153,7 +153,7 @@
 
     </LinearLayout>
 
-    <Button
+    <com.kwala.app.helpers.views.KwalaButton
         android:id="@+id/finish_reg_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -164,10 +164,7 @@
         android:layout_marginBottom="20dp"
 
         android:text="@string/registration_button"
-        android:textAllCaps="false"
         android:textSize="20dp"
-        android:textColor="@color/buttonText"
-        android:background="@drawable/button_background"
         />
 
 </RelativeLayout>

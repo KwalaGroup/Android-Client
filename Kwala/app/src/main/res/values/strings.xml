@@ -2,8 +2,8 @@
     <string name="app_name">Kwala</string>
 
     <!-- Common -->
-    <string name="common_begin">Begin</string>
-    <string name="common_create">Create</string>
+    <string name="common_begin">begin</string>
+    <string name="common_create">create</string>
 
     <!-- Login -->
     <string name="login_email">email</string>
@@ -26,6 +26,6 @@
 
     <!-- Settings -->
     <string name="settings_do_not_disturb">Do not disturb</string>
-    <string name="settings_sign_out">Sign out</string>
+    <string name="settings_sign_out">sign out</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.kwala.app.helpers;
+package com.kwala.app.helpers.views;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

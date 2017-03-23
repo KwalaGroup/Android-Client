@@ -40,13 +40,13 @@
             android:gravity="center"
             />
 
-        <Button
+        <com.kwala.app.helpers.views.KwalaButton
             android:id="@+id/filters_fragment_empty_state_create_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:text="@string/common_create"
-            android:textAllCaps="false"
+            android:textSize="20sp"
             />
 
     </LinearLayout>

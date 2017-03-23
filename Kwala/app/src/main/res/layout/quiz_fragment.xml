@@ -30,13 +30,13 @@
             android:gravity="center"
             />
 
-        <Button
+        <com.kwala.app.helpers.views.KwalaButton
             android:id="@+id/quiz_fragment_begin_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:text="@string/common_begin"
-            android:textAllCaps="false"
+            android:textSize="20sp"
             />
 
     </LinearLayout>

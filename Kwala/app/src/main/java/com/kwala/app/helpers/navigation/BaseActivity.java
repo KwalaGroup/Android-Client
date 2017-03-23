@@ -1,4 +1,4 @@
-package com.kwala.app.helpers;
+package com.kwala.app.helpers.navigation;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;

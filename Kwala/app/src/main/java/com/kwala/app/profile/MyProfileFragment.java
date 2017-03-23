@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.kwala.app.R;
-import com.kwala.app.helpers.BaseFragment;
+import com.kwala.app.helpers.navigation.BaseFragment;
 import com.kwala.app.service.DataStore;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@drawable/background">
 
-    <Button
+    <com.kwala.app.helpers.views.KwalaButton
         android:id="@+id/settings_logout_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,10 +17,7 @@
         android:layout_marginBottom="20dp"
 
         android:text="@string/settings_sign_out"
-        android:textAllCaps="false"
         android:textSize="20sp"
-        android:textColor="@color/buttonText"
-        android:background="@drawable/button_background"
         />
 
 </RelativeLayout>

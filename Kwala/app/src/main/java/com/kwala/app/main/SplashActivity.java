@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.kwala.app.R;
-import com.kwala.app.helpers.BaseActivity;
+import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.login.LandingActivity;
 import com.kwala.app.service.UserData;
 

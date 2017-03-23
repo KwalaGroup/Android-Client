@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kwala.app.R;
-import com.kwala.app.helpers.BaseActivity;
+import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.registration.RegistrationActivity;
 
 /**

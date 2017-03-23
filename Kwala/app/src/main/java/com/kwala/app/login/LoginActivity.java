@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.kwala.app.R;
-import com.kwala.app.helpers.BaseActivity;
+import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.LoginTask;

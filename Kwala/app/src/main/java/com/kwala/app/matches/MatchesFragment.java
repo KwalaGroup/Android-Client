@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kwala.app.R;
-import com.kwala.app.helpers.KRealmRecyclerViewAdapter;
+import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.models.RMatch;
 import com.kwala.app.service.realm.RealmQueries;
 

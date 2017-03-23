@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.kwala.app.R;
-import com.kwala.app.helpers.BaseToolbarActivity;
+import com.kwala.app.helpers.navigation.BaseToolbarActivity;
 
 /**
  * @author jacobamuchow@gmail.com

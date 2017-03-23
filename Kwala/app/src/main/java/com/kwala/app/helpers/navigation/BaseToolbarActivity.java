@@ -1,4 +1,4 @@
-package com.kwala.app.helpers;
+package com.kwala.app.helpers.navigation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

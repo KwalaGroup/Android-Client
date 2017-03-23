@@ -16,7 +16,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.kwala.app.R;
 import com.kwala.app.filters.FiltersFragment;
-import com.kwala.app.helpers.BaseActivity;
+import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.matches.MatchesFragment;
 import com.kwala.app.profile.MyProfileFragment;
 import com.kwala.app.quiz.QuizFragment;

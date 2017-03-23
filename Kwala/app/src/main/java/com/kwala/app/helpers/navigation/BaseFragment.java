@@ -1,4 +1,4 @@
-package com.kwala.app.helpers;
+package com.kwala.app.helpers.navigation;
 
 import android.app.Fragment;
 import android.support.annotation.NonNull;
