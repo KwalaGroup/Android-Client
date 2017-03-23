@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseActivity;
+import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.LoginTask;
@@ -21,8 +21,8 @@ import com.kwala.app.service.tasks.auth.LoginTask;
 public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
 
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private KwalaEditText emailEditText;
+    private KwalaEditText passwordEditText;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -33,15 +33,15 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        emailEditText = (EditText) findViewById(R.id.login_email);
-        passwordEditText = (EditText) findViewById(R.id.login_password);
+        emailEditText = (KwalaEditText) findViewById(R.id.login_email);
+        passwordEditText = (KwalaEditText) findViewById(R.id.login_password);
         Button loginButton = (Button) findViewById(R.id.login_login_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString().trim();
+                String email = emailEditText.getTextTrimmed();
+                String password = passwordEditText.getTextTrimmed();
 
                 new LoginTask(email, password).start(new Task.Callback<Void>() {
                     @Override

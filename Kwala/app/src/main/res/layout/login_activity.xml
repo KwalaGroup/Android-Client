@@ -16,42 +16,25 @@
         android:src="@drawable/logo"
         />
 
-    <EditText
+    <com.kwala.app.helpers.views.KwalaEditText
         android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="15dp"
+        android:layout_margin="20dp"
 
         android:hint="@string/login_email"
-        android:background="@drawable/edit_text_background"
         android:inputType="textEmailAddress"
         />
 
-    <EditText
+    <com.kwala.app.helpers.views.KwalaEditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/login_email"
-
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="15dp"
+        android:layout_margin="20dp"
 
         android:hint="@string/login_password"
-        android:background="@drawable/edit_text_background"
         android:inputType="textPassword"
         />
 

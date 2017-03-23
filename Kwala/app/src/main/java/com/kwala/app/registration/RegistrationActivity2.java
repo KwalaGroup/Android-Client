@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.kwala.app.R;
 import com.kwala.app.enums.Gender;
+import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.RegisterTask;
@@ -29,9 +29,9 @@ public class RegistrationActivity2 extends AppCompatActivity {
     private Button finishRegButton;
     private ImageView maleIcon;
     private ImageView femaleIcon;
-    private EditText firstNameEditText;
-    private EditText lastNameEditText;
-    private EditText ageEditText;
+    private KwalaEditText firstNameEditText;
+    private KwalaEditText lastNameEditText;
+    private KwalaEditText ageEditText;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, RegistrationActivity2.class);
@@ -48,9 +48,9 @@ public class RegistrationActivity2 extends AppCompatActivity {
         femaleIcon = (ImageView) findViewById(R.id.female_icon);
         maleIcon = (ImageView) findViewById(R.id.male_icon);
 
-        firstNameEditText = (EditText) findViewById(R.id.first_name_box);
-        lastNameEditText = (EditText) findViewById(R.id.last_name_box);
-        ageEditText = (EditText) findViewById(R.id.age_box);
+        firstNameEditText = (KwalaEditText) findViewById(R.id.first_name_box);
+        lastNameEditText = (KwalaEditText) findViewById(R.id.last_name_box);
+        ageEditText = (KwalaEditText) findViewById(R.id.age_box);
         finishRegButton = (Button) findViewById(R.id.finish_reg_button);
 
         /*
@@ -90,9 +90,9 @@ public class RegistrationActivity2 extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            String firstName = firstNameEditText.getText().toString().trim();
-            String lastName = lastNameEditText.getText().toString().trim();
-            String ageText = ageEditText.getText().toString().trim();
+            String firstName = firstNameEditText.getTextTrimmed();
+            String lastName = lastNameEditText.getTextTrimmed();
+            String ageText = ageEditText.getTextTrimmed();
 
             Integer age = Integer.valueOf(ageText);
 

@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseActivity;
+import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.EmailAvailabilityTask;
@@ -22,8 +22,8 @@ import com.kwala.app.service.tasks.auth.EmailAvailabilityTask;
 public class RegistrationActivity extends BaseActivity {
     private static final String TAG = RegistrationActivity.class.getSimpleName();
 
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private KwalaEditText emailEditText;
+    private KwalaEditText passwordEditText;
     private Button continueButton;
 
     public static Intent newIntent(Context context) {
@@ -35,8 +35,8 @@ public class RegistrationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_activity);
 
-        emailEditText = (EditText) findViewById(R.id.registration_email_text);
-        passwordEditText = (EditText) findViewById(R.id.registration_password_text);
+        emailEditText = (KwalaEditText) findViewById(R.id.registration_email_text);
+        passwordEditText = (KwalaEditText) findViewById(R.id.registration_password_text);
         continueButton = (Button) findViewById(R.id.registration_continue_button);
 
         continueButton.setOnClickListener(continueClickListener);
@@ -45,8 +45,8 @@ public class RegistrationActivity extends BaseActivity {
     private final View.OnClickListener continueClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String email = emailEditText.getText().toString().trim();
-            String password = passwordEditText.getText().toString().trim();
+            String email = emailEditText.getTextTrimmed();
+            String password = passwordEditText.getTextTrimmed();
 
             RegistrationData.getInstance()
                     .setEmail(email)

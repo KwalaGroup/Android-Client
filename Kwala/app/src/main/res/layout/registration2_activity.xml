@@ -46,34 +46,23 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp">
 
-                <EditText
+                <com.kwala.app.helpers.views.KwalaEditText
                     android:id="@+id/first_name_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
 
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="10dp"
-
                     android:hint="first name"
-                    android:background="@drawable/edit_text_background"
                     />
 
-                <EditText
+                <com.kwala.app.helpers.views.KwalaEditText
                     android:id="@+id/last_name_box"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
 
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:paddingLeft="10dp"
-
                     android:hint="last name"
-                    android:background="@drawable/edit_text_background"
                     />
 
             </LinearLayout>
@@ -135,18 +124,13 @@
 
             </LinearLayout>
 
-            <EditText
+            <com.kwala.app.helpers.views.KwalaEditText
                 android:id="@+id/age_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
 
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:paddingLeft="10dp"
-
                 android:hint="age"
-                android:background="@drawable/edit_text_background"
                 />
 
         </LinearLayout>
