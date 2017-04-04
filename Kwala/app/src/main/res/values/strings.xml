@@ -18,6 +18,12 @@
 
     <!-- Filters -->
     <string name="filters_empty_state_string">Looks like you don\’t have any filters set up yet.\n\nCreate your first to get started!</string>
+    <string name="filters_love_interest_string">Love Interest</string>
+    <string name="filters_coffee_buddy_string">Coffee Buddy</string>
+    <string name="filters_study_buddy_string">Study Buddy</string>
+    <string name="filters_workout_buddy_string">Workout Buddy</string>
+    <string name="filters_buddy_string">Buddy</string>
+    <string name="filters_one_night_stand">One Night Stand ;)</string>
 
     <!-- Matches -->
     <string name="matches_empty_state_string">No matches yet!</string>
