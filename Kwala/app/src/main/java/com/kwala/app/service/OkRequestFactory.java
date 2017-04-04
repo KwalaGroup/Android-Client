@@ -33,7 +33,7 @@ public class OkRequestFactory {
 
         if (endpoint.getMethod() == Endpoint.Method.GET && endpoint.getParams() != null) {
             for (String key : endpoint.getParams().keySet()) {
-                builder.addQueryParameter(key, endpoint.getParams().get(key));
+                builder.addQueryParameter(key, endpoint.getParams().get(key).toString());
             }
         }
 

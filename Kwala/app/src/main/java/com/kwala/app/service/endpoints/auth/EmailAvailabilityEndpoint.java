@@ -14,7 +14,7 @@ public class EmailAvailabilityEndpoint extends JSONEndpoint {
     public EmailAvailabilityEndpoint(String email) {
         super(APIPaths.Auth.EMAIL_AVAILABILITY, Method.GET);
 
-        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>();
 
         params.put("email", email);
 

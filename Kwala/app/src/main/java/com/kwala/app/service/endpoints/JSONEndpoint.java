@@ -17,7 +17,7 @@ public abstract class JSONEndpoint extends Endpoint<JSONObject> {
         super(url, method);
     }
 
-    public JSONEndpoint(String url, Method method, @Nullable Map<String, String> params) {
+    public JSONEndpoint(String url, Method method, @Nullable Map<String, Object> params) {
         super(url, method, params);
     }
 

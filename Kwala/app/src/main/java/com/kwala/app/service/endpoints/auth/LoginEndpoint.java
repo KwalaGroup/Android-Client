@@ -15,7 +15,7 @@ public class LoginEndpoint extends JSONEndpoint {
     public LoginEndpoint(String email, String hashedPassword) {
         super(APIPaths.Auth.LOGIN, Method.POST);
 
-        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>();
 
         params.put("email", email);
         params.put("password", hashedPassword);
