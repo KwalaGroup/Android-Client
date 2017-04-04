@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.kwala.app.R;
 import com.kwala.app.enums.Gender;
 import com.kwala.app.helpers.views.KwalaEditText;
+import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.RegisterTask;
@@ -104,12 +107,14 @@ public class RegistrationActivity2 extends AppCompatActivity {
             new RegisterTask(RegistrationData.getInstance()).start(new Task.Callback<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-
+                    Intent intent = MainActivity.newIntent(RegistrationActivity2.this);
+                    startActivity(intent);
                 }
 
                 @Override
                 public void onFailure(Exception e) {
-
+                    Toast.makeText(RegistrationActivity2.this, "Error", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Failed to register", e);
                 }
             });
         }

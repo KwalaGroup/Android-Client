@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.kwala.app.enums.FilterCategory;
-import com.kwala.app.helpers.BaseActivity;
+import com.kwala.app.helpers.navigation.BaseActivity;
 
 /**
  * Created by sijaebrown on 3/4/17.
