@@ -22,7 +22,7 @@ public class RegistrationData {
         private static final String FIRST_NAME = "first_name";
         private static final String LAST_NAME = "last_name";
         private static final String AGE = "age";
-        private static final String IMAGE_ID = "image_id";
+        private static final String PROFILE_IMAGE_ID = "profile_image_id";
         private static final String GENDER = "gender";
     }
 
@@ -109,15 +109,15 @@ public class RegistrationData {
     }
 
     /**
-     * Image ID
+     * Profile image ID
      */
     @Nullable
-    public String getImageId() {
-        return sharedPreferences.getString(Keys.IMAGE_ID, null);
+    public String getProfileImageId() {
+        return sharedPreferences.getString(Keys.PROFILE_IMAGE_ID, null);
     }
 
-    public RegistrationData setImageId(@Nullable String imageId) {
-        sharedPreferences.edit().putString(Keys.IMAGE_ID, imageId).apply();
+    public RegistrationData setProfileImageId(@Nullable String imageId) {
+        sharedPreferences.edit().putString(Keys.PROFILE_IMAGE_ID, imageId).apply();
         return this;
     }
 

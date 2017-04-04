@@ -1,5 +1,6 @@
 package com.kwala.app.service;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -95,27 +96,37 @@ public class NetworkStore {
         return new EndpointRequest<>(endpoint, callback);
     }
 
-    public void uploadImage(File file) {
+    public void uploadImage(Uri imageUri, final ImageUploadObserver imageUploadObserver) {
 
-        String imageId = UUID.randomUUID().toString();
+        final File file = new File(imageUri.getPath());
+        final String imageId = UUID.randomUUID().toString();
 
-        TransferObserver observer = transferUtility.upload(KwalaConstants.Network.S3_BUCKET_NAME, imageId, file);
+        final TransferObserver observer = transferUtility.upload(KwalaConstants.Network.S3_BUCKET_NAME, imageId, file);
 
         observer.setTransferListener(new TransferListener() {
             @Override
             public void onStateChanged(int id, TransferState state) {
                 Log.d(TAG, "" + id + ": " + state.name());
+                imageUploadObserver.onStateChanged(imageId, state);
             }
 
             @Override
             public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
                 Log.d(TAG, "" + id + ": " + bytesCurrent + " / " + bytesTotal);
+                imageUploadObserver.onProgressChanged(imageId, bytesCurrent, bytesTotal);
             }
 
             @Override
             public void onError(int id, Exception ex) {
                 Log.e(TAG, "Error uploading image: " + id, ex);
+                imageUploadObserver.onError(imageId, ex);
             }
         });
+    }
+
+    public interface ImageUploadObserver {
+        void onStateChanged(String imageId, TransferState state);
+        void onProgressChanged(String imageId, long bytesCurrent, long bytesTotal);
+        void onError(String imageId, Exception e);
     }
 }

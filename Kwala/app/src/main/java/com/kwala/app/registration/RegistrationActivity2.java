@@ -19,6 +19,7 @@ import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.UploadImageTask;
 import com.kwala.app.service.tasks.auth.RegisterTask;
 
 /**
@@ -92,11 +93,25 @@ public class RegistrationActivity2 extends BaseActivity {
                 public void onSuccess(Uri imageUri) {
                     Log.d(TAG, "Success!");
                     profileImageView.setImageURI(imageUri);
+
+                    new UploadImageTask(imageUri).start(new Task.Callback<String>() {
+                        @Override
+                        public void onSuccess(String imageId) {
+                            Log.d(TAG, "Image uploaded successfully: " + imageId);
+
+                            RegistrationData.getInstance().setProfileImageId(imageId);
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            Log.e(TAG, "Image upload failure :(", e);
+                        }
+                    });
                 }
 
                 @Override
                 public void onFailure(PhotoHelper.Failure failure) {
-                    Log.d(TAG, "Failure :( " + failure.name());
+                    Log.e(TAG, "Failure :( " + failure.name());
                 }
             });
         }

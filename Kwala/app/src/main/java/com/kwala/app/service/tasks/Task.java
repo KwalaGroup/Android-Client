@@ -3,11 +3,8 @@ package com.kwala.app.service.tasks;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.kwala.app.service.DataStore;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.EndpointRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,18 +15,14 @@ import org.json.JSONObject;
 public abstract class Task<Result> {
     private static final String TAG = Task.class.getSimpleName();
 
-    private enum Status {
+    public enum Status {
         READY, PENDING, SUCCESS, FAILURE, CANCELLED
     }
 
-    private Status mStatus = Status.READY;
-    @Nullable private Result mResult;
+    protected Status mStatus = Status.READY;
+    @Nullable protected Result mResult;
 
-    @Nullable private Callback<Result> mCallback;
-
-    protected abstract Endpoint<JSONObject> buildEndpoint();
-
-    protected abstract Result parse(JSONObject jsonObject) throws JSONException;
+    @Nullable protected Callback<Result> mCallback;
 
     public void start(@Nullable Callback<Result> callback) {
         synchronized (this) {
@@ -39,53 +32,15 @@ public abstract class Task<Result> {
             this.mCallback = callback;
         }
 
+        callRun();
+    }
+
+    private void callRun() {
+        mStatus = Status.PENDING;
         run();
     }
 
-    protected void run() {
-        mStatus = Status.PENDING;
-
-        DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<JSONObject>() {
-            @Override
-            public void success(JSONObject result) {
-                Log.d(TAG, "response: " + result);
-
-                try {
-                    mResult = parse(result);
-                } catch (JSONException e) {
-                    Log.e(TAG, "Error parsing result", e);
-                    failure(e);
-                    return;
-                }
-
-                mStatus = Status.SUCCESS;
-
-                if (mCallback != null) {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mCallback.onSuccess(mResult);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void failure(final Exception e) {
-                mResult = null;
-                mStatus = Status.FAILURE;
-
-                if (mCallback != null) {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mCallback.onFailure(e);
-                        }
-                    });
-                }
-            }
-        });
-    }
+    protected abstract void run();
 
     /**
      * Getters / setters
@@ -112,6 +67,52 @@ public abstract class Task<Result> {
 
     public boolean isResolved() {
         return isSuccessful() || isFailed() || isCancelled();
+    }
+
+    public void resolve(Result result) {
+        this.mStatus = Status.SUCCESS;
+        this.mResult = result;
+
+        if (mCallback != null) {
+            mCallback.onSuccess(result);
+        }
+    }
+
+    public void resolveOnMain(final Result result) {
+        this.mStatus = Status.SUCCESS;
+        this.mResult = result;
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCallback != null) {
+                    mCallback.onSuccess(mResult);
+                }
+            }
+        });
+    }
+
+    public void reject(Exception e) {
+        this.mStatus = Status.FAILURE;
+        this.mResult = null;
+
+        if (mCallback != null) {
+            mCallback.onFailure(e);
+        }
+    }
+
+    public void rejectOnMain(final Exception e) {
+        this.mStatus = Status.FAILURE;
+        this.mResult = null;
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (mCallback != null) {
+                    mCallback.onFailure(e);
+                }
+            }
+        });
     }
 
     /**

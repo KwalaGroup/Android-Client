@@ -2,7 +2,7 @@ package com.kwala.app.service.tasks.auth;
 
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.EmailAvailabilityEndpoint;
-import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +11,7 @@ import org.json.JSONObject;
  * @author jacobamuchow@gmail.com
  */
 
-public class EmailAvailabilityTask extends Task<Boolean> {
+public class EmailAvailabilityTask extends NetworkTask<Boolean> {
     private static final String TAG = EmailAvailabilityTask.class.getSimpleName();
 
     private String email;

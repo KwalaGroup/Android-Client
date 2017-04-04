@@ -7,7 +7,7 @@ import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.RegisterEndpoint;
 import com.kwala.app.service.realm.RealmSyncs;
 import com.kwala.app.service.realm.RealmWrites;
-import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +19,7 @@ import io.realm.Realm;
  * @author jacobamuchow@gmail.com
  */
 
-public class RegisterTask extends Task<Void> {
+public class RegisterTask extends NetworkTask<Void> {
     private static final String TAG = RegisterTask.class.getSimpleName();
 
     private RegistrationData registrationData;

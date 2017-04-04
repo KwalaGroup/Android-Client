@@ -5,7 +5,7 @@ import android.util.Log;
 import com.kwala.app.service.UserData;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.LoginEndpoint;
-import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +14,7 @@ import org.json.JSONObject;
  * @author jacobamuchow@gmail.com
  */
 
-public class LoginTask extends Task<Void> {
+public class LoginTask extends NetworkTask<Void> {
     private static final String TAG = LoginTask.class.getSimpleName();
 
     private String email;
