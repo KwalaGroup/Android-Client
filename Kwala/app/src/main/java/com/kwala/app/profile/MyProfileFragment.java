@@ -53,7 +53,6 @@ public class MyProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Nammu.init(getActivity());
 
         profileImageView = (ImageView) view.findViewById(R.id.profile_image);
         firstNameTextView = (TextView) view.findViewById(R.id.profile_first_name);
