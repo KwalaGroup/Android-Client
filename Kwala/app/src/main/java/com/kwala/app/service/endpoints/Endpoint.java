@@ -1,7 +1,9 @@
 package com.kwala.app.service.endpoints;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,6 +35,26 @@ public abstract class Endpoint<Result> {
     public abstract Result parse(int code, String response) throws Exception;
 
     /**
+     * Builder methods
+     */
+    public Endpoint<Result> setParams(@Nullable Map<String, Object> params) {
+        this.params = params;
+        return this;
+    }
+
+    public Endpoint<Result> addParam(@NonNull String key, @NonNull Object value) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        params.put(key, value);
+        return this;
+    }
+
+    public Endpoint<Result> addOptParam(@NonNull String key, @Nullable Object value) {
+        return value == null ? this : addParam(key, value);
+    }
+
+    /**
      * Getters / setters
      */
     public String getUrl() {
@@ -46,9 +68,5 @@ public abstract class Endpoint<Result> {
     @Nullable
     public Map<String, Object> getParams() {
         return params;
-    }
-
-    public void setParams(@Nullable Map<String, Object> params) {
-        this.params = params;
     }
 }

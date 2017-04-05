@@ -1,11 +1,13 @@
-package com.kwala.app.service.tasks;
+package com.kwala.app.service.tasks.quizzes;
 
 import android.util.Log;
 
+import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.GetQuizEndpoint;
 import com.kwala.app.service.realm.RealmSyncs;
 import com.kwala.app.service.realm.RealmWrites;
+import com.kwala.app.service.tasks.APIPaths;
+import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +24,7 @@ public class GetQuizTask extends NetworkTask<Void> {
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new GetQuizEndpoint();
+        return new APIEndpoint(APIPaths.QUIZZES, Endpoint.Method.GET);
     }
 
     @Override

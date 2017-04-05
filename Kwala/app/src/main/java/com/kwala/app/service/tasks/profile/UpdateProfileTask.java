@@ -1,4 +1,4 @@
-package com.kwala.app.service.tasks.auth;
+package com.kwala.app.service.tasks.profile;
 
 import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
@@ -12,12 +12,19 @@ import org.json.JSONObject;
  * @author jacobamuchow@gmail.com
  */
 
-public class LogoutTask extends NetworkTask<Void> {
-    private static final String TAG = LogoutTask.class.getSimpleName();
+public class UpdateProfileTask extends NetworkTask<Void> {
+    private static final String TAG = UpdateProfileTask.class.getSimpleName();
+
+    public String profileImageId;
+
+    public UpdateProfileTask(String profileImageId) {
+        this.profileImageId = profileImageId;
+    }
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new APIEndpoint(APIPaths.Auth.LOGOUT, Endpoint.Method.POST);
+        return new APIEndpoint(APIPaths.PROFILE, Endpoint.Method.PUT)
+                .addParam("image_id", profileImageId);
     }
 
     @Override

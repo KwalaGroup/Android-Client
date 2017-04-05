@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.kwala.app.R;
 import com.kwala.app.quiz.take_quiz.TakeQuizActivity;
-import com.kwala.app.service.tasks.GetQuizTask;
+import com.kwala.app.service.tasks.quizzes.GetQuizTask;
 import com.kwala.app.service.tasks.Task;
 
 /**

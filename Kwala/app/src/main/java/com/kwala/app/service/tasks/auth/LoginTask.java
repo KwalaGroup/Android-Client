@@ -1,8 +1,9 @@
 package com.kwala.app.service.tasks.auth;
 
 import com.kwala.app.service.UserData;
+import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.auth.LoginEndpoint;
+import com.kwala.app.service.tasks.APIPaths;
 import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONException;
@@ -25,7 +26,9 @@ public class LoginTask extends NetworkTask<Void> {
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new LoginEndpoint(email, hashedPassword);
+        return new APIEndpoint(APIPaths.Auth.LOGIN, Endpoint.Method.POST)
+                .addParam("email", email)
+                .addParam("password", hashedPassword);
     }
 
     @Override

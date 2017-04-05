@@ -30,7 +30,12 @@ public class OkRequestFactory {
 
     private static <T> HttpUrl getUrl(Endpoint<T> endpoint) {
 
-        HttpUrl.Builder builder = HttpUrl.parse(endpoint.getUrl()).newBuilder();
+        HttpUrl baseHttpUrl = HttpUrl.parse(endpoint.getUrl());
+        if (baseHttpUrl == null) {
+            throw new IllegalStateException("Malformed URL: " + endpoint.getUrl());
+        }
+
+        HttpUrl.Builder builder = baseHttpUrl.newBuilder();
 
         if (endpoint.getMethod() == Endpoint.Method.GET && endpoint.getParams() != null) {
             for (String key : endpoint.getParams().keySet()) {

@@ -1,7 +1,8 @@
 package com.kwala.app.service.tasks.auth;
 
+import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.auth.EmailAvailabilityEndpoint;
+import com.kwala.app.service.tasks.APIPaths;
 import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONException;
@@ -22,7 +23,8 @@ public class EmailAvailabilityTask extends NetworkTask<Boolean> {
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new EmailAvailabilityEndpoint(email);
+        return new APIEndpoint(APIPaths.Auth.EMAIL_AVAILABILITY, Endpoint.Method.GET)
+                .addParam("email", email);
     }
 
     @Override

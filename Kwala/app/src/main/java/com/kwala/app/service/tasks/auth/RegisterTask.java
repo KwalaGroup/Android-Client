@@ -2,8 +2,9 @@ package com.kwala.app.service.tasks.auth;
 
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.UserData;
+import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
-import com.kwala.app.service.endpoints.auth.RegisterEndpoint;
+import com.kwala.app.service.tasks.APIPaths;
 import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONException;
@@ -24,7 +25,14 @@ public class RegisterTask extends NetworkTask<Void> {
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new RegisterEndpoint(registrationData);
+        return new APIEndpoint(APIPaths.Auth.REGISTER, Endpoint.Method.POST)
+                .addParam("email", registrationData.getEmail())
+                .addParam("password", registrationData.getHashedPassword())
+                .addParam("image_id", registrationData.getProfileImageId())
+                .addParam("gender", registrationData.getGender().getNetworkValue())
+                .addParam("first_name", registrationData.getFirstName())
+                .addParam("last_name", registrationData.getLastName())
+                .addParam("age", registrationData.getAge());
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.Map;
  * @author jacobamuchow@gmail.com
  */
 
-public abstract class JSONEndpoint extends Endpoint<JSONObject> {
+public class JSONEndpoint extends Endpoint<JSONObject> {
     private static final String TAG = JSONEndpoint.class.getSimpleName();
 
     public JSONEndpoint(String url, Method method) {
