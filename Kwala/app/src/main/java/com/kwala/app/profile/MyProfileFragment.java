@@ -3,6 +3,7 @@ package com.kwala.app.profile;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.kwala.app.R;
 import com.kwala.app.helpers.KwalaImages;
 import com.kwala.app.helpers.PhotoHelper;
 import com.kwala.app.helpers.navigation.BaseFragment;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.profile.UpdateProfileImageTask;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -63,7 +66,7 @@ public class MyProfileFragment extends BaseFragment {
             PhotoHelper.showChooserDialog(getBaseActivity(), new PhotoHelper.Callback() {
                 @Override
                 public void onSuccess(Uri imageUri) {
-                    //TODO: upload, set on server
+                    updateProfileImage(imageUri);
                 }
 
                 @Override
@@ -73,4 +76,18 @@ public class MyProfileFragment extends BaseFragment {
             });
         }
     };
+
+    private void updateProfileImage(Uri imageUri) {
+        new UpdateProfileImageTask(imageUri).start(new Task.Callback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "UI success");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "UI failure", e);
+            }
+        });
+    }
 }

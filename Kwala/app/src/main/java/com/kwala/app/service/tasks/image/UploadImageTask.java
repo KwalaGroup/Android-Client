@@ -1,10 +1,11 @@
-package com.kwala.app.service.tasks;
+package com.kwala.app.service.tasks.image;
 
 import android.net.Uri;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.kwala.app.service.DataStore;
 import com.kwala.app.service.NetworkStore;
+import com.kwala.app.service.tasks.Task;
 
 /**
  * @author jacobamuchow@gmail.com

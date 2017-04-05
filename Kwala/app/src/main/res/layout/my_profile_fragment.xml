@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:background="@drawable/background">
 
-    <com.kwala.app.main.MainTabLayout
-        android:id="@+id/main_activity_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#CCC4C3C3"
-        android:elevation="10dp"
-        />
-
     <LinearLayout
         android:id="@+id/profile_info"
         android:layout_width="match_parent"
@@ -27,10 +19,11 @@
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
 
             android:layout_gravity="center_horizontal"
             android:layout_weight="3"
+            android:adjustViewBounds="true"
             />
 
         <TextView

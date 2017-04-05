@@ -24,7 +24,7 @@ import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.tasks.Task;
-import com.kwala.app.service.tasks.UploadImageTask;
+import com.kwala.app.service.tasks.image.UploadImageTask;
 import com.kwala.app.service.tasks.auth.RegisterTask;
 
 import static com.kwala.app.enums.Gender.FEMALE;
