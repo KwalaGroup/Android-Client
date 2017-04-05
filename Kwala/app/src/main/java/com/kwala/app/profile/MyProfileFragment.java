@@ -1,30 +1,18 @@
 package com.kwala.app.profile;
 
-import android.Manifest;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
-import com.bumptech.glide.Glide;
 import com.kwala.app.R;
+import com.kwala.app.helpers.KwalaImages;
+import com.kwala.app.helpers.PhotoHelper;
 import com.kwala.app.helpers.navigation.BaseFragment;
-import com.kwala.app.service.DataStore;
-import com.kwala.app.service.NetworkStore;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import pl.tajchert.nammu.Nammu;
-import pl.tajchert.nammu.PermissionCallback;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -61,77 +49,28 @@ public class MyProfileFragment extends BaseFragment {
         colorImageView = (ImageView) view.findViewById(R.id.profile_circle);
         descriptionTextView = (TextView) view.findViewById(R.id.profile_description);
 
-        profileImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        profileImageView.setOnClickListener(profileImageClickListener);
 
-                Nammu.askForPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-                    @Override
-                    public void permissionGranted() {
-                        Intent intent = CropImage.getPickImageChooserIntent(getActivity());
-                        startActivityForResult(intent, CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE);
-                    }
-
-                    @Override
-                    public void permissionRefused() {
-                        // :(
-                    }
-                });
-            }
-        });
-
-        Glide.with(this)
-                .load("https://s3.amazonaws.com/kwala-uploads/f89c8f68-69da-4def-8776-885f9fbe71b3")
-                .bitmapTransform(new CropCircleTransformation(getActivity()))
-                .into(profileImageView);
+        KwalaImages.with(profileImageView).setProfileImageId("f89c8f68-69da-4def-8776-885f9fbe71b3");
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    /**
+     * Listeners
+     */
+    private final View.OnClickListener profileImageClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            PhotoHelper.showChooserDialog(getBaseActivity(), new PhotoHelper.Callback() {
+                @Override
+                public void onSuccess(Uri imageUri) {
+                    //TODO: upload, set on server
+                }
 
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
-            Uri imageUri = CropImage.getPickImageResultUri(getActivity(), data);
+                @Override
+                public void onFailure(PhotoHelper.Failure failure) {
 
-            Intent intent = CropImage.activity(imageUri)
-                    .setAspectRatio(1, 1)
-                    .setFixAspectRatio(true)
-                    .setCropShape(CropImageView.CropShape.OVAL)
-                    .getIntent(getActivity());
-
-            startActivityForResult(intent, CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
+                }
+            });
         }
-
-        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            Log.d(TAG, "activity result for crop");
-
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-            if (result.getError() != null) {
-                Log.e(TAG, "Error cropping image", result.getError());
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-            } else {
-                profileImageView.setImageURI(result.getUri());
-                Log.d(TAG, "image set");
-                Log.d(TAG, "bitmap null: " + (result.getBitmap() == null));
-
-                DataStore.getInstance().getNetworkStore().uploadImage(result.getUri(), new NetworkStore.ImageUploadObserver() {
-                    @Override
-                    public void onStateChanged(String imageId, TransferState state) {
-
-                    }
-
-                    @Override
-                    public void onProgressChanged(String imageId, long bytesCurrent, long bytesTotal) {
-
-                    }
-
-                    @Override
-                    public void onError(String imageId, Exception e) {
-
-                    }
-                });
-            }
-        }
-    }
+    };
 }
