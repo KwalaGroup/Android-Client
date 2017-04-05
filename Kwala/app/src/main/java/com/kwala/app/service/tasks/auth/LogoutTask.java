@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.LogoutEndpoint;
-import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONObject;
 
@@ -12,7 +12,7 @@ import org.json.JSONObject;
  * @author jacobamuchow@gmail.com
  */
 
-public class LogoutTask extends Task<Void> {
+public class LogoutTask extends NetworkTask<Void> {
     private static final String TAG = LogoutTask.class.getSimpleName();
 
     @Override

@@ -10,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.bumptech.glide.Glide;
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseFragment;
 import com.kwala.app.service.DataStore;
+import com.kwala.app.service.NetworkStore;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.io.File;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import pl.tajchert.nammu.Nammu;
@@ -53,7 +53,6 @@ public class MyProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Nammu.init(getActivity());
 
         profileImageView = (ImageView) view.findViewById(R.id.profile_image);
         firstNameTextView = (TextView) view.findViewById(R.id.profile_first_name);
@@ -116,8 +115,22 @@ public class MyProfileFragment extends BaseFragment {
                 Log.d(TAG, "image set");
                 Log.d(TAG, "bitmap null: " + (result.getBitmap() == null));
 
-                File file = new File(result.getUri().getPath());
-                DataStore.getInstance().getNetworkStore().uploadImage(file);
+                DataStore.getInstance().getNetworkStore().uploadImage(result.getUri(), new NetworkStore.ImageUploadObserver() {
+                    @Override
+                    public void onStateChanged(String imageId, TransferState state) {
+
+                    }
+
+                    @Override
+                    public void onProgressChanged(String imageId, long bytesCurrent, long bytesTotal) {
+
+                    }
+
+                    @Override
+                    public void onError(String imageId, Exception e) {
+
+                    }
+                });
             }
         }
     }

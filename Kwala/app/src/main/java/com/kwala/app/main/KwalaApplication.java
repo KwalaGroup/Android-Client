@@ -10,6 +10,7 @@ import com.kwala.app.service.DataStore;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.exceptions.RealmError;
+import pl.tajchert.nammu.Nammu;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -27,6 +28,8 @@ public class KwalaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+
+        Nammu.init(this);
 
         /*
          * Configure Realm

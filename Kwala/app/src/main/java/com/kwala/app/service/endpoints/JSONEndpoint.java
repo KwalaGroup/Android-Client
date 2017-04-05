@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -17,7 +17,7 @@ public abstract class JSONEndpoint extends Endpoint<JSONObject> {
         super(url, method);
     }
 
-    public JSONEndpoint(String url, Method method, @Nullable HashMap<String, Object> params) {
+    public JSONEndpoint(String url, Method method, @Nullable Map<String, Object> params) {
         super(url, method, params);
     }
 

@@ -17,7 +17,7 @@ import io.realm.Realm;
  * @author jacobamuchow@gmail.com
  */
 
-public class GetQuizTask extends Task<Void> {
+public class GetQuizTask extends NetworkTask<Void> {
     private static final String TAG = GetQuizTask.class.getSimpleName();
 
     @Override

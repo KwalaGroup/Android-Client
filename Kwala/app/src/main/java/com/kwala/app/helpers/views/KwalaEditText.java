@@ -1,6 +1,7 @@
 package com.kwala.app.helpers.views;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -31,6 +32,13 @@ public class KwalaEditText extends EditText {
 
     private void init() {
         setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_text_background));
+    }
+
+    public void setTextAppend(@Nullable String text) {
+        setText("");
+        if (text != null) {
+            append(text);
+        }
     }
 
     public String getTextTrimmed() {
