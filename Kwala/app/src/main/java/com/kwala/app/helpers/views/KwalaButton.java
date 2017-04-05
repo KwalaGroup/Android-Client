@@ -2,8 +2,8 @@ package com.kwala.app.helpers.views;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
-import android.widget.Button;
 
 import com.kwala.app.R;
 
@@ -11,7 +11,7 @@ import com.kwala.app.R;
  * @author jacobamuchow@gmail.com
  */
 
-public class KwalaButton extends Button {
+public class KwalaButton extends AppCompatButton {
     private static final String TAG = KwalaButton.class.getSimpleName();
 
     public KwalaButton(Context context) {
@@ -35,5 +35,11 @@ public class KwalaButton extends Button {
         setTextColor(ContextCompat.getColor(getContext(), R.color.kWhite));
 
         setAllCaps(false);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setAlpha(enabled ? 1.0f : 0.4f);
     }
 }

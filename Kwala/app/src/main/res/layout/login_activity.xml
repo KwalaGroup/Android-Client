@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
@@ -38,6 +39,17 @@
         android:inputType="textPassword"
         />
 
+    <com.kwala.app.helpers.views.KwalaProgressSpinner
+        android:id="@+id/login_progress_spinner"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/login_password"
+        android:layout_centerHorizontal="true"
+
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
     <com.kwala.app.helpers.views.KwalaButton
         android:id="@+id/login_login_button"
         android:layout_width="match_parent"
@@ -50,6 +62,7 @@
 
         android:text="@string/login_button"
         android:textSize="20sp"
+        android:alpha="1.0"
         />
 
 </RelativeLayout>
