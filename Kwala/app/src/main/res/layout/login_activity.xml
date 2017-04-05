@@ -41,8 +41,8 @@
 
     <com.kwala.app.helpers.views.KwalaProgressSpinner
         android:id="@+id/login_progress_spinner"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_below="@id/login_password"
         android:layout_centerHorizontal="true"
 

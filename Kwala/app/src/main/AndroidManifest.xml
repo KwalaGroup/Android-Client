@@ -27,12 +27,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".login.LandingActivity">
+        <activity android:name=".login.LandingActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity android:name=".login.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
-        <activity android:name=".registration.RegistrationActivity">
+        <activity android:name=".registration.RegistrationActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity android:name=".registration.RegistrationActivity2">
         </activity>
