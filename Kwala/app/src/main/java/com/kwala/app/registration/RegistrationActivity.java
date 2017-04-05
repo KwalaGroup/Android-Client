@@ -55,6 +55,12 @@ public class RegistrationActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        RegistrationData registrationData = RegistrationData.getInstance();
+
+        emailEditText.setTextAppend(registrationData.getEmail());
+        passwordEditText.setTextAppend(registrationData.getHashedPassword());
+
         updateViews();
     }
 

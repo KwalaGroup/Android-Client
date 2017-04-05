@@ -41,6 +41,10 @@ public class RegistrationData {
         return registrationData;
     }
 
+    public void clearAll() {
+        sharedPreferences.edit().clear().apply();
+    }
+
     @Nullable
     public String getEmail() {
         return sharedPreferences.getString(Keys.EMAIL, null);

@@ -98,6 +98,8 @@ public class LoginActivity extends BaseActivity {
             new LoginTask(email, password).start(new Task.Callback<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    networkPending = false;
+
                     Intent intent = MainActivity.newIntent(LoginActivity.this);
                     startActivity(intent);
                     finishAffinity();

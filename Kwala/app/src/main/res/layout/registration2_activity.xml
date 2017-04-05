@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
@@ -136,6 +137,18 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.kwala.app.helpers.views.KwalaProgressSpinner
+        android:id="@+id/registration_progress_spinner"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_above="@+id/finish_reg_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
 
     <com.kwala.app.helpers.views.KwalaButton
         android:id="@+id/finish_reg_button"

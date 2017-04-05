@@ -40,6 +40,8 @@ public class RegisterTask extends NetworkTask<Void> {
 
         UserData.getInstance().updateFromJson(jsonObject);
 
+        RegistrationData.getInstance().clearAll();
+
         return null;
     }
 }

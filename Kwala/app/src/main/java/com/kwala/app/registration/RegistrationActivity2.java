@@ -21,6 +21,7 @@ import com.kwala.app.helpers.PhotoHelper;
 import com.kwala.app.helpers.SimpleTextWatcher;
 import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KwalaEditText;
+import com.kwala.app.helpers.views.KwalaProgressSpinner;
 import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.RegistrationData;
 import com.kwala.app.service.tasks.Task;
@@ -49,7 +50,10 @@ public class RegistrationActivity2 extends BaseActivity {
     private KwalaEditText lastNameEditText;
     private KwalaEditText ageEditText;
 
+    private KwalaProgressSpinner progressSpinner;
     private Button finishRegButton;
+
+    private boolean networkPending = false;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, RegistrationActivity2.class);
@@ -71,6 +75,7 @@ public class RegistrationActivity2 extends BaseActivity {
         lastNameEditText = (KwalaEditText) findViewById(R.id.last_name_box);
         ageEditText = (KwalaEditText) findViewById(R.id.age_box);
 
+        progressSpinner = (KwalaProgressSpinner) findViewById(R.id.registration_progress_spinner);
         finishRegButton = (Button) findViewById(R.id.finish_reg_button);
 
         /*
@@ -105,7 +110,7 @@ public class RegistrationActivity2 extends BaseActivity {
             ageEditText.setTextAppend("" + registrationData.getAge());
         }
 
-        updateContinueButton();
+        updateViews();
     }
 
     private boolean isFormComplete() {
@@ -118,8 +123,10 @@ public class RegistrationActivity2 extends BaseActivity {
                 && registrationData.getProfileImageId() != null;
     }
 
-    private void updateContinueButton() {
-        finishRegButton.setEnabled(isFormComplete());
+    private void updateViews() {
+        finishRegButton.setEnabled(isFormComplete() && !networkPending);
+
+        progressSpinner.setVisibility(networkPending ? View.VISIBLE : View.GONE);
     }
 
     private void setGender(Gender gender) {
@@ -134,7 +141,7 @@ public class RegistrationActivity2 extends BaseActivity {
             femaleIcon.setColorFilter(Color.DKGRAY);
         }
 
-        updateContinueButton();
+        updateViews();
     }
 
     @Nullable
@@ -165,7 +172,7 @@ public class RegistrationActivity2 extends BaseActivity {
                             Log.d(TAG, "Image uploaded successfully: " + imageId);
 
                             RegistrationData.getInstance().setProfileImageId(imageId);
-                            updateContinueButton();
+                            updateViews();
                         }
 
                         @Override
@@ -200,7 +207,7 @@ public class RegistrationActivity2 extends BaseActivity {
     private final SimpleTextWatcher textWatcher = new SimpleTextWatcher() {
         @Override
         public void afterTextChanged(Editable s) {
-            updateContinueButton();
+            updateViews();
         }
     };
 
@@ -219,16 +226,24 @@ public class RegistrationActivity2 extends BaseActivity {
             new RegisterTask(RegistrationData.getInstance()).start(new Task.Callback<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    networkPending = false;
+
                     Intent intent = MainActivity.newIntent(RegistrationActivity2.this);
                     startActivity(intent);
+                    finishAffinity();
                 }
 
                 @Override
                 public void onFailure(Exception e) {
                     Toast.makeText(RegistrationActivity2.this, "Error", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Failed to register", e);
+                    networkPending = false;
+                    updateViews();
                 }
             });
+
+            networkPending = true;
+            updateViews();
         }
     };
 }
