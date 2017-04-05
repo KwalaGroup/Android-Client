@@ -6,6 +6,7 @@ import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.LogoutEndpoint;
 import com.kwala.app.service.tasks.NetworkTask;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -21,7 +22,7 @@ public class LogoutTask extends NetworkTask<Void> {
     }
 
     @Override
-    protected Void parse(JSONObject jsonObject) {
+    protected Void parse(JSONObject jsonObject) throws JSONException {
         Log.d(TAG, jsonObject.toString());
         return null;
     }

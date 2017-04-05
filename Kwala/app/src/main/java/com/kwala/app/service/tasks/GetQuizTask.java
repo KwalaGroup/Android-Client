@@ -26,7 +26,7 @@ public class GetQuizTask extends NetworkTask<Void> {
     }
 
     @Override
-    protected Void parse(final JSONObject jsonObject) {
+    protected Void parse(final JSONObject jsonObject) throws JSONException {
         Log.d(TAG, jsonObject.toString());
 
         return RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
