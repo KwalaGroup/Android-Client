@@ -1,7 +1,5 @@
 package com.kwala.app.service.tasks.auth;
 
-import android.util.Log;
-
 import com.kwala.app.service.UserData;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.auth.LoginEndpoint;
@@ -33,10 +31,7 @@ public class LoginTask extends NetworkTask<Void> {
     @Override
     protected Void parse(JSONObject jsonObject) throws JSONException {
 
-        String userId = jsonObject.getString("user_id");
-        Log.e(TAG, "userId: " + userId);
-
-        UserData.getInstance().setUserId(userId);
+        UserData.getInstance().updateFromJson(jsonObject);
 
         return null;
     }
