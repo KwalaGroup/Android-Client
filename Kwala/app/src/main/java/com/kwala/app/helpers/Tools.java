@@ -30,11 +30,11 @@ public class Tools {
     }
 
     @Nullable
-    public static String computeSHAHash(String password) {
+    public static String computeSHAHash(String string) {
         MessageDigest mdSha1 = null;
         try {
             mdSha1 = MessageDigest.getInstance("SHA-1");
-            mdSha1.update(password.getBytes("UTF-8"));
+            mdSha1.update(string.getBytes("UTF-8"));
 
             byte[] data = mdSha1.digest();
             return convertToHex(data);

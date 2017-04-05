@@ -2,7 +2,7 @@ package com.kwala.app.service.endpoints;
 
 import android.support.annotation.Nullable;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author muchow@hello.com
@@ -18,13 +18,13 @@ public abstract class Endpoint<Result> {
     private Method method = Method.GET;
 
     @Nullable
-    private Map<String, String> params = null;
+    private HashMap<String, Object> params = null;
 
     public Endpoint(String url, Method method) {
         this(url, method, null);
     }
 
-    public Endpoint(String url, Method method, @Nullable Map<String, String> params) {
+    public Endpoint(String url, Method method, @Nullable HashMap<String, Object> params) {
         this.url = url;
         this.method = method;
         this.params = params;
@@ -44,11 +44,11 @@ public abstract class Endpoint<Result> {
     }
 
     @Nullable
-    public Map<String, String> getParams() {
+    public HashMap<String, Object> getParams() {
         return params;
     }
 
-    public void setParams(@Nullable Map<String, String> params) {
+    public void setParams(@Nullable HashMap<String, Object> params) {
         this.params = params;
     }
 }

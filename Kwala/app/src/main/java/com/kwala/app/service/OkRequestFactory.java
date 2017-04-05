@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.kwala.app.service.endpoints.Endpoint;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.HttpUrl;
@@ -33,7 +34,7 @@ public class OkRequestFactory {
 
         if (endpoint.getMethod() == Endpoint.Method.GET && endpoint.getParams() != null) {
             for (String key : endpoint.getParams().keySet()) {
-                builder.addQueryParameter(key, endpoint.getParams().get(key));
+                builder.addQueryParameter(key, endpoint.getParams().get(key).toString());
             }
         }
 
@@ -55,10 +56,30 @@ public class OkRequestFactory {
             return null;
         }
 
+        if (endpoint.getParams() != null) {
+            for (String key : endpoint.getParams().keySet()) {
+                Log.d(TAG, key + " : " + endpoint.getParams().get(key));
+            }
+        }
+
         JSONObject jsonObject = endpoint.getParams() == null ? new JSONObject()
                 : new JSONObject(endpoint.getParams());
 
         Log.d(TAG, "body: " + jsonObject.toString());
+
+        jsonObject = new JSONObject();
+
+        if (endpoint.getParams() != null) {
+            for (String key : endpoint.getParams().keySet()) {
+                try {
+                    Log.d(TAG, key + " : " + endpoint.getParams().get(key));
+                    Object put = jsonObject.put(key, endpoint.getParams().get(key));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         return RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString());
     }
