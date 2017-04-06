@@ -21,6 +21,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.JavaNetCookieJar;
@@ -48,6 +49,8 @@ public class NetworkStore {
 
         okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(new JavaNetCookieJar(cookieManager))
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
 
         KwalaApplication application = KwalaApplication.getInstance();
