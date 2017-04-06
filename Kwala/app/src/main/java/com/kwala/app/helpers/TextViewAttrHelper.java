@@ -8,7 +8,6 @@ import android.support.annotation.StyleableRes;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.kwala.app.R;
 import com.kwala.app.enums.Font;
 
 /**
@@ -24,7 +23,7 @@ public class TextViewAttrHelper {
         Typeface typeface = Font.MEDIUM.getTypeface(context);
 
         if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.KwalaProgressSpinner);
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, styleableIds);
 
             int fontId = typedArray.getInt(fontStyableId, Font.MEDIUM.getId());
             typeface = Font.fromId(fontId).getTypeface(context);
