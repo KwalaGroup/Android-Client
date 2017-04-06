@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.kwala.app.enums.FilterCategory;
 import com.kwala.app.helpers.navigation.BaseActivity;
@@ -32,6 +33,6 @@ public class CreateFilterActivity2 extends BaseActivity {
         String filterValue = getIntent().getStringExtra(FILTER_CATEGORY_KEY);
         FilterCategory filterCategory = FilterCategory.fromNetworkString(filterValue);
 
-
+        Log.d(TAG, filterCategory.name());
     }
 }

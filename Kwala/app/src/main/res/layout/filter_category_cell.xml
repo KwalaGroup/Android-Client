@@ -7,8 +7,8 @@
 
     tools:background="@drawable/background">
 
-
-    <Button
+    <com.kwala.app.helpers.views.KwalaButton
+        android:id="@+id/filter_category_cell_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -16,10 +16,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
 
-        android:background="@drawable/button_background"
+        tools:text="filter"
         android:textSize="20sp"
-        android:textColor="@color/kWhite"
-        android:textAllCaps="false"
 
         />
 </RelativeLayout>

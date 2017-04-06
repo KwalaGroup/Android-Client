@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.kwala.app.R;
-import com.kwala.app.helpers.navigation.BaseToolbarActivity;
 import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.helpers.navigation.BaseToolbarActivity;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -28,6 +29,7 @@ public class CreateFilterActivity extends BaseToolbarActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_filter_activity);
+        setTitle("Create Filter");
 
         filtersRecyclerView = (RecyclerView) findViewById(R.id.create_filter_recycler_view);
 
@@ -36,16 +38,25 @@ public class CreateFilterActivity extends BaseToolbarActivity {
         filtersRecyclerView.setAdapter(new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                Button filterButton = new Button(parent.getContext());
-                return new RecyclerView.ViewHolder(filterButton) {};
+                FilterCategoryCell filterCategoryCell = new FilterCategoryCell(parent.getContext());
+                return new RecyclerView.ViewHolder(filterCategoryCell) {};
             }
 
             @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                final Button button = (Button) holder.itemView;
-                FilterCategory filterCategory = filterCategories[position];
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+                final FilterCategoryCell filterCategoryCell = (FilterCategoryCell) holder.itemView;
+                final FilterCategory filterCategory = filterCategories[position];
 
-                button.setText(filterCategory.getDisplayString());
+                filterCategoryCell.setViewData(filterCategory);
+
+                filterCategoryCell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "Click");
+                        Intent intent = CreateFilterActivity2.newIntent(CreateFilterActivity.this, filterCategory);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -53,7 +64,5 @@ public class CreateFilterActivity extends BaseToolbarActivity {
                 return filterCategories.length;
             }
         });
-
-        setTitle("Create Filter");
     }
 }
