@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:background="@drawable/background">
 
+    <TextView
+        android:id="@+id/settings_version_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/settings_logout_button"
+        android:layout_marginBottom="6dp"
+
+        tools:text="android.1.0.0"
+        android:textSize="14sp"
+        android:textColor="@color/kWhite"
+        />
+
     <com.kwala.app.helpers.views.KwalaButton
         android:id="@+id/settings_logout_button"
         android:layout_width="match_parent"
@@ -16,6 +29,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
 
+        android:background="@drawable/button_background"
         android:text="@string/settings_sign_out"
         android:textSize="20sp"
         />
