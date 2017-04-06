@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseFragment;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.quizzes.SubmitQuizTask;
 
 import java.util.HashMap;
 
@@ -20,6 +22,8 @@ public class SubmissionFragment extends BaseFragment {
     private static final String TAG = SubmissionFragment.class.getSimpleName();
 
     private static final String ANSWERS_MAP_KEY = "answers_map";
+
+    private HashMap<String, String> answersMap;
 
     public static SubmissionFragment newInstance(HashMap<String, String> answersMap) {
         SubmissionFragment fragment = new SubmissionFragment();
@@ -41,7 +45,7 @@ public class SubmissionFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        HashMap<String, String> answersMap = (HashMap<String, String>) getArguments().getSerializable(ANSWERS_MAP_KEY);
+        answersMap = (HashMap<String, String>) getArguments().getSerializable(ANSWERS_MAP_KEY);
         Log.d(TAG, answersMap.toString());
 
         getView().postDelayed(new Runnable() {
@@ -54,5 +58,17 @@ public class SubmissionFragment extends BaseFragment {
 
     private void submitQuiz() {
         Log.d(TAG, "Submitting quiz...");
+
+        new SubmitQuizTask(answersMap).start(new Task.Callback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Success");
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.d(TAG, "Failure", e);
+            }
+        });
     }
 }
