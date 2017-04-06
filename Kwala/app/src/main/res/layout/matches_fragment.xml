@@ -36,7 +36,7 @@
             android:background="@color/kWhite"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/matches_fragment_your_match_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:src="@drawable/kwala_head"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

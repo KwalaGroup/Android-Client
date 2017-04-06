@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -30,7 +30,7 @@
 
     </RelativeLayout>
 
-    <TextView
+    <com.kwala.app.helpers.views.KwalaTextView
         android:id="@+id/settings_version_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

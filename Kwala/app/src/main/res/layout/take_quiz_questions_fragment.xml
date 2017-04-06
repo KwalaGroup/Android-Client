@@ -10,7 +10,7 @@
 
     tools:background="@drawable/background">
 
-    <TextView
+    <com.kwala.app.helpers.views.KwalaTextView
         android:id="@+id/take_quiz_question_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -2,6 +2,7 @@ package com.kwala.app.settings;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -41,6 +42,9 @@ public class SettingsFragment extends Fragment {
 
         TextView versionTextView = (TextView) view.findViewById(R.id.settings_version_text);
         Button signOutButton = (Button) view.findViewById(R.id.settings_logout_button);
+
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvenirNext-Medium.ttf");
+        versionTextView.setTypeface(typeface);
 
         versionTextView.setText(String.format(Locale.US, "%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
 

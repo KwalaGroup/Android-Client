@@ -30,7 +30,7 @@
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/match_cell_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_marginLeft="20dp"
             android:orientation="horizontal">
 
-            <TextView
+            <com.kwala.app.helpers.views.KwalaTextView
                 android:id="@+id/match_cell_score_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                 tools:src="@drawable/filter_heart_icon"
                 />
 
-            <TextView
+            <com.kwala.app.helpers.views.KwalaTextView
                 android:id="@+id/match_cell_age_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

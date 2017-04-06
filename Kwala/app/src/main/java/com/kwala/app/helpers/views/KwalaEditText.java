@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import com.kwala.app.R;
+import com.kwala.app.helpers.TextViewAttrHelper;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -17,20 +18,22 @@ public class KwalaEditText extends EditText {
 
     public KwalaEditText(Context context) {
         super(context);
-        init();
+        initialize(null);
     }
 
     public KwalaEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        initialize(attrs);
     }
 
     public KwalaEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        initialize(attrs);
     }
 
-    private void init() {
+    private void initialize(@Nullable AttributeSet attrs) {
+        TextViewAttrHelper.applyAttributes(this, attrs, R.styleable.KwalaEditText, R.styleable.KwalaEditText_font);
+
         setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_text_background));
     }
 

@@ -26,7 +26,7 @@
             android:adjustViewBounds="true"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/profile_first_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:hint="first name"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/profile_last_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:hint="last name"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/profile_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:src="@drawable/profile_oval"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/profile_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

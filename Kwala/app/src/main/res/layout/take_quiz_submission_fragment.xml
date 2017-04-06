@@ -21,7 +21,7 @@
             android:layout_marginBottom="6dp"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/submission_spinner_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:gravity="center"
             />
 
-        <TextView
+        <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/submission_success_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
