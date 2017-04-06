@@ -2,6 +2,7 @@ package com.kwala.app.service.realm;
 
 import android.util.Log;
 
+import com.kwala.app.models.RQuiz;
 import com.kwala.app.models.RQuizAnswer;
 import com.kwala.app.models.RQuizQuestion;
 
@@ -27,6 +28,17 @@ public class RealmSyncs {
 
     public static RealmSyncs withRealm(Realm realm) {
         return new RealmSyncs(realm);
+    }
+
+    public RQuiz syncQuiz(JSONObject jsonObject) throws JSONException {
+
+        String quizId = jsonObject.getString("id");
+        RQuiz quiz = RealmWrites.withRealm(realm).findOrCreate(RQuiz.class, quizId);
+
+        RealmList<RQuizQuestion> questions = syncQuizQuestions(jsonObject.getJSONArray("questions"));
+        quiz.setQuestions(questions);
+
+        return quiz;
     }
 
     public RealmList<RQuizQuestion> syncQuizQuestions(JSONArray jsonArray) throws JSONException {
@@ -64,7 +76,7 @@ public class RealmSyncs {
             String answerId = answerJsonObject.getString("id");
             RQuizAnswer answer = RealmWrites.withRealm(realm).findOrCreate(RQuizAnswer.class, answerId);
 
-            answer.setAnswer(answerJsonObject.getString("description"));
+            answer.setAnswer(answerJsonObject.getString("answer"));
 
             answers.add(answer);
         }

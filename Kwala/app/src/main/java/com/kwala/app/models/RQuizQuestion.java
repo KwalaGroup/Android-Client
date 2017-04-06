@@ -22,10 +22,6 @@ public class RQuizQuestion extends RealmObject {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
-    }
-
     public String getQuestion() {
         return question;
     }
