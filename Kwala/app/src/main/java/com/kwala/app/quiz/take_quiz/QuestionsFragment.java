@@ -107,7 +107,24 @@ public class QuestionsFragment extends Fragment {
         if (++questionIndex < questions.size()) {
             setupQuestion(questions.get(questionIndex));
         } else {
-            //TODO: submit
+            showSubmissionFragment();
         }
+    }
+
+    public boolean onBackPressed() {
+        if (--questionIndex < 0) {
+            return false;
+        } else {
+            setupQuestion(questions.get(questionIndex));
+            return true;
+        }
+    }
+
+    private void showSubmissionFragment() {
+        Fragment fragment = SubmissionFragment.newInstance(answersMap);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.take_quiz_activity_content_layout, fragment, fragment.getClass().getCanonicalName())
+                .commit();
     }
 }
