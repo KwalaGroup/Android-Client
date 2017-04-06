@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.kwala.app.R;
 import com.kwala.app.helpers.KwalaImages;
 import com.kwala.app.helpers.PhotoHelper;
+import com.kwala.app.helpers.Tools;
 import com.kwala.app.helpers.navigation.BaseFragment;
+import com.kwala.app.service.UserData;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.profile.UpdateProfileImageTask;
 
@@ -25,8 +27,7 @@ public class MyProfileFragment extends BaseFragment {
     private static final String TAG = MyProfileFragment.class.getSimpleName();
 
     private ImageView profileImageView;
-    private TextView firstNameTextView;
-    private TextView lastNameTextView;
+    private TextView nameTextView;
     private TextView ageTextView;
     private ImageView colorImageView;
     private TextView descriptionTextView;
@@ -46,15 +47,39 @@ public class MyProfileFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         profileImageView = (ImageView) view.findViewById(R.id.profile_image);
-        firstNameTextView = (TextView) view.findViewById(R.id.profile_first_name);
-        lastNameTextView = (TextView) view.findViewById(R.id.profile_last_name);
+        nameTextView = (TextView) view.findViewById(R.id.profile_name);
         ageTextView = (TextView) view.findViewById(R.id.profile_age);
         colorImageView = (ImageView) view.findViewById(R.id.profile_circle);
         descriptionTextView = (TextView) view.findViewById(R.id.profile_description);
 
         profileImageView.setOnClickListener(profileImageClickListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateViews();
+    }
+
+    public void updateViews() {
+        if (getView() == null) {
+            return;
+        }
+
+        UserData userData = UserData.getInstance();
 
         KwalaImages.with(profileImageView).setProfileImageId("f89c8f68-69da-4def-8776-885f9fbe71b3");
+
+        nameTextView.setText(Tools.formatString(getActivity(), R.string.profile_name_formatted,
+                userData.getFirstName(), userData.getLastName()));
+
+        Integer age = userData.getAge();
+        ageTextView.setText(Tools.formatString(getActivity(), R.string.profile_age_formatted, age == null ? "?" : "" + age));
+
+        //TODO: profile color
+
+        //TODO: description
+        descriptionTextView.setText(R.string.test_description);
     }
 
     /**

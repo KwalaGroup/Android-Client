@@ -5,6 +5,15 @@
     <string name="common_begin">begin</string>
     <string name="common_create">create</string>
 
+    <!-- Test -->
+    <string name="test_first_name">Brittany</string>
+    <string name="test_last_name">Chipmunk</string>
+    <string name="test_full_name">Brittany Chipmunk</string>
+    <string name="test_profile_name">Brittany\nChipmunk</string>
+    <string name="test_age">20</string>
+    <string name="test_profile_age">Age: 20</string>
+    <string name="test_description">Hi! I was born in Chipmunk City, MO. I spend most of my days eating and storing nuts. I promise I won’t do that to you ;) I’m working on a B.S. in Nutology and looking for someone to build a nest with!</string>
+
     <!-- Login -->
     <string name="login_email">email</string>
     <string name="login_password">password</string>
@@ -29,6 +38,8 @@
     <string name="matches_empty_state_string">No matches yet!</string>
 
     <!-- Profile -->
+    <string name="profile_name_formatted">%1$s\n%2$s</string>
+    <string name="profile_age_formatted">Age: %s</string>
 
     <!-- Settings -->
     <string name="settings_do_not_disturb">Do not disturb</string>

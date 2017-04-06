@@ -1,12 +1,15 @@
 package com.kwala.app.helpers;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Base64;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -43,5 +46,10 @@ public class Tools {
             Log.e(TAG, "Error initializing SHA1 message digest");
             return null;
         }
+    }
+
+    public static String formatString(Context context, @StringRes int stringId, Object... args) {
+        String string = context.getString(stringId);
+        return String.format(Locale.US, string, args);
     }
 }
