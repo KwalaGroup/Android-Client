@@ -4,12 +4,14 @@
     <color name="colorPrimaryDark">#449C51</color>
     <color name="colorAccent">#36B4E9</color>
 
-    <color name="buttonText">#78FFFFFF</color>
+    <color name="switchTrackColor">#44222222</color>
+
 
     <color name="kPink">#FFD5D5</color>
     <color name="kYellow">#EBE974</color>
     <color name="kLightBlue">#A9DEEF</color>
     <color name="kOrange">#FFA274</color>
     <color name="kWhite">#CCFFFFFF</color>
+    <color name="kGray">#777777</color>
 
 </resources>
