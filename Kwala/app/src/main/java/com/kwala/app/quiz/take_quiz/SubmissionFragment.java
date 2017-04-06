@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseFragment;
+import com.kwala.app.helpers.views.KwalaProgressSpinner;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.quizzes.SubmitQuizTask;
 
@@ -22,6 +25,10 @@ public class SubmissionFragment extends BaseFragment {
     private static final String TAG = SubmissionFragment.class.getSimpleName();
 
     private static final String ANSWERS_MAP_KEY = "answers_map";
+
+    private KwalaProgressSpinner progressSpinner;
+    private TextView spinnerTextView;
+    private TextView successTextView;
 
     private HashMap<String, String> answersMap;
 
@@ -42,6 +49,15 @@ public class SubmissionFragment extends BaseFragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        progressSpinner = (KwalaProgressSpinner) view.findViewById(R.id.submission_progress_spinner);
+        spinnerTextView = (TextView) view.findViewById(R.id.submission_spinner_text);
+        successTextView = (TextView) view.findViewById(R.id.submission_success_text);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -53,7 +69,7 @@ public class SubmissionFragment extends BaseFragment {
             public void run() {
                 submitQuiz();
             }
-        }, 3000);
+        }, 2000);
     }
 
     private void submitQuiz() {
@@ -62,13 +78,29 @@ public class SubmissionFragment extends BaseFragment {
         new SubmitQuizTask(answersMap).start(new Task.Callback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Success");
+                progressSpinner.setVisibility(View.GONE);
+                spinnerTextView.setVisibility(View.GONE);
+                successTextView.setVisibility(View.VISIBLE);
+
+                performDelayedFinish();
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.d(TAG, "Failure", e);
+                Log.d(TAG, "Error submitting quiz", e);
+                Toast.makeText(getActivity(), "There was a problem submitting your quiz", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void performDelayedFinish() {
+        if (getView() != null) {
+            getView().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getActivity().finish();
+                }
+            }, 2000);
+        }
     }
 }

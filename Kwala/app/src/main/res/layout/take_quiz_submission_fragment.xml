@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <com.kwala.app.helpers.views.KwalaProgressSpinner
+            android:id="@+id/submission_progress_spinner"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -21,13 +22,29 @@
             />
 
         <TextView
+            android:id="@+id/submission_spinner_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
 
             android:text="Submitting your quiz..."
             android:textSize="16sp"
-            android:textColor="@color/kWhite"/>
+            android:textColor="@color/kWhite"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/submission_success_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:text="Success!"
+            android:textSize="16sp"
+            android:textColor="@color/kWhite"
+            android:gravity="center"
+            android:visibility="gone"
+            />
 
     </LinearLayout>
 
