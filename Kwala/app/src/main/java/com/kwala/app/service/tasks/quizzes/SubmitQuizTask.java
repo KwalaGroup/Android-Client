@@ -42,8 +42,8 @@ public class SubmitQuizTask extends NetworkTask<Void> {
             jsonArray.put(jsonObject);
         }
 
-        return new APIEndpoint(APIPaths.Quizzes.ANSWERS, Endpoint.Method.PUT)
-                .addParam("pairs", jsonArray.toString());
+        return new APIEndpoint(APIPaths.Quizzes.SUBMIT, Endpoint.Method.PUT)
+                .addParam("pairs", jsonArray);
     }
 
     @Override

@@ -20,6 +20,7 @@ public final class APIPaths {
     public static final String QUIZZES = "/quizzes";
     public static final class Quizzes {
         public static final String CURRENT = QUIZZES + "/current";
+        public static final String SUBMIT = QUIZZES + "/submit";
         public static final String ANSWERS = QUIZZES + "/answers";
     }
 

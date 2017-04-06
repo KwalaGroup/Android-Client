@@ -4,7 +4,10 @@ import android.util.Log;
 
 import com.kwala.app.service.endpoints.Endpoint;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -36,9 +39,16 @@ public class OkRequestFactory {
 
         HttpUrl.Builder builder = baseHttpUrl.newBuilder();
 
+        //Add params to query string if Method is GET
         if (endpoint.getMethod() == Endpoint.Method.GET && endpoint.getParams() != null) {
-            for (String key : endpoint.getParams().keySet()) {
-                builder.addQueryParameter(key, endpoint.getParams().get(key).toString());
+            Iterator<String> iterator = endpoint.getParams().keys();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                try {
+                    builder.addQueryParameter(key, endpoint.getParams().get(key).toString());
+                } catch (JSONException e) {
+                    throw new IllegalArgumentException(e);
+                }
             }
         }
 
@@ -61,7 +71,7 @@ public class OkRequestFactory {
         }
 
         JSONObject jsonObject = endpoint.getParams() == null ? new JSONObject()
-                : new JSONObject(endpoint.getParams());
+                : endpoint.getParams();
 
         Log.d(TAG, "body: " + jsonObject.toString());
 
