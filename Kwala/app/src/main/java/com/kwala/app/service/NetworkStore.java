@@ -14,6 +14,7 @@ import com.kwala.app.helpers.KwalaConstants;
 import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
+import com.kwala.app.service.endpoints.NetworkException;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,16 +82,22 @@ public class NetworkStore {
             public void onResponse(Call call, Response response) throws IOException {
                 Log.d(TAG, "onResponse: " + response);
                 try {
+                    if (response.code() != 200) {
+                        callback.failure(new NetworkException(response.code(), response.message()));
+                        return;
+                    }
+
                     T result = endpoint.parse(response.code(), response.body().string());
                     callback.success(result);
-                } catch (Exception e) {
+
+                } catch (NetworkException e) {
                     callback.failure(e);
                 }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.failure(e);
+                callback.failure(new NetworkException(e));
             }
         };
 

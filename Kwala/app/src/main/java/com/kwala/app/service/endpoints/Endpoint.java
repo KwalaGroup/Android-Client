@@ -31,7 +31,7 @@ public abstract class Endpoint<Result> {
         this.method = method;
     }
 
-    public abstract Result parse(int code, String response) throws Exception;
+    public abstract Result parse(int code, String response) throws NetworkException;
 
     /**
      * Builder methods

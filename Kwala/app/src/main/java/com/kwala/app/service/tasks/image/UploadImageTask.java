@@ -5,13 +5,14 @@ import android.net.Uri;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.kwala.app.service.DataStore;
 import com.kwala.app.service.NetworkStore;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 
 /**
  * @author jacobamuchow@gmail.com
  */
 
-public class UploadImageTask extends Task<String> {
+public class UploadImageTask extends Task<String, NetworkException> {
     private static final String TAG = UploadImageTask.class.getSimpleName();
 
     private Uri imageUri;
@@ -31,11 +32,11 @@ public class UploadImageTask extends Task<String> {
                         break;
 
                     case CANCELED:
-                        rejectOnMain(new Exception("Cancelled"));
+                        rejectOnMain(new NetworkException("Cancelled"));
                         break;
 
                     case FAILED:
-                        rejectOnMain(new Exception("Failed"));
+                        rejectOnMain(new NetworkException("Failed"));
                         break;
                 }
             }
@@ -47,7 +48,7 @@ public class UploadImageTask extends Task<String> {
 
             @Override
             public void onError(String imageId, Exception e) {
-                rejectOnMain(e);
+                rejectOnMain(new NetworkException(e));
             }
         });
     }

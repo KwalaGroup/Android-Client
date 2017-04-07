@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseFragment;
 import com.kwala.app.helpers.views.KwalaProgressSpinner;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.quizzes.SubmitQuizTask;
 
@@ -75,7 +76,7 @@ public class SubmissionFragment extends BaseFragment {
     private void submitQuiz() {
         Log.d(TAG, "Submitting quiz...");
 
-        new SubmitQuizTask(answersMap).start(new Task.Callback<Void>() {
+        new SubmitQuizTask(answersMap).start(new Task.Callback<Void, NetworkException>() {
             @Override
             public void onSuccess(Void aVoid) {
                 progressSpinner.setVisibility(View.GONE);
@@ -86,7 +87,7 @@ public class SubmissionFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Exception e) {
+            public void onFailure(NetworkException e) {
                 Log.d(TAG, "Error submitting quiz", e);
                 Toast.makeText(getActivity(), "There was a problem submitting your quiz", Toast.LENGTH_LONG).show();
             }

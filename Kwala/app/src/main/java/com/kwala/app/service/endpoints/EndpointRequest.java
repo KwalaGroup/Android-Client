@@ -57,6 +57,6 @@ public class EndpointRequest<Result> {
 
     public interface Callback<Result> {
         void success(Result result);
-        void failure(Exception e);
+        void failure(NetworkException e);
     }
 }

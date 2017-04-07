@@ -16,6 +16,7 @@ import com.kwala.app.helpers.PhotoHelper;
 import com.kwala.app.helpers.Tools;
 import com.kwala.app.helpers.navigation.BaseFragment;
 import com.kwala.app.service.UserData;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.profile.UpdateProfileImageTask;
 
@@ -103,14 +104,14 @@ public class MyProfileFragment extends BaseFragment {
     };
 
     private void updateProfileImage(Uri imageUri) {
-        new UpdateProfileImageTask(imageUri).start(new Task.Callback<Void>() {
+        new UpdateProfileImageTask(imageUri).start(new Task.Callback<Void, NetworkException>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "UI success");
             }
 
             @Override
-            public void onFailure(Exception e) {
+            public void onFailure(NetworkException e) {
                 Log.e(TAG, "UI failure", e);
             }
         });
