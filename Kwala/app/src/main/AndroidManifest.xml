@@ -51,7 +51,12 @@
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
+
+        <service android:name=".service.LocationService"
+            android:enabled="true"
+            android:exported="false" />
 
     </application>
 

@@ -15,6 +15,7 @@ import com.kwala.app.BuildConfig;
 import com.kwala.app.R;
 import com.kwala.app.login.LandingActivity;
 import com.kwala.app.service.DataStore;
+import com.kwala.app.service.LocationService;
 import com.kwala.app.service.tasks.auth.LogoutTask;
 
 import java.util.Locale;
@@ -53,9 +54,13 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 new LogoutTask().start(null);
 
+                //Stop location update service
+                Intent intent = new Intent(getActivity(), LocationService.class);
+                getActivity().stopService(intent);
+
                 DataStore.getInstance().clearAllData();
 
-                Intent intent = LandingActivity.newIntent(getActivity());
+                intent = LandingActivity.newIntent(getActivity());
                 startActivity(intent);
                 getActivity().finishAffinity();
             }
