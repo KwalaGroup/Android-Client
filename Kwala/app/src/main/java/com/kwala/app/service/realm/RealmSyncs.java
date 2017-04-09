@@ -2,6 +2,7 @@ package com.kwala.app.service.realm;
 
 import android.util.Log;
 
+import com.kwala.app.models.RFilter;
 import com.kwala.app.models.RQuiz;
 import com.kwala.app.models.RQuizAnswer;
 import com.kwala.app.models.RQuizQuestion;
@@ -84,5 +85,38 @@ public class RealmSyncs {
         question.setAnswers(answers);
 
         return question;
+    }
+
+    public RealmList<RFilter> syncFilters(JSONArray jsonArray) throws JSONException {
+
+        RealmList<RFilter> filters = new RealmList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject filterJsonObject = jsonArray.getJSONObject(i);
+
+            try {
+                RFilter filter = syncFilter(filterJsonObject);
+                filters.add(filter);
+
+            } catch (JSONException e) {
+                Log.e(TAG, "Error parsing filter", e);
+            }
+        }
+
+        return filters;
+    }
+
+    public RFilter syncFilter(JSONObject jsonObject) throws JSONException {
+
+        String filterId = jsonObject.getString("id");
+        RFilter filter = RealmWrites.withRealm(realm).findOrCreate(RFilter.class, filterId);
+
+        filter.setCategoryValue(jsonObject.getString("filter"));
+
+        filter.setGenderValue(jsonObject.getString("gender"));
+
+        filter.setActive(jsonObject.getBoolean("isActive"));
+
+        return filter;
     }
 }

@@ -1,10 +1,9 @@
 package com.kwala.app.models;
 
 import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.enums.Gender;
 import com.kwala.app.service.realm.RealmWrites;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
-
-import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -21,10 +20,9 @@ public class RFilter extends RealmObject {
 
     @PrimaryKey private String filterId;
 
-    @Required private Date createdAt;
     private boolean active;
     @Required private String categoryValue;
-    private String gender; //TODO: enum?, required?
+    private String genderValue;
 
     public String getFilterId() {
         return filterId;
@@ -32,14 +30,6 @@ public class RFilter extends RealmObject {
 
     public void setFilterId(String filterId) {
         this.filterId = filterId;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public boolean isActive() {
@@ -66,12 +56,20 @@ public class RFilter extends RealmObject {
         setCategoryValue(category.getNetworkString());
     }
 
-    public String getGender() {
-        return gender;
+    public String getGenderValue() {
+        return genderValue;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setGenderValue(String genderValue) {
+        this.genderValue = genderValue;
+    }
+
+    public Gender getGender() {
+        return Gender.fromNetworkValue(getGenderValue());
+    }
+
+    public void setGender(Gender gender) {
+        setGenderValue(gender.getNetworkValue());
     }
 
     public static void generateTestData(final boolean clearAll) {
@@ -87,31 +85,27 @@ public class RFilter extends RealmObject {
                 }
 
                 RFilter filter = realm.createObject(RFilter.class, "1");
-                filter.setCreatedAt(new Date());
                 filter.setActive(true);
                 filter.setCategory(FilterCategory.LOVE_INTEREST);
-                filter.setGender("Both");
+                filter.setGenderValue("Both");
                 filters.add(filter);
 
                 filter = realm.createObject(RFilter.class, "2");
-                filter.setCreatedAt(new Date());
                 filter.setActive(true);
                 filter.setCategory(FilterCategory.COFFEE_BUDDY);
-                filter.setGender("Female");
+                filter.setGenderValue("Female");
                 filters.add(filter);
 
                 filter = realm.createObject(RFilter.class, "3");
-                filter.setCreatedAt(new Date());
                 filter.setActive(true);
                 filter.setCategory(FilterCategory.WORKOUT_BUDDY);
-                filter.setGender("Male");
+                filter.setGenderValue("Male");
                 filters.add(filter);
 
                 filter = realm.createObject(RFilter.class, "4");
-                filter.setCreatedAt(new Date());
                 filter.setActive(false);
                 filter.setCategory(FilterCategory.ONE_NIGHT_STAND);
-                filter.setGender("Male");
+                filter.setGenderValue("Male");
                 filters.add(filter);
 
                 return null;
