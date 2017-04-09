@@ -24,6 +24,11 @@
     <string name="filters_workout_buddy_string">Workout Buddy</string>
     <string name="filters_buddy_string">Buddy</string>
     <string name="filters_one_night_stand">One Night Stand ;)</string>
+    <string name="filter_activity_permanent">Permanent</string>
+    <string name="filter_activity_time_limit">One hour time limit</string>
+    <string name="filter_activity_male">Male</string>
+    <string name="filter_activity_female">Female</string>
+    <string name="filter_activity_interests">Interests</string>
 
     <!-- Matches -->
     <string name="matches_empty_state_string">No matches yet!</string>

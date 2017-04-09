@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/filter_activity_2_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentLeft="true"
+
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                tools:src="@drawable/filter_arrows_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="5dp"
+
+                android:textSize="35dp"
+                tools:text="Buddy"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/filter_detail_line"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:rowCount="4"
+            android:columnCount="2"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp">
+
+            <CheckBox
+                android:id="@+id/filter_activity_2_permanent_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:id="@+id/filter_activity_2_permanent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="left"
+                android:layout_row="0"
+                android:layout_column="1"
+
+                android:text="@string/filter_activity_permanent"
+                android:textSize="20dp"
+                />
+
+            <CheckBox
+                android:id="@+id/filter_activity_2_time_limit_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:id="@+id/filter_activity_2_time_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:layout_row="1"
+                android:layout_column="1"
+
+                android:text="@string/filter_activity_time_limit"
+                android:textSize="20dp"
+                />
+
+            <CheckBox
+                android:id="@+id/fitler_acitivty_2_male_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:id="@+id/filter_activity_2_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="left"
+                android:layout_row="2"
+                android:layout_column="1"
+
+                android:text="@string/filter_activity_male"
+                android:textSize="20dp"
+                />
+
+            <CheckBox
+                android:id="@+id/filter_activity_2_female_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:id="@+id/filter_activity_2_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:layout_row="3"
+                android:layout_column="1"
+
+                android:text="@string/filter_activity_female"
+                android:textSize="20dp"
+                />
+
+        </GridLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/filter_detail_line"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/filter_activity_interests"
+            android:textSize="25dp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/create_filter_2_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+
+            app:layoutManager="GridLayoutManager"
+            app:spanCount="3"
+
+            android:padding="10dp"
+            android:clipToPadding="false">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</RelativeLayout>

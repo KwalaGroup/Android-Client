@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.kwala.app.R;
 import com.kwala.app.enums.FilterCategory;
 import com.kwala.app.helpers.navigation.BaseActivity;
 
@@ -29,6 +30,8 @@ public class CreateFilterActivity2 extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.create_filter_activity_2);
+        setTitle("Create Filter");
 
         String filterValue = getIntent().getStringExtra(FILTER_CATEGORY_KEY);
         FilterCategory filterCategory = FilterCategory.fromNetworkString(filterValue);

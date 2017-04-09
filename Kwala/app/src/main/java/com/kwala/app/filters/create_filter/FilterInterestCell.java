@@ -1,0 +1,52 @@
+package com.kwala.app.filters.create_filter;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.kwala.app.R;
+import com.kwala.app.enums.FilterCategory;
+
+/**
+ * Created by sijaebrown on 4/9/17.
+ */
+
+public class FilterInterestCell extends RelativeLayout {
+    private static final String TAG = FilterInterestCell.class.getSimpleName();
+
+    private TextView textView;
+
+    public FilterInterestCell(Context context) {
+        super(context);
+        initialize();
+    }
+
+    public FilterInterestCell(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initialize();
+    }
+
+    public FilterInterestCell(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initialize();
+    }
+
+    private void initialize() {
+        LayoutInflater.from(getContext()).inflate(R.layout.filter_interest_cell, this);
+
+        textView = (TextView) findViewById(R.id.filter_interest_cell_text);
+    }
+
+    public void setViewData(FilterCategory filterCategory, int position){
+        String listInterests[] = filterCategory.getInterests();
+        textView.setText(listInterests[position]);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        textView.setOnClickListener(l);
+    }
+}
