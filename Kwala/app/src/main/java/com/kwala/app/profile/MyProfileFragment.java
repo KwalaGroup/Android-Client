@@ -32,7 +32,7 @@ public class MyProfileFragment extends BaseFragment {
     private TextView nameTextView;
     private TextView ageTextView;
     private ImageView colorImageView;
-    private TextView descriptionTextView;
+    private TextView bioTextView;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -52,7 +52,7 @@ public class MyProfileFragment extends BaseFragment {
         nameTextView = (TextView) view.findViewById(R.id.profile_name);
         ageTextView = (TextView) view.findViewById(R.id.profile_age);
         colorImageView = (ImageView) view.findViewById(R.id.profile_circle);
-        descriptionTextView = (TextView) view.findViewById(R.id.profile_description);
+        bioTextView = (TextView) view.findViewById(R.id.profile_bio);
 
         profileImageView.setOnClickListener(profileImageClickListener);
     }
@@ -70,7 +70,7 @@ public class MyProfileFragment extends BaseFragment {
 
         UserData userData = UserData.getInstance();
 
-        KwalaImages.with(profileImageView).setProfileImageId("f89c8f68-69da-4def-8776-885f9fbe71b3");
+        KwalaImages.with(profileImageView).setProfileImageId(userData.getProfileImageId());
 
         nameTextView.setText(Tools.formatString(getActivity(), R.string.profile_name_formatted,
                 userData.getFirstName(), userData.getLastName()));
@@ -86,8 +86,7 @@ public class MyProfileFragment extends BaseFragment {
 
         Log.d(TAG, "from hex: " + Long.valueOf(hex, 16).intValue());
 
-        //TODO: description
-        descriptionTextView.setText(R.string.test_description);
+        bioTextView.setText(userData.getBio());
     }
 
     /**
