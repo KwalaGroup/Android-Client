@@ -3,6 +3,7 @@ package com.kwala.app.profile;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,12 @@ public class MyProfileFragment extends BaseFragment {
         ageTextView.setText(Tools.formatString(getActivity(), R.string.profile_age_formatted, age == null ? "?" : "" + age));
 
         //TODO: profile color
+        int color = ContextCompat.getColor(getActivity(), R.color.kLightBlue);
+        String hex = Integer.toHexString(color);
+        Log.d(TAG, "color int: " + color);
+        Log.d(TAG, "hex: " + hex);
+
+        Log.d(TAG, "from hex: " + Long.valueOf(hex, 16).intValue());
 
         //TODO: description
         descriptionTextView.setText(R.string.test_description);
