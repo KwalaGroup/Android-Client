@@ -1,6 +1,7 @@
 package com.kwala.app.helpers;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.util.Base64;
@@ -46,6 +47,15 @@ public class Tools {
             Log.e(TAG, "Error initializing SHA1 message digest");
             return null;
         }
+    }
+
+    @ColorInt
+    public static int hexToColorInt(String hexString) {
+        return Long.valueOf(hexString, 16).intValue();
+    }
+
+    public static String colorIntToHex(@ColorInt int colorInt) {
+        return Integer.toHexString(colorInt);
     }
 
     public static String formatString(Context context, @StringRes int stringId, Object... args) {

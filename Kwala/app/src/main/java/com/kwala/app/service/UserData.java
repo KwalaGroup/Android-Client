@@ -2,9 +2,11 @@ package com.kwala.app.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 
 import com.kwala.app.enums.Gender;
+import com.kwala.app.helpers.Tools;
 import com.kwala.app.main.KwalaApplication;
 
 import org.json.JSONException;
@@ -27,6 +29,7 @@ public class UserData {
         private static final String GENDER = "gender";
         private static final String AGE = "age";
         private static final String BIO = "bio";
+        private static final String COLOR = "color";
     }
 
     private static UserData userData;
@@ -145,6 +148,22 @@ public class UserData {
         return this;
     }
 
+    @Nullable
+    public synchronized String getColor() {
+        return sharedPreferences.getString(Keys.COLOR, null);
+    }
+
+    @ColorInt
+    public synchronized int getColorAsInt() {
+        String colorHex = getColor();
+        return Tools.hexToColorInt(colorHex == null ? "ffa9deef" : colorHex);
+    }
+
+    public synchronized UserData setColor(@Nullable String color) {
+        sharedPreferences.edit().putString(Keys.COLOR, color).apply();
+        return this;
+    }
+
     public void updateFromJson(JSONObject jsonObject) throws JSONException {
 
         setUserId(jsonObject.getString("id"));
@@ -162,5 +181,7 @@ public class UserData {
         setAge(jsonObject.getInt("age"));
 
         setBio(jsonObject.optString("bio", null));
+
+        setColor(jsonObject.getString("color"));
     }
 }
