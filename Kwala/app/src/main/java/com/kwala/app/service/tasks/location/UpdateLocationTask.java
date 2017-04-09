@@ -27,7 +27,8 @@ public class UpdateLocationTask extends NetworkTask<Void> {
     protected Endpoint<JSONObject> buildEndpoint() {
         return new APIEndpoint(APIPaths.LOCATIONS, Endpoint.Method.POST)
                 .addParam("lat", latitude)
-                .addParam("lon", longitude);
+                .addParam("lon", longitude)
+                .shouldLog(false);
     }
 
     @Override

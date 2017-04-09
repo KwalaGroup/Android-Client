@@ -23,10 +23,14 @@ public abstract class NetworkTask<Result> extends Task<Result, NetworkException>
 
     @Override
     protected void run() {
-        DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<JSONObject>() {
+        final Endpoint<JSONObject> endpoint = buildEndpoint();
+
+        DataStore.getInstance().getNetworkStore().performRequest(endpoint, new EndpointRequest.Callback<JSONObject>() {
             @Override
             public void success(JSONObject response) {
-                Log.d(TAG, "response: " + response);
+                if (endpoint.shouldLog()) {
+                    Log.d(TAG, "response: " + response);
+                }
 
                 try {
                     Result result = parse(response);

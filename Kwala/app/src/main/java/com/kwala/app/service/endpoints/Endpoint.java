@@ -22,6 +22,8 @@ public abstract class Endpoint<Result> {
     @Nullable
     private JSONObject params;
 
+    private boolean shouldLog = true;
+
     public Endpoint(String url, Method method) {
         this(url, method, null);
     }
@@ -57,6 +59,11 @@ public abstract class Endpoint<Result> {
         return value == null ? this : addParam(key, value);
     }
 
+    public Endpoint<Result> shouldLog(boolean shouldLog) {
+        this.shouldLog = shouldLog;
+        return this;
+    }
+
     /**
      * Getters / setters
      */
@@ -71,5 +78,9 @@ public abstract class Endpoint<Result> {
     @Nullable
     public JSONObject getParams() {
         return params;
+    }
+
+    public boolean shouldLog() {
+        return shouldLog;
     }
 }

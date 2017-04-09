@@ -75,16 +75,27 @@ public class NetworkStore {
 
         Request request = OkRequestFactory.createRequest(endpoint);
 
-        Log.d(TAG, "Request: " + request.toString());
+        if (endpoint.shouldLog()) {
+            Log.d(TAG, "Request: " + request.toString());
+        }
 
         okhttp3.Callback responseCallback = new okhttp3.Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response);
                 try {
                     if (response.code() != 200) {
+                        if (!endpoint.shouldLog()) {
+                            Log.e(TAG, "Silent endpoint failed");
+                            Log.d(TAG, "Request: " + response);
+                            Log.d(TAG, "Response: " + response);
+                        }
+
                         callback.failure(new NetworkException(response.code(), response.message()));
                         return;
+                    }
+
+                    if (endpoint.shouldLog()) {
+                        Log.d(TAG, "Response: " + response);
                     }
 
                     T result = endpoint.parse(response.code(), response.body().string());
