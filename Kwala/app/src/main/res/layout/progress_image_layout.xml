@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="FrameLayout">
+
+    <ImageView
+        android:id="@+id/progress_image_layout_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/progress_image_layout_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@drawable/image_oval_mask"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.kwala.app.helpers.views.KwalaProgressSpinner
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            app:tintColor="@color/kOrange"
+            />
+
+    </FrameLayout>
+
+</merge>

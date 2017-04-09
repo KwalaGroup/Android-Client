@@ -61,7 +61,7 @@ public class MainTabLayout extends TabLayout {
     private void updateColors() {
         for(int i = 0; i < getTabCount(); i++) {
             Tab tab = getTabAt(i);
-            
+
             if (tab.isSelected()) {
                 int color = Color.WHITE;
 

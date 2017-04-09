@@ -16,6 +16,7 @@ import com.kwala.app.helpers.KwalaImages;
 import com.kwala.app.helpers.PhotoHelper;
 import com.kwala.app.helpers.Tools;
 import com.kwala.app.helpers.navigation.BaseFragment;
+import com.kwala.app.helpers.views.ProgressImageLayout;
 import com.kwala.app.service.UserData;
 import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
@@ -28,11 +29,19 @@ import com.kwala.app.service.tasks.profile.UpdateProfileImageTask;
 public class MyProfileFragment extends BaseFragment {
     private static final String TAG = MyProfileFragment.class.getSimpleName();
 
-    private ImageView profileImageView;
+    /*
+        References
+     */
+    private ProgressImageLayout profileImageLayout;
     private TextView nameTextView;
     private TextView ageTextView;
     private ImageView colorImageView;
     private TextView bioTextView;
+
+    /*
+        Data
+     */
+    private Uri croppedImageUri;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -48,13 +57,13 @@ public class MyProfileFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        profileImageView = (ImageView) view.findViewById(R.id.profile_image);
+        profileImageLayout = (ProgressImageLayout) view.findViewById(R.id.profile_image);
         nameTextView = (TextView) view.findViewById(R.id.profile_name);
         ageTextView = (TextView) view.findViewById(R.id.profile_age);
         colorImageView = (ImageView) view.findViewById(R.id.profile_circle);
         bioTextView = (TextView) view.findViewById(R.id.profile_bio);
 
-        profileImageView.setOnClickListener(profileImageClickListener);
+        profileImageLayout.setOnClickListener(profileImageClickListener);
     }
 
     @Override
@@ -70,7 +79,12 @@ public class MyProfileFragment extends BaseFragment {
 
         UserData userData = UserData.getInstance();
 
-        KwalaImages.with(profileImageView).setProfileImageId(userData.getProfileImageId());
+        KwalaImages kwalaImages = KwalaImages.with(profileImageLayout.getImageView());
+        if (croppedImageUri != null) {
+            kwalaImages.setProfileImageUri(croppedImageUri);
+        } else {
+            kwalaImages.setProfileImageId(userData.getProfileImageId());
+        }
 
         nameTextView.setText(Tools.formatString(getActivity(), R.string.profile_name_formatted,
                 userData.getFirstName(), userData.getLastName()));
@@ -93,7 +107,9 @@ public class MyProfileFragment extends BaseFragment {
             PhotoHelper.showChooserDialog(getBaseActivity(), new PhotoHelper.Callback() {
                 @Override
                 public void onSuccess(Uri imageUri) {
+                    croppedImageUri = imageUri;
                     updateProfileImage(imageUri);
+                    updateViews();
                 }
 
                 @Override
@@ -109,12 +125,18 @@ public class MyProfileFragment extends BaseFragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "UI success");
+                profileImageLayout.hideProgress();
+                croppedImageUri = null;
             }
 
             @Override
             public void onFailure(NetworkException e) {
                 Log.e(TAG, "UI failure", e);
+                profileImageLayout.hideProgress();
+                croppedImageUri = null;
             }
         });
+
+        profileImageLayout.showProgress();
     }
 }

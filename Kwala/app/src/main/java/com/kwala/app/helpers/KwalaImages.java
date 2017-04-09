@@ -1,10 +1,12 @@
 package com.kwala.app.helpers;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -31,6 +33,14 @@ public class KwalaImages {
     public void setProfileImageId(String profileImageId) {
         Glide.with(context)
                 .load(getImageUrl(profileImageId))
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(imageView);
+    }
+
+    public void setProfileImageUri(Uri imageUri) {
+        Glide.with(context)
+                .load(imageUri)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(imageView);
     }

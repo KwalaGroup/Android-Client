@@ -36,7 +36,7 @@ public class UpdateProfileImageTask extends Task<Void, NetworkException> {
         });
     }
 
-    private void updateProfile(String imageId) {
+    private void updateProfile(final String imageId) {
         new UpdateProfileTask(imageId).start(new Callback<Void, NetworkException>() {
             @Override
             public void onSuccess(Void aVoid) {
