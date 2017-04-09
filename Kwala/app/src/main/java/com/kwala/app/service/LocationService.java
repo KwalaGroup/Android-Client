@@ -1,5 +1,6 @@
 package com.kwala.app.service;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -14,6 +15,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.kwala.app.service.endpoints.NetworkException;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.location.UpdateLocationTask;
+
+import pl.tajchert.nammu.Nammu;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -54,16 +60,18 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     public void onConnected(@Nullable Bundle bundle) {
         //TODO: ask for permission at appropriate time
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000); //TODO: change to 30s
+        locationRequest.setInterval(30000);
+        locationRequest.setFastestInterval(30000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, LocationService.this);
+        if (Nammu.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, LocationService.this);
+        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Log.d(TAG, "Google API connection suspended: " + i);
     }
 
     @Override
@@ -77,11 +85,29 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "connection failed: " + connectionResult.toString());
+        Log.d(TAG, "Google API connection failed: " + connectionResult.toString());
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        if (!UserData.getInstance().isLoggedIn()) {
+            stopSelf();
+            return;
+        }
+
         Log.d(TAG, "onLocationChanged: " + location.getLatitude() + "," + location.getLongitude());
+
+        new UpdateLocationTask(location.getLatitude(), location.getLongitude()).start(new Task.Callback<Void, NetworkException>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //TODO: show notification when match list changes
+                Log.d(TAG, "update location success");
+            }
+
+            @Override
+            public void onFailure(NetworkException e) {
+                Log.d(TAG, "update location failure", e);
+            }
+        });
     }
 }

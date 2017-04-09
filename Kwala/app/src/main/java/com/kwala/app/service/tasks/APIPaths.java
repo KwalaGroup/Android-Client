@@ -28,4 +28,9 @@ public final class APIPaths {
     public static final class Profile {
 
     }
+
+    public static final String LOCATIONS = "/locations";
+    public static final class Locations {
+
+    }
 }
