@@ -1,30 +1,24 @@
 package com.kwala.app.models;
 
-import com.google.firebase.database.IgnoreExtraProperties;
+import android.util.Log;
+
+import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * @author jacobamuchow@gmail.com
  */
-@IgnoreExtraProperties
-public class FBMessage {
-    private static final String TAG = FBMessage.class.getSimpleName();
+@GenerateRealmFieldNames
+public class RMessage extends RealmObject {
+    private static final String TAG = RMessage.class.getSimpleName();
 
-    private String messageId;
+    @PrimaryKey private String messageId;
     private String userId;
     private String firstName;
     private String lastName;
     private String text;
-
-    public FBMessage() {
-        //Required for Firebase
-    }
-
-    public FBMessage(String userId, String firstName, String lastName, String text) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.text = text;
-    }
 
     public String getMessageId() {
         return messageId;
@@ -64,5 +58,9 @@ public class FBMessage {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void log() {
+        Log.d(TAG, messageId + " " + userId + " " + firstName + " " + lastName + " " + text);
     }
 }

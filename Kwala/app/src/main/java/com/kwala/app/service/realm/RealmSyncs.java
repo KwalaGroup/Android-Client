@@ -2,7 +2,9 @@ package com.kwala.app.service.realm;
 
 import android.util.Log;
 
+import com.kwala.app.models.FBMessage;
 import com.kwala.app.models.RFilter;
+import com.kwala.app.models.RMessage;
 import com.kwala.app.models.RQuiz;
 import com.kwala.app.models.RQuizAnswer;
 import com.kwala.app.models.RQuizQuestion;
@@ -118,5 +120,17 @@ public class RealmSyncs {
         filter.setActive(jsonObject.getBoolean("isActive"));
 
         return filter;
+    }
+
+    public RMessage syncMessage(String key, FBMessage fbMessage) {
+
+        //Key is message ID
+        RMessage message = RealmWrites.withRealm(realm).findOrCreate(RMessage.class, key);
+
+        message.setFirstName(fbMessage.getFirstName());
+        message.setLastName(fbMessage.getLastName());
+        message.setText(fbMessage.getText());
+
+        return message;
     }
 }

@@ -6,18 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseActivity;
-import com.kwala.app.models.FBMessage;
-import com.kwala.app.service.UserData;
+import com.kwala.app.models.RMessage;
+import com.kwala.app.service.firebase.ChatObserver;
+import com.kwala.app.service.realm.RealmQueries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import io.realm.OrderedCollectionChangeSet;
+import io.realm.OrderedRealmCollectionChangeListener;
+import io.realm.RealmResults;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -27,7 +24,7 @@ public class ChatActivity extends BaseActivity {
 
     private static final String MATCH_ID_KEY = "match_id";
 
-    private DatabaseReference dbReference;
+    private RealmResults<RMessage> messages;
 
     public static Intent newIntent(Context context, String matchId) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -45,41 +42,25 @@ public class ChatActivity extends BaseActivity {
         String matchId = getIntent().getStringExtra(MATCH_ID_KEY);
         Log.d(TAG, "matchId: " + matchId);
 
-        dbReference = FirebaseDatabase.getInstance().getReference("match-chats").child(matchId);
+        ChatObserver chatObserver = new ChatObserver(matchId);
 
-        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        messages = RealmQueries.withMainRealm().getMessages(matchId);
+        logMessages();
+
+        messages.addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<RMessage>>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "data: " + dataSnapshot.toString());
-
-                if (dataSnapshot.getValue() == null) {
-                    Log.d(TAG, "null value");
-
-                    final ArrayList<HashMap<String, Object>> messages = new ArrayList<>();
-
-                    HashMap<String, Object> message = new HashMap<>();
-                    message.put("text", "hey");
-                    messages.add(message);
-
-                    message = new HashMap<>();
-                    message.put("text", "hi!");
-                    messages.add(message);
-
-                    dataSnapshot.getRef().setValue(messages);
-                }
-
-                DatabaseReference ref = dbReference.push();
-
-                UserData userData = UserData.getInstance();
-                FBMessage message = new FBMessage(userData.getUserId(), userData.getFirstName(), userData.getLastName(), "I'm at Harpos! you?");
-
-                ref.setValue(message);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "Firebase database error", databaseError.toException());
+            public void onChange(RealmResults<RMessage> collection, OrderedCollectionChangeSet changeSet) {
+                messages = collection;
+                logMessages();
             }
         });
+    }
+
+    private void logMessages() {
+        Log.d(TAG, " ");
+        for (RMessage message : messages) {
+            message.log();
+        }
+        Log.d(TAG, " ");
     }
 }
