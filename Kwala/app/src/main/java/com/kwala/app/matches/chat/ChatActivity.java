@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseActivity;
+import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.service.firebase.ChatObserver;
 import com.kwala.app.service.realm.RealmQueries;
 
-import io.realm.OrderedCollectionChangeSet;
-import io.realm.OrderedRealmCollectionChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -24,6 +24,10 @@ public class ChatActivity extends BaseActivity {
 
     private static final String MATCH_ID_KEY = "match_id";
 
+    private RecyclerView recyclerView;
+    private KRealmRecyclerViewAdapter<RMessage> adapter;
+
+    private String matchId;
     private RealmResults<RMessage> messages;
 
     public static Intent newIntent(Context context, String matchId) {
@@ -39,29 +43,49 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
 
-        String matchId = getIntent().getStringExtra(MATCH_ID_KEY);
-        Log.d(TAG, "matchId: " + matchId);
+        /*
+         * Get view references
+         */
+        recyclerView = (RecyclerView) findViewById(R.id.chat_activity_recycler_view);
+
+        /*
+         * Set view data
+         */
+        matchId = getIntent().getStringExtra(MATCH_ID_KEY);
 
         ChatObserver chatObserver = new ChatObserver(matchId);
         chatObserver.startListening();
 
+        adapter = createAdapter();
+        recyclerView.setAdapter(adapter);
+
+//        logMessages();
+    }
+
+    private KRealmRecyclerViewAdapter<RMessage> createAdapter() {
         messages = RealmQueries.withMainRealm().getMessages(matchId);
-        logMessages();
 
-        messages.addChangeListener(new OrderedRealmCollectionChangeListener<RealmResults<RMessage>>() {
+        return new KRealmRecyclerViewAdapter<RMessage>(this, messages, true) {
             @Override
-            public void onChange(RealmResults<RMessage> collection, OrderedCollectionChangeSet changeSet) {
-                messages = collection;
-                logMessages();
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                LeftChatCell leftChatCell = new LeftChatCell(parent.getContext());
+                return new RecyclerView.ViewHolder(leftChatCell) {};
             }
-        });
+
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                LeftChatCell leftChatCell = (LeftChatCell) holder.itemView;
+
+                leftChatCell.setViewData(getItem(position));
+            }
+        };
     }
 
-    private void logMessages() {
-        Log.d(TAG, " ");
-        for (RMessage message : messages) {
-            message.log();
-        }
-        Log.d(TAG, " ");
-    }
+//    private void logMessages() {
+//        Log.d(TAG, " ");
+//        for (RMessage message : messages) {
+//            message.log();
+//        }
+//        Log.d(TAG, " ");
+//    }
 }
