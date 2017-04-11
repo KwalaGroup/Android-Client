@@ -2,6 +2,7 @@ package com.kwala.app.service.firebase;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -24,6 +25,8 @@ public abstract class GenericChildEventListener<Model> implements ChildEventList
 
     protected abstract void onChildMoved(String key, Model model);
 
+    protected abstract void onError(DatabaseError error);
+
     @Override
     public final void onChildAdded(DataSnapshot dataSnapshot, String s) {
         onChildAdded(dataSnapshot.getKey(), dataSnapshot.getValue(clazz));
@@ -42,5 +45,10 @@ public abstract class GenericChildEventListener<Model> implements ChildEventList
     @Override
     public final void onChildMoved(DataSnapshot dataSnapshot, String s) {
         onChildMoved(dataSnapshot.getKey(), dataSnapshot.getValue(clazz));
+    }
+
+    @Override
+    public final void onCancelled(DatabaseError databaseError) {
+        onError(databaseError);
     }
 }

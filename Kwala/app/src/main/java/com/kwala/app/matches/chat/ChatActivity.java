@@ -43,6 +43,7 @@ public class ChatActivity extends BaseActivity {
         Log.d(TAG, "matchId: " + matchId);
 
         ChatObserver chatObserver = new ChatObserver(matchId);
+        chatObserver.startListening();
 
         messages = RealmQueries.withMainRealm().getMessages(matchId);
         logMessages();

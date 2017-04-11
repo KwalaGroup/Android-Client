@@ -1,9 +1,5 @@
 package com.kwala.app.service.firebase;
 
-import android.util.Log;
-
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.kwala.app.models.FBMessage;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.service.realm.RealmSyncs;
@@ -15,12 +11,11 @@ import io.realm.Realm;
  * @author jacobamuchow@gmail.com
  */
 
-public class ChatObserver extends GenericChildEventListener<FBMessage> {
+public class ChatObserver extends BaseObserver<FBMessage> {
     private static final String TAG = ChatObserver.class.getSimpleName();
 
     public ChatObserver(String matchId) {
-        super(FBMessage.class);
-        FirebaseDatabase.getInstance().getReference("match-chats").child(matchId).addChildEventListener(this);
+        super(FBMessage.class, "match-chats/" + matchId);
     }
 
     @Override
@@ -41,11 +36,6 @@ public class ChatObserver extends GenericChildEventListener<FBMessage> {
     @Override
     protected void onChildMoved(String key, FBMessage fbMessage) {
         writeMessage(key, fbMessage);
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-        Log.d(TAG, "Database error", databaseError.toException());
     }
 
     private void writeMessage(final String key, final FBMessage fbMessage) {
