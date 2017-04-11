@@ -7,10 +7,15 @@ import android.support.annotation.StringRes;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -56,6 +61,15 @@ public class Tools {
 
     public static String colorIntToHex(@ColorInt int colorInt) {
         return Integer.toHexString(colorInt);
+    }
+
+    public static JSONObject dataSnapshotToJSONObject(@Nullable DataSnapshot dataSnapshot) {
+        if (dataSnapshot == null) {
+            return null;
+        }
+
+        Object value = dataSnapshot.getValue();
+        return value == null ? null : new JSONObject((Map) value);
     }
 
     public static String formatString(Context context, @StringRes int stringId, Object... args) {

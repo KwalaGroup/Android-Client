@@ -8,13 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.kwala.app.R;
 import com.kwala.app.filters.FiltersFragment;
 import com.kwala.app.helpers.navigation.BaseActivity;
@@ -23,10 +17,6 @@ import com.kwala.app.profile.MyProfileFragment;
 import com.kwala.app.quiz.QuizFragment;
 import com.kwala.app.service.LocationService;
 import com.kwala.app.settings.SettingsFragment;
-
-import org.json.JSONObject;
-
-import java.util.Map;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -65,24 +55,6 @@ public class MainActivity extends BaseActivity {
 
         Intent intent = new Intent(this, LocationService.class);
         startService(intent);
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference dbReference = database.getReference();
-
-        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "data: " + dataSnapshot.toString());
-
-                JSONObject jsonObject = new JSONObject((Map) dataSnapshot.getValue());
-                Log.d(TAG, "json: " + jsonObject);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "Firebase database error", databaseError.toException());
-            }
-        });
     }
 
     private PagerAdapter createAdapter() {
