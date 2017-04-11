@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kwala.app.R;
-import com.kwala.app.enums.FilterCategory;
 
 /**
  * Created by sijaebrown on 4/9/17.
@@ -40,9 +39,8 @@ public class FilterInterestCell extends RelativeLayout {
         textView = (TextView) findViewById(R.id.filter_interest_cell_text);
     }
 
-    public void setViewData(FilterCategory filterCategory, int position){
-        String listInterests[] = filterCategory.getInterests();
-        textView.setText(listInterests[position]);
+    public void setViewData(String interest){
+        textView.setText(interest);
     }
 
     @Override
