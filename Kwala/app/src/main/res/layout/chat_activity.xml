@@ -17,6 +17,9 @@
 
         app:layoutManager="LinearLayoutManager"
         app:stackFromEnd="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"
         />
 
     <RelativeLayout
@@ -24,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/kWhite">
+        android:background="#fff">
 
         <com.kwala.app.helpers.views.KwalaEditText
             android:id="@+id/chat_activity_text_field"

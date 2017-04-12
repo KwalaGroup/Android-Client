@@ -147,7 +147,6 @@ public class ChatActivity extends BaseActivity {
         public void onClick(View v) {
             String messageText = messageEditText.getTextTrimmed();
             messageEditText.setText("");
-            messageEditText.clearFocus();
 
             new SendMessageTask(matchId, messageText).start(new Task.Callback<Void, NetworkException>() {
                 @Override
