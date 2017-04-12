@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DatabaseError;
 import com.kwala.app.R;
 import com.kwala.app.helpers.SimpleTextWatcher;
 import com.kwala.app.helpers.navigation.BaseActivity;
@@ -19,6 +21,7 @@ import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.service.UserData;
 import com.kwala.app.service.endpoints.NetworkException;
+import com.kwala.app.service.firebase.BaseObserver;
 import com.kwala.app.service.firebase.ChatObserver;
 import com.kwala.app.service.realm.RealmQueries;
 import com.kwala.app.service.tasks.Task;
@@ -29,7 +32,7 @@ import io.realm.RealmResults;
 /**
  * @author jacobamuchow@gmail.com
  */
-public class ChatActivity extends BaseActivity {
+public class ChatActivity extends BaseActivity implements BaseObserver.Listener {
     private static final String TAG = ChatActivity.class.getSimpleName();
 
     private static final String MATCH_ID_KEY = "match_id";
@@ -78,6 +81,7 @@ public class ChatActivity extends BaseActivity {
         matchId = getIntent().getStringExtra(MATCH_ID_KEY);
 
         ChatObserver chatObserver = new ChatObserver(matchId);
+        chatObserver.setListener(this);
         chatObserver.startListening();
 
         adapter = createAdapter();
@@ -85,6 +89,34 @@ public class ChatActivity extends BaseActivity {
 
         messageEditText.addTextChangedListener(messageTextWatcher);
         sendButton.setOnClickListener(sendClickListener);
+    }
+
+    @Override
+    public void onUpdate() {
+        //After an update from the observer, scroll to the bottom of the list if previously at the bottom
+        if (recyclerView != null) {
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (recyclerView == null || adapter == null) {
+                        return;
+                    }
+
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int lastPos = layoutManager.findLastCompletelyVisibleItemPosition();
+                    int endPos = adapter.getItemCount() - 1;
+
+                    if (lastPos == endPos - 1) {
+                        recyclerView.smoothScrollToPosition(endPos);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onError(DatabaseError error) {
+        Log.e(TAG, "Chat database error", error.toException());
     }
 
     private KRealmRecyclerViewAdapter<RMessage> createAdapter() {
