@@ -45,7 +45,8 @@
         </activity>
         <activity android:name=".quiz.take_quiz.TakeQuizActivity">
         </activity>
-        <activity android:name=".matches.chat.ChatActivity">
+        <activity android:name=".matches.chat.ChatActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

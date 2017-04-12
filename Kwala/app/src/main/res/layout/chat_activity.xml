@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical"
     android:background="@drawable/background">
@@ -11,8 +13,40 @@
         android:id="@+id/chat_activity_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/chat_activity_bottom_bar"
 
         app:layoutManager="LinearLayoutManager"
         />
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/chat_activity_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/kWhite">
+
+        <com.kwala.app.helpers.views.KwalaEditText
+            android:id="@+id/chat_activity_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/chat_activity_send_button"
+
+            android:hint="send a message..."
+            android:textSize="18sp"
+            android:inputType="textCapSentences"
+            />
+
+        <ImageView
+            android:id="@+id/chat_activity_send_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+
+            android:padding="4dp"
+            android:src="@drawable/send_icon"
+            android:tint="@color/kOrange"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

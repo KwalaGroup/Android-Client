@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.kwala.app.R;
+import com.kwala.app.helpers.SimpleTextWatcher;
 import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
+import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.service.UserData;
 import com.kwala.app.service.firebase.ChatObserver;
@@ -25,12 +31,24 @@ public class ChatActivity extends BaseActivity {
 
     private static final String MATCH_ID_KEY = "match_id";
 
+    /*
+        References
+     */
     private RecyclerView recyclerView;
     private KRealmRecyclerViewAdapter<RMessage> adapter;
+    private ImageView sendButton;
 
+    private KwalaEditText messageEditText;
+
+    /*
+        Data
+     */
     private String matchId;
     private RealmResults<RMessage> messages;
 
+    /*
+        Constructors
+     */
     public static Intent newIntent(Context context, String matchId) {
         Intent intent = new Intent(context, ChatActivity.class);
 
@@ -48,6 +66,8 @@ public class ChatActivity extends BaseActivity {
          * Get view references
          */
         recyclerView = (RecyclerView) findViewById(R.id.chat_activity_recycler_view);
+        messageEditText = (KwalaEditText) findViewById(R.id.chat_activity_text_field);
+        sendButton = (ImageView) findViewById(R.id.chat_activity_send_button);
 
         /*
          * Set view data
@@ -60,7 +80,8 @@ public class ChatActivity extends BaseActivity {
         adapter = createAdapter();
         recyclerView.setAdapter(adapter);
 
-//        logMessages();
+        messageEditText.addTextChangedListener(messageTextWatcher);
+        sendButton.setOnClickListener(sendClickListener);
     }
 
     private KRealmRecyclerViewAdapter<RMessage> createAdapter() {
@@ -104,11 +125,23 @@ public class ChatActivity extends BaseActivity {
         };
     }
 
-//    private void logMessages() {
-//        Log.d(TAG, " ");
-//        for (RMessage message : messages) {
-//            message.log();
-//        }
-//        Log.d(TAG, " ");
-//    }
+    /**
+     * Listeners
+     */
+    private final SimpleTextWatcher messageTextWatcher = new SimpleTextWatcher() {
+        @Override
+        public void afterTextChanged(Editable s) {
+            boolean enabled = s.toString().trim().length() > 0;
+            sendButton.setEnabled(enabled);
+            sendButton.setAlpha(enabled ? 1.0f : 0.4f);
+        }
+    };
+
+    private final View.OnClickListener sendClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String messageText = messageEditText.getTextTrimmed();
+            Toast.makeText(ChatActivity.this, messageText, Toast.LENGTH_LONG).show();
+        }
+    };
 }
