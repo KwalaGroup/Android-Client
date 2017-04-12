@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.kwala.app.enums.Gender;
 import com.kwala.app.helpers.Tools;
@@ -66,6 +67,10 @@ public class UserData {
 
     public synchronized boolean isLoggedIn() {
         return getUserId() != null;
+    }
+
+    public synchronized boolean isUser(@Nullable String userId) {
+        return TextUtils.equals(getUserId(), userId);
     }
 
     @Nullable

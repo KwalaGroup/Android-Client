@@ -11,6 +11,7 @@ import com.kwala.app.R;
 import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.models.RMessage;
+import com.kwala.app.service.UserData;
 import com.kwala.app.service.firebase.ChatObserver;
 import com.kwala.app.service.realm.RealmQueries;
 
@@ -68,15 +69,37 @@ public class ChatActivity extends BaseActivity {
         return new KRealmRecyclerViewAdapter<RMessage>(this, messages, true) {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                LeftChatCell leftChatCell = new LeftChatCell(parent.getContext());
-                return new RecyclerView.ViewHolder(leftChatCell) {};
+                if (viewType == 2) {
+                    RightChatCell rightChatCell = new RightChatCell(parent.getContext());
+                    return new RecyclerView.ViewHolder(rightChatCell) {};
+                } else {
+                    LeftChatCell leftChatCell = new LeftChatCell(parent.getContext());
+                    return new RecyclerView.ViewHolder(leftChatCell) {};
+                }
             }
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                LeftChatCell leftChatCell = (LeftChatCell) holder.itemView;
 
-                leftChatCell.setViewData(getItem(position));
+                if (holder.itemView instanceof RightChatCell) {
+                    RightChatCell rightChatCell = (RightChatCell) holder.itemView;
+                    rightChatCell.setViewData(getItem(position));
+                }
+
+                if (holder.itemView instanceof LeftChatCell) {
+                    LeftChatCell leftChatCell = (LeftChatCell) holder.itemView;
+                    leftChatCell.setViewData(getItem(position));
+                }
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                RMessage message = getItem(position);
+                if (message != null && UserData.getInstance().isUser(message.getUserId())) {
+                    return 2;
+                } else {
+                    return 1;
+                }
             }
         };
     }
