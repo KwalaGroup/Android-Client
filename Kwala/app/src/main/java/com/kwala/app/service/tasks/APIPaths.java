@@ -25,12 +25,8 @@ public final class APIPaths {
     }
 
     public static final String PROFILE = "/profile";
-    public static final class Profile {
-
-    }
 
     public static final String LOCATIONS = "/locations";
-    public static final class Locations {
 
-    }
+    public static final String FILTERS = "/filters";
 }
