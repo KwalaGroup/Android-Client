@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 
@@ -122,11 +124,14 @@ public class RealmSyncs {
         return filter;
     }
 
-    public RMessage syncMessage(String key, FBMessage fbMessage) {
+    public RMessage syncMessage(String matchId, FBMessage fbMessage) {
 
         //Key is message ID
-        RMessage message = RealmWrites.withRealm(realm).findOrCreate(RMessage.class, key);
+        String messageId = fbMessage.getMessageId();
+        RMessage message = RealmWrites.withRealm(realm).findOrCreate(RMessage.class, messageId);
 
+        message.setCreatedDate(new Date(fbMessage.getCreatedDate()));
+        message.setMatchId(matchId);
         message.setFirstName(fbMessage.getFirstName());
         message.setLastName(fbMessage.getLastName());
         message.setText(fbMessage.getText());

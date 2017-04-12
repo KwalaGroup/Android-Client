@@ -14,18 +14,21 @@ import io.realm.Realm;
 public class ChatObserver extends BaseObserver<FBMessage> {
     private static final String TAG = ChatObserver.class.getSimpleName();
 
+    private String matchId;
+
     public ChatObserver(String matchId) {
         super(FBMessage.class, "match-chats/" + matchId);
+        this.matchId = matchId;
     }
 
     @Override
     protected void onChildAdded(String key, FBMessage fbMessage) {
-        writeMessage(key, fbMessage);
+        writeMessage(fbMessage);
     }
 
     @Override
     protected void onChildChanged(String key, FBMessage fbMessage) {
-        writeMessage(key, fbMessage);
+        writeMessage(fbMessage);
     }
 
     @Override
@@ -35,17 +38,15 @@ public class ChatObserver extends BaseObserver<FBMessage> {
 
     @Override
     protected void onChildMoved(String key, FBMessage fbMessage) {
-        writeMessage(key, fbMessage);
+        writeMessage(fbMessage);
     }
 
-    private void writeMessage(final String key, final FBMessage fbMessage) {
+    private void writeMessage(final FBMessage fbMessage) {
 
         RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
             @Override
             public Void execute(Realm realm) {
-
-                RealmSyncs.withRealm(realm).syncMessage(key, fbMessage);
-
+                RealmSyncs.withRealm(realm).syncMessage(matchId, fbMessage);
                 return null;
             }
         });
@@ -56,6 +57,7 @@ public class ChatObserver extends BaseObserver<FBMessage> {
         RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
             @Override
             public Void execute(Realm realm) {
+                //Key in FB is message ID
                 RMessage message = RealmWrites.withRealm(realm).findOrCreate(RMessage.class, key);
                 message.deleteFromRealm();
                 return null;

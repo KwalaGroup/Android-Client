@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.SimpleTextWatcher;
@@ -18,8 +18,11 @@ import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.service.UserData;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.firebase.ChatObserver;
 import com.kwala.app.service.realm.RealmQueries;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.chat.SendMessageTask;
 
 import io.realm.RealmResults;
 
@@ -102,6 +105,8 @@ public class ChatActivity extends BaseActivity {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+                Log.d(TAG, position + ": " + getItem(position).getMessageId());
+
                 if (holder.itemView instanceof RightChatCell) {
                     RightChatCell rightChatCell = (RightChatCell) holder.itemView;
                     rightChatCell.setViewData(getItem(position));
@@ -141,7 +146,20 @@ public class ChatActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             String messageText = messageEditText.getTextTrimmed();
-            Toast.makeText(ChatActivity.this, messageText, Toast.LENGTH_LONG).show();
+            messageEditText.setText("");
+            messageEditText.clearFocus();
+
+            new SendMessageTask(matchId, messageText).start(new Task.Callback<Void, NetworkException>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "success!");
+                }
+
+                @Override
+                public void onFailure(NetworkException e) {
+                    Log.e(TAG, "Error sending message", e);
+                }
+            });
         }
     };
 }

@@ -16,6 +16,7 @@
         android:layout_above="@+id/chat_activity_bottom_bar"
 
         app:layoutManager="LinearLayoutManager"
+        app:stackFromEnd="true"
         />
 
     <RelativeLayout

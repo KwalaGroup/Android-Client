@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -15,6 +17,9 @@ public class RMessage extends RealmObject {
     private static final String TAG = RMessage.class.getSimpleName();
 
     @PrimaryKey private String messageId;
+    private Date createdDate;
+
+    private String matchId;
     private String userId;
     private String firstName;
     private String lastName;
@@ -26,6 +31,22 @@ public class RMessage extends RealmObject {
 
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(String matchId) {
+        this.matchId = matchId;
     }
 
     public String getUserId() {

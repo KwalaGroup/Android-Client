@@ -2,6 +2,9 @@ package com.kwala.app.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
+import java.util.UUID;
+
 /**
  * @author jacobamuchow@gmail.com
  */
@@ -10,6 +13,8 @@ public class FBMessage {
     private static final String TAG = FBMessage.class.getSimpleName();
 
     private String messageId;
+    private long createdDate;
+
     private String userId;
     private String firstName;
     private String lastName;
@@ -20,6 +25,8 @@ public class FBMessage {
     }
 
     public FBMessage(String userId, String firstName, String lastName, String text) {
+        this.messageId = UUID.randomUUID().toString();
+        this.createdDate = new Date().getTime();
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,6 +39,14 @@ public class FBMessage {
 
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public long getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(long createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getUserId() {
