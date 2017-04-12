@@ -132,6 +132,7 @@ public class RealmSyncs {
 
         message.setCreatedDate(new Date(fbMessage.getCreatedDate()));
         message.setMatchId(matchId);
+        message.setUserId(fbMessage.getUserId());
         message.setFirstName(fbMessage.getFirstName());
         message.setLastName(fbMessage.getLastName());
         message.setText(fbMessage.getText());

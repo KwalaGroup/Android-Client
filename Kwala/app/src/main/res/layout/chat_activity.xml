@@ -37,7 +37,9 @@
 
             android:hint="send a message..."
             android:textSize="18sp"
-            android:inputType="textCapSentences"
+            android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+            android:singleLine="false"
+            android:maxLines="10"
             />
 
         <ImageView

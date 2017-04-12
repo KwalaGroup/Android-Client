@@ -137,8 +137,6 @@ public class ChatActivity extends BaseActivity implements BaseObserver.Listener 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-                Log.d(TAG, position + ": " + getItem(position).getMessageId());
-
                 if (holder.itemView instanceof RightChatCell) {
                     RightChatCell rightChatCell = (RightChatCell) holder.itemView;
                     rightChatCell.setViewData(getItem(position));
