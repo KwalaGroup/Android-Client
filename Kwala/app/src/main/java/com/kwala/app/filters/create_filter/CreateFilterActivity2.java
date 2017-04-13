@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.kwala.app.R;
 import com.kwala.app.enums.FilterCategory;
@@ -28,8 +30,12 @@ public class CreateFilterActivity2 extends BaseActivity {
     private ArrayList<String> listOfInterests = new ArrayList<>();
 
     private RecyclerView interestsRecyclerView;
-    private CheckBox maleCheckBox;
-    private CheckBox femaleCheckBox;
+    private boolean maleRadioButtonChecked;
+    private boolean femaleRadioButtonChecked;
+    private boolean permanentButtonChecked;
+    private boolean oneHourButtonChecked;
+    private ImageView image;
+    private TextView filterTitle;
 
     public static Intent newIntent(Context context, FilterCategory filterCategory) {
         Intent intent = new Intent(context, CreateFilterActivity2.class);
@@ -50,8 +56,16 @@ public class CreateFilterActivity2 extends BaseActivity {
 
         Log.d(TAG, filterCategory.name());
 
-        maleCheckBox = (CheckBox) findViewById(R.id.fitler_acitivty_2_male_checkbox);
-        femaleCheckBox = (CheckBox) findViewById(R.id.filter_activity_2_female_checkbox);
+        permanentButtonChecked = false;
+        oneHourButtonChecked = false;
+        maleRadioButtonChecked = false;
+        femaleRadioButtonChecked = false;
+
+        image = (ImageView) findViewById(R.id.filter_activity_2_image);
+        image.setBackgroundResource(filterCategory.getIconId());
+
+        filterTitle = (TextView) findViewById(R.id.filter_activity_2_title);
+        filterTitle.setText(filterCategory.getDisplayString());
 
         interestsRecyclerView = (RecyclerView) findViewById(R.id.create_filter_2_recycler_view);
 
@@ -75,7 +89,7 @@ public class CreateFilterActivity2 extends BaseActivity {
                     public void onClick(View v) {
                         Log.d(TAG, "Click");
                         if (!listOfInterests.contains(interest)) {
-                            v.setBackgroundColor(Color.DKGRAY);
+                            v.setBackgroundColor(Color.LTGRAY);
                             listOfInterests.add(interest);
                         } else {
                             v.setBackgroundColor(Color.TRANSPARENT);
@@ -90,5 +104,35 @@ public class CreateFilterActivity2 extends BaseActivity {
                 return interestList.length;
             }
         });
+    }
+
+    public void onFilter2RadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch (view.getId()) {
+            case R.id.filter_activity_2_permanent_radio:
+                permanentButtonChecked = toggleBool(checked);
+                break;
+            case R.id.filter_activity_2_time_limit_radio:
+                oneHourButtonChecked = toggleBool(checked);
+                break;
+            case R.id.filter_activity_2_male_radiobutton:
+                maleRadioButtonChecked = toggleBool(checked);
+                break;
+            case R.id.filter_activity_2_female_radiobutton:
+                femaleRadioButtonChecked = toggleBool(checked);
+                break;
+            default:
+                Log.d(TAG, "Random radio button click. Not sure what happened??");
+                break;
+        }
+    }
+
+    private boolean toggleBool(boolean radioButtonValue) {
+        if (radioButtonValue == true) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

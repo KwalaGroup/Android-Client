@@ -5,7 +5,7 @@
     <color name="colorAccent">#36B4E9</color>
 
     <color name="switchTrackColor">#44222222</color>
-
+    <color name="filterLineColor">#EDEDED</color>
 
     <color name="kPink">#FFD5D5</color>
     <color name="kYellow">#EBE974</color>

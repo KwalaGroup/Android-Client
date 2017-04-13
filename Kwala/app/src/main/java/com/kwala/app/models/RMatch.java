@@ -133,7 +133,7 @@ public class RMatch extends RealmObject {
 
                 match = realm.createObject(RMatch.class, "2");
                 match.setScore(89.7);
-                match.setFilterCategory(FilterCategory.ONE_NIGHT_STAND);
+                match.setFilterCategory(FilterCategory.BUDDY);
                 match.setFirstName("Brandon");
                 match.setLastName("Erbschloe");
                 match.setProfileImageId("f89c8f68-69da-4def-8776-885f9fbe71b3");

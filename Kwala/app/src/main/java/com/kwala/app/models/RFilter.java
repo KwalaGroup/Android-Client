@@ -110,7 +110,7 @@ public class RFilter extends RealmObject {
                 filter = realm.createObject(RFilter.class, "4");
                 filter.setCreatedAt(new Date());
                 filter.setActive(false);
-                filter.setCategory(FilterCategory.ONE_NIGHT_STAND);
+                filter.setCategory(FilterCategory.BUDDY);
                 filter.setGender("Male");
                 filters.add(filter);
 
