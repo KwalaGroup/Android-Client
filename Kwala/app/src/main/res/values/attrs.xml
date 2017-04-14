@@ -24,4 +24,8 @@
         <attr name="font" />
     </declare-styleable>
 
+    <declare-styleable name="KwalaRadioButton">
+        <attr name="font" />
+    </declare-styleable>
+
 </resources>

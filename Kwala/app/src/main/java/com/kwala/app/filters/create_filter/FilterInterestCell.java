@@ -1,7 +1,6 @@
 package com.kwala.app.filters.create_filter;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -40,19 +39,15 @@ public class FilterInterestCell extends RelativeLayout {
         textView = (TextView) findViewById(R.id.filter_interest_cell_text);
     }
 
-    public void setViewData(String interest){
+    public void setViewData(String interest) {
         textView.setText(interest);
-    }
-
-    @Override
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        textView.setOnClickListener(l);
     }
 
     @Override
     public void setSelected(boolean selected) {
         super.setSelected(selected);
-        int color = ContextCompat.getColor(getContext(), R.color.kOrange);
+
+        int color = ContextCompat.getColor(getContext(), selected ? R.color.kOrange : R.color.kDarkGray);
         textView.setTextColor(color);
     }
 }

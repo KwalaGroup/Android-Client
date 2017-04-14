@@ -16,10 +16,10 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:clickable="true"
 
         tools:text="Interest 1"
-        android:textSize="15dp"
+        android:textSize="18sp"
+        android:gravity="center"
         />
 
 </RelativeLayout>

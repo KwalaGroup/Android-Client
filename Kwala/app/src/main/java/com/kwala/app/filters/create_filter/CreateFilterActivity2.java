@@ -2,7 +2,6 @@ package com.kwala.app.filters.create_filter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -54,8 +53,6 @@ public class CreateFilterActivity2 extends BaseActivity {
         String filterValue = getIntent().getStringExtra(FILTER_CATEGORY_KEY);
         FilterCategory filterCategory = FilterCategory.fromNetworkString(filterValue);
 
-        Log.d(TAG, filterCategory.name());
-
         permanentButtonChecked = false;
         oneHourButtonChecked = false;
         maleRadioButtonChecked = false;
@@ -87,15 +84,13 @@ public class CreateFilterActivity2 extends BaseActivity {
                 filterInterestCell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG, "Click");
-                        if (!listOfInterests.contains(interest)) {
-                            filterInterestCell.setSelected(true);
-                            v.setBackgroundColor(Color.LTGRAY);
-                            listOfInterests.add(interest);
-                        } else {
+
+                        if (v.isSelected()) {
                             filterInterestCell.setSelected(false);
-                            v.setBackgroundColor(Color.TRANSPARENT);
                             listOfInterests.remove(interest);
+                        } else {
+                            filterInterestCell.setSelected(true);
+                            listOfInterests.add(interest);
                         }
                     }
                 });

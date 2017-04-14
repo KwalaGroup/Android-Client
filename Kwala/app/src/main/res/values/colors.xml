@@ -5,6 +5,8 @@
     <color name="colorAccent">#36B4E9</color>
 
     <color name="switchTrackColor">#44222222</color>
+    <color name="radioButtonUnchecked">#99EDEDED</color>
+    <color name="radioButtonChecked">@color/kOrange</color>
     <color name="filterLineColor">#EDEDED</color>
 
     <color name="kPink">#FFD5D5</color>
@@ -13,5 +15,6 @@
     <color name="kOrange">#FFA274</color>
     <color name="kWhite">#CCFFFFFF</color>
     <color name="kGray">#777777</color>
+    <color name="kDarkGray">#CC333333</color>
 
 </resources>
