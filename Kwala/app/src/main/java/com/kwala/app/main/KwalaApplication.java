@@ -4,7 +4,6 @@ import android.app.Application;
 import android.util.Log;
 
 import com.kwala.app.models.RFilter;
-import com.kwala.app.models.RMatch;
 import com.kwala.app.service.DataStore;
 
 import io.realm.Realm;
@@ -55,6 +54,5 @@ public class KwalaApplication extends Application {
          * TODO: remove as needed
          */
         RFilter.generateTestData(true);
-        RMatch.generateTestData(false);
     }
 }
