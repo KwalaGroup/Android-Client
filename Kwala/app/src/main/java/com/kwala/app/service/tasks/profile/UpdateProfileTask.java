@@ -1,5 +1,6 @@
 package com.kwala.app.service.tasks.profile;
 
+import com.kwala.app.service.UserData;
 import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.tasks.APIPaths;
@@ -29,6 +30,7 @@ public class UpdateProfileTask extends NetworkTask<Void> {
 
     @Override
     protected Void parse(JSONObject jsonObject) throws JSONException {
+        UserData.getInstance().setProfileImageId(profileImageId);
         return null;
     }
 }

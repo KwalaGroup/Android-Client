@@ -2,6 +2,9 @@ package com.kwala.app.service.realm;
 
 import android.util.Log;
 
+import com.kwala.app.models.FBMessage;
+import com.kwala.app.models.RFilter;
+import com.kwala.app.models.RMessage;
 import com.kwala.app.models.RQuiz;
 import com.kwala.app.models.RQuizAnswer;
 import com.kwala.app.models.RQuizQuestion;
@@ -9,6 +12,8 @@ import com.kwala.app.models.RQuizQuestion;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -84,5 +89,54 @@ public class RealmSyncs {
         question.setAnswers(answers);
 
         return question;
+    }
+
+    public RealmList<RFilter> syncFilters(JSONArray jsonArray) throws JSONException {
+
+        RealmList<RFilter> filters = new RealmList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject filterJsonObject = jsonArray.getJSONObject(i);
+
+            try {
+                RFilter filter = syncFilter(filterJsonObject);
+                filters.add(filter);
+
+            } catch (JSONException e) {
+                Log.e(TAG, "Error parsing filter", e);
+            }
+        }
+
+        return filters;
+    }
+
+    public RFilter syncFilter(JSONObject jsonObject) throws JSONException {
+
+        String filterId = jsonObject.getString("id");
+        RFilter filter = RealmWrites.withRealm(realm).findOrCreate(RFilter.class, filterId);
+
+        filter.setCategoryValue(jsonObject.getString("filter"));
+
+        filter.setGenderValue(jsonObject.getString("gender"));
+
+        filter.setActive(jsonObject.getBoolean("isActive"));
+
+        return filter;
+    }
+
+    public RMessage syncMessage(String matchId, FBMessage fbMessage) {
+
+        //Key is message ID
+        String messageId = fbMessage.getMessageId();
+        RMessage message = RealmWrites.withRealm(realm).findOrCreate(RMessage.class, messageId);
+
+        message.setCreatedDate(new Date(fbMessage.getCreatedDate()));
+        message.setMatchId(matchId);
+        message.setUserId(fbMessage.getUserId());
+        message.setFirstName(fbMessage.getFirstName());
+        message.setLastName(fbMessage.getLastName());
+        message.setText(fbMessage.getText());
+
+        return message;
     }
 }

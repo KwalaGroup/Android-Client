@@ -3,6 +3,7 @@ package com.kwala.app.service.tasks.profile;
 import android.net.Uri;
 import android.util.Log;
 
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.image.UploadImageTask;
 
@@ -10,7 +11,7 @@ import com.kwala.app.service.tasks.image.UploadImageTask;
  * @author jacobamuchow@gmail.com
  */
 
-public class UpdateProfileImageTask extends Task<Void> {
+public class UpdateProfileImageTask extends Task<Void, NetworkException> {
     private static final String TAG = UpdateProfileImageTask.class.getSimpleName();
 
     private Uri imageUri;
@@ -21,7 +22,7 @@ public class UpdateProfileImageTask extends Task<Void> {
 
     @Override
     protected void run() {
-        new UploadImageTask(imageUri).start(new Task.Callback<String>() {
+        new UploadImageTask(imageUri).start(new Task.Callback<String, NetworkException>() {
             @Override
             public void onSuccess(String imageId) {
                 Log.d(TAG, "image uploaded: " + imageId);
@@ -29,14 +30,14 @@ public class UpdateProfileImageTask extends Task<Void> {
             }
 
             @Override
-            public void onFailure(Exception e) {
+            public void onFailure(NetworkException e) {
                 rejectOnMain(e);
             }
         });
     }
 
-    private void updateProfile(String imageId) {
-        new UpdateProfileTask(imageId).start(new Callback<Void>() {
+    private void updateProfile(final String imageId) {
+        new UpdateProfileTask(imageId).start(new Callback<Void, NetworkException>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "profile updated successfully");
@@ -44,7 +45,7 @@ public class UpdateProfileImageTask extends Task<Void> {
             }
 
             @Override
-            public void onFailure(Exception e) {
+            public void onFailure(NetworkException e) {
                 rejectOnMain(e);
             }
         });

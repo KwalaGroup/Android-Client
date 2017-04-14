@@ -5,6 +5,7 @@ import android.util.Log;
 import com.kwala.app.service.DataStore;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
+import com.kwala.app.service.endpoints.NetworkException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +14,7 @@ import org.json.JSONObject;
  * @author jacobamuchow@gmail.com
  */
 
-public abstract class NetworkTask<Result> extends Task<Result> {
+public abstract class NetworkTask<Result> extends Task<Result, NetworkException> {
     private static final String TAG = NetworkTask.class.getSimpleName();
 
     protected abstract Endpoint<JSONObject> buildEndpoint();
@@ -22,10 +23,14 @@ public abstract class NetworkTask<Result> extends Task<Result> {
 
     @Override
     protected void run() {
-        DataStore.getInstance().getNetworkStore().performRequest(buildEndpoint(), new EndpointRequest.Callback<JSONObject>() {
+        final Endpoint<JSONObject> endpoint = buildEndpoint();
+
+        DataStore.getInstance().getNetworkStore().performRequest(endpoint, new EndpointRequest.Callback<JSONObject>() {
             @Override
             public void success(JSONObject response) {
-                Log.d(TAG, "response: " + response);
+                if (endpoint.shouldLog()) {
+                    Log.d(TAG, "response: " + response);
+                }
 
                 try {
                     Result result = parse(response);
@@ -33,13 +38,13 @@ public abstract class NetworkTask<Result> extends Task<Result> {
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Error parsing result", e);
-                    rejectOnMain(e);
+                    rejectOnMain(new NetworkException("Error parsing result", e));
                     return;
                 }
             }
 
             @Override
-            public void failure(final Exception e) {
+            public void failure(final NetworkException e) {
                 rejectOnMain(e);
             }
         });

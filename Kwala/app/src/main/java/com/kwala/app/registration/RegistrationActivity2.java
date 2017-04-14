@@ -24,6 +24,7 @@ import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.helpers.views.KwalaProgressSpinner;
 import com.kwala.app.main.MainActivity;
 import com.kwala.app.service.RegistrationData;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.image.UploadImageTask;
 import com.kwala.app.service.tasks.auth.RegisterTask;
@@ -166,7 +167,7 @@ public class RegistrationActivity2 extends BaseActivity {
                     Log.d(TAG, "Success!");
                     profileImageView.setImageURI(imageUri);
 
-                    new UploadImageTask(imageUri).start(new Task.Callback<String>() {
+                    new UploadImageTask(imageUri).start(new Task.Callback<String, NetworkException>() {
                         @Override
                         public void onSuccess(String imageId) {
                             Log.d(TAG, "Image uploaded successfully: " + imageId);
@@ -176,7 +177,7 @@ public class RegistrationActivity2 extends BaseActivity {
                         }
 
                         @Override
-                        public void onFailure(Exception e) {
+                        public void onFailure(NetworkException e) {
                             Log.e(TAG, "Image upload failure :(", e);
                         }
                     });
@@ -223,7 +224,7 @@ public class RegistrationActivity2 extends BaseActivity {
                     .setLastName(lastName)
                     .setAge(getAge());
 
-            new RegisterTask(RegistrationData.getInstance()).start(new Task.Callback<Void>() {
+            new RegisterTask(RegistrationData.getInstance()).start(new Task.Callback<Void, NetworkException>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     networkPending = false;
@@ -234,7 +235,7 @@ public class RegistrationActivity2 extends BaseActivity {
                 }
 
                 @Override
-                public void onFailure(Exception e) {
+                public void onFailure(NetworkException e) {
                     Toast.makeText(RegistrationActivity2.this, "Error", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Failed to register", e);
                     networkPending = false;

@@ -2,9 +2,12 @@ package com.kwala.app.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.kwala.app.enums.Gender;
+import com.kwala.app.helpers.Tools;
 import com.kwala.app.main.KwalaApplication;
 
 import org.json.JSONException;
@@ -23,8 +26,11 @@ public class UserData {
         private static final String EMAIL = "email";
         private static final String FIRST_NAME = "first_name";
         private static final String LAST_NAME = "last_name";
+        private static final String PROFILE_IMAGE_ID = "profile_image_id";
         private static final String GENDER = "gender";
         private static final String AGE = "age";
+        private static final String BIO = "bio";
+        private static final String COLOR = "color";
     }
 
     private static UserData userData;
@@ -63,6 +69,10 @@ public class UserData {
         return getUserId() != null;
     }
 
+    public synchronized boolean isUser(@Nullable String userId) {
+        return TextUtils.equals(getUserId(), userId);
+    }
+
     @Nullable
     public synchronized String getEmail() {
         return sharedPreferences.getString(Keys.EMAIL, null);
@@ -95,6 +105,16 @@ public class UserData {
         return this;
     }
 
+    @Nullable
+    public synchronized String getProfileImageId() {
+        return sharedPreferences.getString(Keys.PROFILE_IMAGE_ID, null);
+    }
+
+    public synchronized UserData setProfileImageId(@Nullable String profileImageId) {
+        sharedPreferences.edit().putString(Keys.PROFILE_IMAGE_ID, profileImageId).apply();
+        return this;
+    }
+
     public synchronized String getGenderValue() {
         return sharedPreferences.getString(Keys.GENDER, Gender.UNKNOWN.getNetworkValue());
     }
@@ -123,6 +143,32 @@ public class UserData {
         return this;
     }
 
+    @Nullable
+    public synchronized String getBio() {
+        return sharedPreferences.getString(Keys.BIO, null);
+    }
+
+    public synchronized UserData setBio(@Nullable String bio) {
+        sharedPreferences.edit().putString(Keys.BIO, bio).apply();
+        return this;
+    }
+
+    @Nullable
+    public synchronized String getColor() {
+        return sharedPreferences.getString(Keys.COLOR, null);
+    }
+
+    @ColorInt
+    public synchronized int getColorAsInt() {
+        String colorHex = getColor();
+        return Tools.hexToColorInt(colorHex == null ? "ffa9deef" : colorHex);
+    }
+
+    public synchronized UserData setColor(@Nullable String color) {
+        sharedPreferences.edit().putString(Keys.COLOR, color).apply();
+        return this;
+    }
+
     public void updateFromJson(JSONObject jsonObject) throws JSONException {
 
         setUserId(jsonObject.getString("id"));
@@ -133,8 +179,14 @@ public class UserData {
 
         setLastName(jsonObject.getString("last_name"));
 
+        setProfileImageId(jsonObject.getString("image_id"));
+
         setGenderValue(jsonObject.getString("gender"));
 
         setAge(jsonObject.getInt("age"));
+
+        setBio(jsonObject.optString("bio", null));
+
+        setColor(jsonObject.getString("color"));
     }
 }

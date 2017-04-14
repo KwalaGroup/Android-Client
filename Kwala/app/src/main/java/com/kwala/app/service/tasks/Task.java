@@ -4,15 +4,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 
-import com.kwala.app.service.endpoints.Endpoint;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * @author jacobamuchow@gmail.com
  */
-public abstract class Task<Result> {
+public abstract class Task<Result, E extends Exception> {
     private static final String TAG = Task.class.getSimpleName();
 
     public enum Status {
@@ -22,9 +17,9 @@ public abstract class Task<Result> {
     protected Status mStatus = Status.READY;
     @Nullable protected Result mResult;
 
-    @Nullable protected Callback<Result> mCallback;
+    @Nullable protected Callback<Result, E> mCallback;
 
-    public void start(@Nullable Callback<Result> callback) {
+    public void start(@Nullable Callback<Result, E> callback) {
         synchronized (this) {
             mStatus = Status.READY;
             mResult = null;
@@ -92,7 +87,7 @@ public abstract class Task<Result> {
         });
     }
 
-    public void reject(Exception e) {
+    public void reject(E e) {
         this.mStatus = Status.FAILURE;
         this.mResult = null;
 
@@ -101,7 +96,7 @@ public abstract class Task<Result> {
         }
     }
 
-    public void rejectOnMain(final Exception e) {
+    public void rejectOnMain(final E e) {
         this.mStatus = Status.FAILURE;
         this.mResult = null;
 
@@ -118,8 +113,8 @@ public abstract class Task<Result> {
     /**
      * Callback interface
      */
-    public interface Callback<Result> {
+    public interface Callback<Result, E extends Exception> {
         void onSuccess(Result result);
-        void onFailure(Exception e);
+        void onFailure(E e);
     }
 }

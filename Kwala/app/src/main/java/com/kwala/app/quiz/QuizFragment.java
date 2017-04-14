@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.kwala.app.R;
 import com.kwala.app.quiz.take_quiz.TakeQuizActivity;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.quizzes.GetCurrentQuizTask;
 import com.kwala.app.service.tasks.Task;
 
@@ -52,14 +53,14 @@ public class QuizFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        new GetCurrentQuizTask().start(new Task.Callback<Void>() {
+        new GetCurrentQuizTask().start(new Task.Callback<Void, NetworkException>() {
             @Override
             public void onSuccess(Void result) {
 
             }
 
             @Override
-            public void onFailure(Exception e) {
+            public void onFailure(NetworkException e) {
                 Log.d(TAG, "UI failure", e);
             }
         });

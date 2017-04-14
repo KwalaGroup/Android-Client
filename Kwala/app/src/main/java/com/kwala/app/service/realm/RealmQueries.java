@@ -2,7 +2,9 @@ package com.kwala.app.service.realm;
 
 import android.support.annotation.MainThread;
 
+import com.kwala.app.models.RMessage;
 import com.kwala.app.models.RQuizQuestion;
+import com.quarkworks.android.realmtypesafequery.generated.RMessageFieldNames;
 import com.quarkworks.android.realmtypesafequery.generated.RQuizQuestionFieldNames;
 
 import io.realm.Realm;
@@ -47,8 +49,20 @@ public class RealmQueries {
         return realm.where(clazz).findAll();
     }
 
+    /*
+     * Quizzes
+     */
     public RealmResults<RQuizQuestion> getQuizQuestions() {
         return realm.where(RQuizQuestion.class)
                 .findAllSorted(RQuizQuestionFieldNames.QUESTION_ID, Sort.ASCENDING);
+    }
+
+    /*
+     * Chat
+     */
+    public RealmResults<RMessage> getMessages(String matchId) {
+        return realm.where(RMessage.class)
+                .equalTo(RMessageFieldNames.MATCH_ID, matchId)
+                .findAllSorted(RMessageFieldNames.CREATED_DATE, Sort.ASCENDING);
     }
 }

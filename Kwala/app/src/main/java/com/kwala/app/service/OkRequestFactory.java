@@ -73,7 +73,9 @@ public class OkRequestFactory {
         JSONObject jsonObject = endpoint.getParams() == null ? new JSONObject()
                 : endpoint.getParams();
 
-        Log.d(TAG, "body: " + jsonObject.toString());
+        if (endpoint.shouldLog()) {
+            Log.d(TAG, "body: " + jsonObject.toString());
+        }
 
         return RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString());
     }

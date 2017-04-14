@@ -1,15 +1,18 @@
 package com.kwala.app.matches;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
+import com.kwala.app.matches.chat.ChatActivity;
 import com.kwala.app.models.RMatch;
 import com.kwala.app.service.realm.RealmQueries;
 
@@ -63,7 +66,20 @@ public class MatchesFragment extends Fragment {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 MatchCell matchCell = (MatchCell) holder.itemView;
+                final RMatch match = getItem(position);
+
                 matchCell.setViewData(getItem(position));
+
+                matchCell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "click");
+                        if (match != null) {
+                            Intent intent = ChatActivity.newIntent(getActivity(), match.getMatchId());
+                            startActivity(intent);
+                        }
+                    }
+                });
             }
         };
 

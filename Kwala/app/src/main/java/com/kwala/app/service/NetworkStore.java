@@ -14,6 +14,7 @@ import com.kwala.app.helpers.KwalaConstants;
 import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
+import com.kwala.app.service.endpoints.NetworkException;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,23 +75,40 @@ public class NetworkStore {
 
         Request request = OkRequestFactory.createRequest(endpoint);
 
-        Log.d(TAG, "Request: " + request.toString());
+        if (endpoint.shouldLog()) {
+            Log.d(TAG, "Request: " + request.toString());
+        }
 
         okhttp3.Callback responseCallback = new okhttp3.Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response);
                 try {
+                    if (response.code() != 200) {
+                        if (!endpoint.shouldLog()) {
+                            Log.e(TAG, "Silent endpoint failed");
+                            Log.d(TAG, "Request: " + response);
+                            Log.d(TAG, "Response: " + response);
+                        }
+
+                        callback.failure(new NetworkException(response.code(), response.message()));
+                        return;
+                    }
+
+                    if (endpoint.shouldLog()) {
+                        Log.d(TAG, "Response: " + response);
+                    }
+
                     T result = endpoint.parse(response.code(), response.body().string());
                     callback.success(result);
-                } catch (Exception e) {
+
+                } catch (NetworkException e) {
                     callback.failure(e);
                 }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                callback.failure(e);
+                callback.failure(new NetworkException(e));
             }
         };
 

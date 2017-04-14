@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:background="@drawable/background">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_activity_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/chat_activity_bottom_bar"
+
+        app:layoutManager="LinearLayoutManager"
+        app:stackFromEnd="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"
+        />
+
+    <RelativeLayout
+        android:id="@+id/chat_activity_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff">
+
+        <com.kwala.app.helpers.views.KwalaEditText
+            android:id="@+id/chat_activity_text_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/chat_activity_send_button"
+
+            android:hint="send a message..."
+            android:textSize="18sp"
+            android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+            android:singleLine="false"
+            android:maxLines="10"
+            />
+
+        <ImageView
+            android:id="@+id/chat_activity_send_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+
+            android:padding="4dp"
+            android:src="@drawable/send_icon"
+            android:tint="@color/kOrange"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

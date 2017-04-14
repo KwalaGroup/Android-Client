@@ -16,6 +16,7 @@ import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.helpers.views.KwalaProgressSpinner;
 import com.kwala.app.service.RegistrationData;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.EmailAvailabilityTask;
 
@@ -100,7 +101,7 @@ public class RegistrationActivity extends BaseActivity {
                     .setEmail(email)
                     .setHashedPassword(password);
 
-            new EmailAvailabilityTask(email).start(new Task.Callback<Boolean>() {
+            new EmailAvailabilityTask(email).start(new Task.Callback<Boolean, NetworkException>() {
                 @Override
                 public void onSuccess(Boolean isAvailable) {
                     networkPending = false;
@@ -113,7 +114,7 @@ public class RegistrationActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailure(Exception e) {
+                public void onFailure(NetworkException e) {
                     Log.e(TAG, "Error", e);
                     networkPending = false;
                     updateViews();

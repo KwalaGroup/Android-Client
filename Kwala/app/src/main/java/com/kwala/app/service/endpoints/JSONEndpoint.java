@@ -2,6 +2,7 @@ package com.kwala.app.service.endpoints;
 
 import android.support.annotation.Nullable;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -20,7 +21,11 @@ public class JSONEndpoint extends Endpoint<JSONObject> {
     }
 
     @Override
-    public JSONObject parse(int code, String response) throws Exception {
-        return new JSONObject(response);
+    public JSONObject parse(int code, String response) throws NetworkException {
+        try {
+            return new JSONObject(response);
+        } catch (JSONException e) {
+            throw new NetworkException(response);
+        }
     }
 }

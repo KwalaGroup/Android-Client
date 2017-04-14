@@ -43,12 +43,12 @@ public class MainTabLayout extends TabLayout {
         addOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(Tab tab) {
-                updateTabColor(tab, true);
+                updateColors();
             }
 
             @Override
             public void onTabUnselected(Tab tab) {
-                updateTabColor(tab, false);
+                updateColors();
             }
 
             @Override
@@ -56,26 +56,29 @@ public class MainTabLayout extends TabLayout {
 
             }
         });
-
-        updateTabColor(getTabAt(0), true);
     }
 
-    private void updateTabColor(Tab tab, boolean selected) {
-        if (selected) {
-            int color = Color.WHITE;
+    private void updateColors() {
+        for(int i = 0; i < getTabCount(); i++) {
+            Tab tab = getTabAt(i);
 
-            switch (tab.getPosition()) {
-                case 0: color = ContextCompat.getColor(getContext(), R.color.kPink); break;
-                case 1: color = ContextCompat.getColor(getContext(), R.color.kYellow); break;
-                case 2: color = ContextCompat.getColor(getContext(), R.color.kLightBlue); break;
-                case 3: color = ContextCompat.getColor(getContext(), R.color.kOrange); break;
-                case 4: color = ContextCompat.getColor(getContext(), R.color.kWhite); break;
+            if (tab.isSelected()) {
+                int color = Color.WHITE;
+
+                switch (tab.getPosition()) {
+                    case 0: color = ContextCompat.getColor(getContext(), R.color.kPink); break;
+                    case 1: color = ContextCompat.getColor(getContext(), R.color.kYellow); break;
+                    case 2: color = ContextCompat.getColor(getContext(), R.color.kLightBlue); break;
+                    case 3: color = ContextCompat.getColor(getContext(), R.color.kOrange); break;
+                    case 4: color = ContextCompat.getColor(getContext(), R.color.kWhite); break;
+                }
+
+                tab.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                setSelectedTabIndicatorColor(color);
+
+            } else {
+                tab.getIcon().setColorFilter(null);
             }
-
-            tab.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-            setSelectedTabIndicatorColor(color);
-        } else {
-            tab.getIcon().setColorFilter(null);
         }
     }
 }

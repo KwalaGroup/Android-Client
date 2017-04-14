@@ -1,12 +1,21 @@
 package com.kwala.app.helpers;
 
+import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Base64;
 import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -43,5 +52,28 @@ public class Tools {
             Log.e(TAG, "Error initializing SHA1 message digest");
             return null;
         }
+    }
+
+    @ColorInt
+    public static int hexToColorInt(String hexString) {
+        return Long.valueOf(hexString, 16).intValue();
+    }
+
+    public static String colorIntToHex(@ColorInt int colorInt) {
+        return Integer.toHexString(colorInt);
+    }
+
+    public static JSONObject dataSnapshotToJSONObject(@Nullable DataSnapshot dataSnapshot) {
+        if (dataSnapshot == null) {
+            return null;
+        }
+
+        Object value = dataSnapshot.getValue();
+        return value == null ? null : new JSONObject((Map) value);
+    }
+
+    public static String formatString(Context context, @StringRes int stringId, Object... args) {
+        String string = context.getString(stringId);
+        return String.format(Locale.US, string, args);
     }
 }

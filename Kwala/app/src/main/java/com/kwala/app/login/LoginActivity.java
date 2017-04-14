@@ -15,6 +15,7 @@ import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.helpers.views.KwalaProgressSpinner;
 import com.kwala.app.main.MainActivity;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.auth.LoginTask;
 
@@ -95,7 +96,7 @@ public class LoginActivity extends BaseActivity {
             String email = emailEditText.getTextTrimmed();
             String password = passwordEditText.getTextTrimmed();
 
-            new LoginTask(email, password).start(new Task.Callback<Void>() {
+            new LoginTask(email, password).start(new Task.Callback<Void, NetworkException>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     networkPending = false;
@@ -106,7 +107,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailure(Exception e) {
+                public void onFailure(NetworkException e) {
                     Log.e(TAG, "onFailure", e);
                     networkPending = false;
                     updateViews();
