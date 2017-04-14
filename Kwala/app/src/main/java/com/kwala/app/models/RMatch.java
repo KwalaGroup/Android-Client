@@ -103,7 +103,7 @@ public class RMatch extends RealmObject {
     public Date getExpirationDate() {
         return expirationDate;
     }
-    
+
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
