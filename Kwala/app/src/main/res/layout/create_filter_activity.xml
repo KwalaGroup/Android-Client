@@ -8,11 +8,20 @@
 
     android:background="@drawable/background">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/base_toolbar_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#CCC4C3C3"
+        android:elevation="10dp"
+        />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/create_filter_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/base_toolbar_activity_toolbar"
 
         app:layoutManager="LinearLayoutManager"
         android:orientation="vertical"

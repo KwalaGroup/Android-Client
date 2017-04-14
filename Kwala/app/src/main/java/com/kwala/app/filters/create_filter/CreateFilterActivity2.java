@@ -89,9 +89,11 @@ public class CreateFilterActivity2 extends BaseActivity {
                     public void onClick(View v) {
                         Log.d(TAG, "Click");
                         if (!listOfInterests.contains(interest)) {
+                            filterInterestCell.setSelected(true);
                             v.setBackgroundColor(Color.LTGRAY);
                             listOfInterests.add(interest);
                         } else {
+                            filterInterestCell.setSelected(false);
                             v.setBackgroundColor(Color.TRANSPARENT);
                             listOfInterests.remove(interest);
                         }

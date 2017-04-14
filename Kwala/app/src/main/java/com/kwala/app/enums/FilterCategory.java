@@ -9,10 +9,10 @@ import com.kwala.app.R;
  */
 public enum FilterCategory {
     UNKNOWN("UNKNOWN", "Unknown", 0, new String[]{}),
-    LOVE_INTEREST("LOVE_INTEREST", "Love Interest", R.drawable.filter_heart_icon, new String[] { "Marriage", "Dating", "Casual"}),
+    LOVE_INTEREST("LOVE_INTEREST", "Love Interest", R.drawable.filter_heart_icon, new String[] { "Marriage", "Dating", "Casual" , "Mutually Exclusive"}),
     COFFEE_BUDDY("COFFEE_BUDDY", "Coffee Buddy", R.drawable.filter_coffee_icon, new String[] {"Tea Not Coffee", "Pour Over", "Lattes", "Just Coffee"}),
     WORKOUT_BUDDY("WORKOUT_BUDDY", "Workout Buddy", R.drawable.filter_weights_icon, new String[] {"Yoga", "Bodybuilding", "Power lifting", "Running", "Biking", "Triathlons"}),
-    STUDY_BUDDY("STUDY_BUDDY", "Study Buddy", R.drawable.filter_pencil_icon, new String[] {"Chemistry", "Physics", "Math", "Operating Systems"}),
+    STUDY_BUDDY("STUDY_BUDDY", "Study Buddy", R.drawable.filter_pencil_icon, new String[] {"Chemistry", "Physics", "Math", "Operating Systems", "Academic Integrity"}),
     BUDDY("BUDDY", "Buddy", R.drawable.filter_arrows_icon, new String[] {"Cooking", "Hiking", "Reading", "Drinking"});
 
     public enum Interests {
@@ -37,7 +37,9 @@ public enum FilterCategory {
         COOKING("COOKING", "Cooking"),
         HIKING("HIKING", "Hiking"),
         READING("READING", "Reading"),
-        DRINKING("DRINKING", "Drinking");
+        DRINKING("DRINKING", "Drinking"),
+        ACADEMIC_INTEGRITY("ACADEMIC_INTEGRITY", "Academic Integrity"),
+        MUTUALLY_EXCLUSIVE("MUTUALLY_EXCLUSIVE", "Mutually Exclusive");
 
         private String networkString;
         private String displayString;
