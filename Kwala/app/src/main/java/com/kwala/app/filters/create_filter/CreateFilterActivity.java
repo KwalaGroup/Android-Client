@@ -1,11 +1,11 @@
 package com.kwala.app.filters.create_filter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +18,8 @@ import com.kwala.app.helpers.navigation.BaseToolbarActivity;
  */
 public class CreateFilterActivity extends BaseToolbarActivity {
     private static final String TAG = CreateFilterActivity.class.getSimpleName();
+
+    private static final int PAGE_2_REQUEST_CODE = 1001;
 
     private RecyclerView filtersRecyclerView;
 
@@ -52,9 +54,8 @@ public class CreateFilterActivity extends BaseToolbarActivity {
                 filterCategoryCell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG, "Click");
                         Intent intent = CreateFilterActivity2.newIntent(CreateFilterActivity.this, filter);
-                        startActivity(intent);
+                        startActivityForResult(intent, PAGE_2_REQUEST_CODE);
                     }
                 });
             }
@@ -64,5 +65,14 @@ public class CreateFilterActivity extends BaseToolbarActivity {
                 return filterCategories.length;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PAGE_2_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            finish();
+        }
     }
 }

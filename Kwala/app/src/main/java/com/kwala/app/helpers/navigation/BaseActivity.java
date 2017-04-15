@@ -29,4 +29,8 @@ public class BaseActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public BaseActivity getBaseActivity() {
+        return this;
+    }
 }

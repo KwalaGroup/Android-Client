@@ -1,10 +1,13 @@
 package com.kwala.app.filters.create_filter;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +19,13 @@ import android.widget.Toast;
 
 import com.kwala.app.R;
 import com.kwala.app.enums.Filter;
+import com.kwala.app.enums.Gender;
 import com.kwala.app.enums.Interest;
 import com.kwala.app.helpers.navigation.BaseToolbarActivity;
+import com.kwala.app.helpers.views.KwalaProgressDialog;
+import com.kwala.app.service.endpoints.NetworkException;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.filters.CreateFilterTask;
 
 import java.util.ArrayList;
 
@@ -42,6 +50,8 @@ public class CreateFilterActivity2 extends BaseToolbarActivity {
     private RadioButton femaleRadioButton;
 
     private RecyclerView interestsRecyclerView;
+
+    private ProgressDialog progressDialog;
 
     /*
         Data
@@ -119,17 +129,40 @@ public class CreateFilterActivity2 extends BaseToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean isFormComplete() {
+    private boolean isFormComplete() {
         return (permanentRadioButton.isChecked() || oneHourRadioButton.isChecked())
                 && (maleRadioButton.isChecked() || femaleRadioButton.isChecked());
     }
 
-    public void createFilter() {
+    private void createFilter() {
         if (!isFormComplete()) {
             return;
         }
 
-        Toast.makeText(this, "Create", Toast.LENGTH_LONG).show();
+        Gender gender = maleRadioButton.isChecked() ? Gender.MALE : Gender.FEMALE;
+
+        //TODO: filter time, interests
+
+        progressDialog = KwalaProgressDialog.show(this, "Creating filter...");
+        new CreateFilterTask(filter, gender).start(new Task.Callback<Void, NetworkException>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+
+            @Override
+            public void onFailure(NetworkException e) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
+                Log.e(TAG, "Error creating filter", e);
+                Toast.makeText(getBaseActivity(), "Error creating filter", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void onFilter2RadioButtonClicked(View view) {
