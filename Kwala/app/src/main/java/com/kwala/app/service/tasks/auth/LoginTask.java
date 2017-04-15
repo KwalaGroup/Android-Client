@@ -41,7 +41,10 @@ public class LoginTask extends NetworkTask<Void> {
     @Override
     protected Void parse(JSONObject jsonObject) throws JSONException {
 
-        UserData.getInstance().updateFromJson(jsonObject);
+        UserData.getInstance()
+                .setEnteredEmail(email)
+                .setHashedPassowrd(hashedPassword)
+                .updateFromJson(jsonObject);
 
         //Sync filters
         final JSONArray filtersJsonArray = jsonObject.getJSONArray("filters");

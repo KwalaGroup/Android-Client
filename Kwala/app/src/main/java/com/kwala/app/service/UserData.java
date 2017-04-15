@@ -22,6 +22,8 @@ public class UserData {
     private static final String SHARED_PREFS_KEY = "user_data_shared_prefs";
 
     private static final class Keys {
+        private static final String ENTERED_EMAIL = "entered_email";
+        private static final String HASHED_PASSWORD = "hashed_password";
         private static final String USER_ID = "user_id";
         private static final String EMAIL = "email";
         private static final String FIRST_NAME = "first_name";
@@ -53,6 +55,26 @@ public class UserData {
 
     public synchronized void clearData() {
         sharedPreferences.edit().clear().apply();
+    }
+
+    @Nullable
+    public synchronized String getEnteredEmail() {
+        return sharedPreferences.getString(Keys.ENTERED_EMAIL, null);
+    }
+
+    public synchronized UserData setEnteredEmail(@Nullable String enteredEmail) {
+        sharedPreferences.edit().putString(Keys.ENTERED_EMAIL, enteredEmail).apply();
+        return this;
+    }
+
+    @Nullable
+    public synchronized String getHashedPassword() {
+        return sharedPreferences.getString(Keys.HASHED_PASSWORD, null);
+    }
+
+    public synchronized UserData setHashedPassowrd(@Nullable String hashedPassword) {
+        sharedPreferences.edit().putString(Keys.HASHED_PASSWORD, hashedPassword).apply();
+        return this;
     }
 
     @Nullable
@@ -92,8 +114,6 @@ public class UserData {
         sharedPreferences.edit().putString(Keys.FIRST_NAME, firstName).apply();
         return this;
     }
-
-
 
     @Nullable
     public synchronized String getLastName() {

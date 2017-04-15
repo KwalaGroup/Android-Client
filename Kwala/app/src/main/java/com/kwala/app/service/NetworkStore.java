@@ -1,5 +1,6 @@
 package com.kwala.app.service;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
@@ -12,9 +13,17 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.kwala.app.helpers.KwalaConstants;
 import com.kwala.app.main.KwalaApplication;
+import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
 import com.kwala.app.service.endpoints.EndpointRequest;
 import com.kwala.app.service.endpoints.NetworkException;
+import com.kwala.app.service.realm.RealmSyncs;
+import com.kwala.app.service.realm.RealmWrites;
+import com.kwala.app.service.tasks.APIPaths;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +33,14 @@ import java.net.CookiePolicy;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import io.realm.Realm;
+import okhttp3.Authenticator;
 import okhttp3.Call;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -36,13 +48,28 @@ import okhttp3.Response;
 public class NetworkStore {
     private static final String TAG = NetworkStore.class.getSimpleName();
 
+    /*
+        References
+     */
     private KwalaCookieStore kwalaCookieStore;
     private OkHttpClient okHttpClient;
 
     private AmazonS3Client s3Client;
     private TransferUtility transferUtility;
 
-    public NetworkStore() {
+    /*
+        Image upload observer
+     */
+    public interface ImageUploadObserver {
+        void onStateChanged(String imageId, TransferState state);
+        void onProgressChanged(String imageId, long bytesCurrent, long bytesTotal);
+        void onError(String imageId, Exception e);
+    }
+
+    /*
+        Constructor
+     */
+    NetworkStore() {
 
         kwalaCookieStore = new KwalaCookieStore(KwalaApplication.getInstance());
         CookieManager cookieManager = new CookieManager(kwalaCookieStore, CookiePolicy.ACCEPT_ORIGINAL_SERVER);
@@ -50,6 +77,7 @@ public class NetworkStore {
 
         okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(new JavaNetCookieJar(cookieManager))
+                .authenticator(authenticator)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build();
@@ -145,9 +173,82 @@ public class NetworkStore {
         });
     }
 
-    public interface ImageUploadObserver {
-        void onStateChanged(String imageId, TransferState state);
-        void onProgressChanged(String imageId, long bytesCurrent, long bytesTotal);
-        void onError(String imageId, Exception e);
+    private final Authenticator authenticator = new Authenticator() {
+        @Override
+        public synchronized Request authenticate(Route route, Response originalResponse) throws IOException {
+            UserData userData = UserData.getInstance();
+            if (!userData.isLoggedIn() || userData.getEnteredEmail() == null || userData.getHashedPassword() == null) {
+                Log.e(TAG, "Unable to reauthenticate: missing data");
+                forceLogout();
+                return null;
+            }
+
+            Endpoint<JSONObject> endpoint = new APIEndpoint(APIPaths.Auth.LOGIN, Endpoint.Method.POST)
+                    .addParam("email", userData.getEnteredEmail())
+                    .addParam("password", userData.getHashedPassword());
+
+            Response loginResponse = okHttpClient.newCall(OkRequestFactory.createRequest(endpoint)).execute();
+            if (loginResponse.code() != 200) {
+                Log.e(TAG, "Login retry failed");
+                Log.e(TAG, loginResponse.toString());
+                forceLogout();
+                return null;
+            }
+
+            final JSONObject result;
+            try {
+                result = endpoint.parse(loginResponse.code(), loginResponse.body().string());
+            } catch (NetworkException e) {
+                Log.e(TAG, "Error parsing background login response", e);
+                forceLogout();
+                return null;
+            }
+
+            try {
+                UserData.getInstance().updateFromJson(result);
+            } catch (JSONException e) {
+                Log.e(TAG, "Error updating UserData from background login response", e);
+                forceLogout();
+                return null;
+            }
+
+            try {
+                //Sync filters
+                final JSONArray filtersJsonArray = result.getJSONArray("filters");
+
+                RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
+                    @Override
+                    public Void execute(Realm realm) {
+                        try {
+                            RealmSyncs.withRealm(realm).syncFilters(filtersJsonArray);
+                        } catch (JSONException e) {
+                            Log.d(TAG, "Error syncing filters", e);
+                        }
+
+                        return null;
+                    }
+                });
+            } catch (JSONException e) {
+                Log.e(TAG, "Error syncing filters from background login response", e);
+            }
+
+            Log.d(TAG, "Login retry success!");
+            return originalResponse.request();
+        }
+    };
+
+    private void forceLogout() {
+        KwalaApplication application = KwalaApplication.getInstance();
+
+        //Stop location update service
+        Intent intent = new Intent(application, LocationService.class);
+        application.stopService(intent);
+
+        DataStore.getInstance().clearAllData();
+
+        //Restart the app
+        intent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        application.startActivity(intent);
     }
 }
