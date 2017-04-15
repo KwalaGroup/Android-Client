@@ -3,7 +3,6 @@ package com.kwala.app.main;
 import android.app.Application;
 import android.util.Log;
 
-import com.kwala.app.models.RFilter;
 import com.kwala.app.service.DataStore;
 
 import io.realm.Realm;
@@ -48,11 +47,5 @@ public class KwalaApplication extends Application {
             Realm.deleteRealm(realmConfiguration);
             DataStore.getInstance();
         }
-
-        /*
-         * Generate test data
-         * TODO: remove as needed
-         */
-        RFilter.generateTestData(true);
     }
 }

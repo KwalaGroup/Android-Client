@@ -2,11 +2,8 @@ package com.kwala.app.models;
 
 import com.kwala.app.enums.Filter;
 import com.kwala.app.enums.Gender;
-import com.kwala.app.service.realm.RealmWrites;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
 
-import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -70,46 +67,5 @@ public class RFilter extends RealmObject {
 
     public void setGender(Gender gender) {
         setGenderValue(gender.getNetworkValue());
-    }
-
-    public static void generateTestData(final boolean clearAll) {
-
-        RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
-            @Override
-            public Void execute(Realm realm) {
-                RealmList<RFilter> filters = new RealmList<>();
-
-                realm.delete(RFilter.class);
-                if (clearAll) {
-                    return null;
-                }
-
-                RFilter filter = realm.createObject(RFilter.class, "1");
-                filter.setActive(true);
-                filter.setCategory(Filter.LOVE_INTEREST);
-                filter.setGenderValue("Both");
-                filters.add(filter);
-
-                filter = realm.createObject(RFilter.class, "2");
-                filter.setActive(true);
-                filter.setCategory(Filter.COFFEE_BUDDY);
-                filter.setGenderValue("Female");
-                filters.add(filter);
-
-                filter = realm.createObject(RFilter.class, "3");
-                filter.setActive(true);
-                filter.setCategory(Filter.WORKOUT_BUDDY);
-                filter.setGenderValue("Male");
-                filters.add(filter);
-
-                filter = realm.createObject(RFilter.class, "4");
-                filter.setActive(false);
-                filter.setCategory(Filter.BUDDY);
-                filter.setGenderValue("Male");
-                filters.add(filter);
-
-                return null;
-            }
-        });
     }
 }

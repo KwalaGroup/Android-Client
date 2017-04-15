@@ -23,6 +23,9 @@ import io.realm.RealmResults;
 public class FiltersFragment extends Fragment {
     private static final String TAG = FiltersFragment.class.getSimpleName();
 
+    private static final int FILTER_CELL = 0;
+    private static final int ADD_MORE_CELL = 1;
+
     public static FiltersFragment newInstance() {
         return new FiltersFragment();
     }
@@ -56,17 +59,39 @@ public class FiltersFragment extends Fragment {
          */
         filters = RealmQueries.withMainRealm().getAll(RFilter.class);
 
-        KRealmRecyclerViewAdapter<RFilter> adapter = new KRealmRecyclerViewAdapter<RFilter>(getActivity(), filters, true) {
+        final KRealmRecyclerViewAdapter<RFilter> adapter = new KRealmRecyclerViewAdapter<RFilter>(getActivity(), filters, true) {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                FilterCell filterCell = new FilterCell(parent.getContext());
-                return new RecyclerView.ViewHolder(filterCell) {};
+                if (viewType == FILTER_CELL) {
+                    FilterCell filterCell = new FilterCell(parent.getContext());
+                    return new RecyclerView.ViewHolder(filterCell) {};
+                } else {
+                    AddFilterCell addFilterCell = new AddFilterCell(parent.getContext());
+                    addFilterCell.setOnClickListener(createFilterClickListener);
+                    return new RecyclerView.ViewHolder(addFilterCell) {};
+                }
             }
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                FilterCell filterCell = (FilterCell) holder.itemView;
-                filterCell.setViewData(getItem(position));
+                if (holder.itemView instanceof FilterCell) {
+                    FilterCell filterCell = (FilterCell) holder.itemView;
+                    filterCell.setViewData(getItem(position));
+                }
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                if (position < getItemCount() - 1) {
+                    return FILTER_CELL;
+                } else {
+                    return ADD_MORE_CELL;
+                }
+            }
+
+            @Override
+            public int getItemCount() {
+                return super.getItemCount()+1;
             }
         };
 
