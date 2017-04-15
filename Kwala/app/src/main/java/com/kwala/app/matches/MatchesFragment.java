@@ -16,6 +16,7 @@ import com.kwala.app.matches.chat.ChatActivity;
 import com.kwala.app.models.RMatch;
 import com.kwala.app.service.realm.RealmQueries;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -55,6 +56,13 @@ public class MatchesFragment extends Fragment {
          * Set up adapter
          */
         matches = RealmQueries.withMainRealm().getAll(RMatch.class);
+
+        matches.addChangeListener(new RealmChangeListener<RealmResults<RMatch>>() {
+            @Override
+            public void onChange(RealmResults<RMatch> element) {
+                resolveLayoutState();
+            }
+        });
 
         KRealmRecyclerViewAdapter<RMatch> adapter = new KRealmRecyclerViewAdapter<RMatch>(getActivity(), matches, true) {
             @Override

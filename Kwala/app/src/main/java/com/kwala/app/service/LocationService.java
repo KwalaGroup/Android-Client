@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationServices;
 import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.location.UpdateLocationTask;
+import com.kwala.app.service.tasks.matches.ListMatchesTask;
 
 import pl.tajchert.nammu.Nammu;
 
@@ -102,6 +103,19 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
             public void onSuccess(Void aVoid) {
                 //TODO: show notification when match list changes
                 Log.d(TAG, "update location success");
+
+                //TODO: sync matches from location update endpoint instead of chaining
+                new ListMatchesTask().start(new Task.Callback<Void, NetworkException>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Matches list success");
+                    }
+
+                    @Override
+                    public void onFailure(NetworkException e) {
+                        Log.d(TAG, "Match list failure", e);
+                    }
+                });
             }
 
             @Override

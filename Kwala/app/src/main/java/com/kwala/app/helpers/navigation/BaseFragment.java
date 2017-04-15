@@ -40,6 +40,10 @@ public class BaseFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void onRealmChanged() {
+        //May override
+    }
+
     /**
      * May be unsafe cast. This is enforced by the IllegalStateException thrown in onAttach()
      * if the parent Activity is not an instance of BaseActivity.

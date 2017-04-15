@@ -22,6 +22,7 @@ import com.kwala.app.service.realm.RealmQueries;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.filters.DeleteFilterTask;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -65,6 +66,13 @@ public class FiltersFragment extends Fragment {
          * Set up adapter
          */
         filters = RealmQueries.withMainRealm().getAll(RFilter.class);
+
+        filters.addChangeListener(new RealmChangeListener<RealmResults<RFilter>>() {
+            @Override
+            public void onChange(RealmResults<RFilter> element) {
+                resolveLayoutState();
+            }
+        });
 
         final KRealmRecyclerViewAdapter<RFilter> adapter = new KRealmRecyclerViewAdapter<RFilter>(getActivity(), filters, true) {
             @Override

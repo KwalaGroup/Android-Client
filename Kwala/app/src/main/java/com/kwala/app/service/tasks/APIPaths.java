@@ -29,4 +29,6 @@ public final class APIPaths {
     public static final String LOCATIONS = "/locations";
 
     public static final String FILTERS = "/filters";
+
+    public static final String MATCHES = "/matches";
 }
