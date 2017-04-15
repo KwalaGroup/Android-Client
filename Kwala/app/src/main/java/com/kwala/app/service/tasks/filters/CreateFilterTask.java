@@ -1,6 +1,6 @@
 package com.kwala.app.service.tasks.filters;
 
-import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.enums.Filter;
 import com.kwala.app.enums.Gender;
 import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
@@ -17,15 +17,11 @@ import org.json.JSONObject;
 public class CreateFilterTask extends NetworkTask<Void> {
     private static final String TAG = CreateFilterTask.class.getSimpleName();
 
-    private FilterCategory filterCategory;
+    private Filter filter;
     private Gender gender;
 
-    public CreateFilterTask(FilterCategory filterCategory) {
-        this(filterCategory, Gender.UNKNOWN);
-    }
-
-    public CreateFilterTask(FilterCategory filterCategory, Gender gender) {
-        this.filterCategory = filterCategory;
+    public CreateFilterTask(Filter filter, Gender gender) {
+        this.filter = filter;
         this.gender = gender;
     }
 
@@ -33,7 +29,7 @@ public class CreateFilterTask extends NetworkTask<Void> {
     protected Endpoint<JSONObject> buildEndpoint() {
         APIEndpoint endpoint = new APIEndpoint(APIPaths.FILTERS, Endpoint.Method.POST);
 
-        endpoint.addParam("filter", filterCategory.getNetworkString());
+        endpoint.addParam("filter", filter.getNetworkString());
 
         if (gender != Gender.UNKNOWN) {
             endpoint.addParam("gender", gender.getNetworkValue());

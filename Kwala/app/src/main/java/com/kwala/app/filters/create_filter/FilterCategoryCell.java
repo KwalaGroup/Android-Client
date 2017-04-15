@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.kwala.app.R;
-import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.enums.Filter;
 
 /**
  * Created by sijaebrown on 4/6/17.
@@ -40,8 +40,8 @@ public class FilterCategoryCell extends RelativeLayout {
         button = (Button) findViewById(R.id.filter_category_cell_button);
     }
 
-    public void setViewData(FilterCategory filterCategory) {
-        button.setText(filterCategory.getDisplayString());
+    public void setViewData(Filter filter) {
+        button.setText(filter.getDisplayString());
     }
 
     @Override

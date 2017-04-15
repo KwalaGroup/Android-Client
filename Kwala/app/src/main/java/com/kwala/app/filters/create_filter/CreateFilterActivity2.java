@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kwala.app.R;
-import com.kwala.app.enums.FilterCategory;
-import com.kwala.app.helpers.navigation.BaseActivity;
+import com.kwala.app.enums.Filter;
+import com.kwala.app.enums.Interest;
+import com.kwala.app.helpers.navigation.BaseToolbarActivity;
 
 import java.util.ArrayList;
 
@@ -22,24 +25,38 @@ import java.util.ArrayList;
  * Created by sijaebrown on 3/4/17.
  */
 
-public class CreateFilterActivity2 extends BaseActivity {
+public class CreateFilterActivity2 extends BaseToolbarActivity {
     private static final String TAG = CreateFilterActivity2.class.getSimpleName();
 
     private static final String FILTER_CATEGORY_KEY = "filter_category";
-    private ArrayList<String> listOfInterests = new ArrayList<>();
+
+    /*
+        References
+     */
+    private ImageView iconImageView;
+    private TextView titleTextView;
+
+    private RadioButton permanentRadioButton;
+    private RadioButton oneHourRadioButton;
+    private RadioButton maleRadioButton;
+    private RadioButton femaleRadioButton;
 
     private RecyclerView interestsRecyclerView;
-    private boolean maleRadioButtonChecked;
-    private boolean femaleRadioButtonChecked;
-    private boolean permanentButtonChecked;
-    private boolean oneHourButtonChecked;
-    private ImageView image;
-    private TextView filterTitle;
 
-    public static Intent newIntent(Context context, FilterCategory filterCategory) {
+    /*
+        Data
+     */
+    private Filter filter;
+    private Interest[] interests;
+    private ArrayList<Interest> selectedInterests = new ArrayList<>();
+
+    /*
+        Constructors
+     */
+    public static Intent newIntent(Context context, Filter filter) {
         Intent intent = new Intent(context, CreateFilterActivity2.class);
 
-        intent.putExtra(FILTER_CATEGORY_KEY, filterCategory.getNetworkString());
+        intent.putExtra(FILTER_CATEGORY_KEY, filter.getNetworkString());
 
         return intent;
     }
@@ -51,23 +68,76 @@ public class CreateFilterActivity2 extends BaseActivity {
         setTitle("Create Filter");
 
         String filterValue = getIntent().getStringExtra(FILTER_CATEGORY_KEY);
-        FilterCategory filterCategory = FilterCategory.fromNetworkString(filterValue);
+        filter = Filter.fromNetworkString(filterValue);
+        interests = filter.getInterests();
 
-        permanentButtonChecked = false;
-        oneHourButtonChecked = false;
-        maleRadioButtonChecked = false;
-        femaleRadioButtonChecked = false;
+        /*
+         * Get view references
+         */
+        iconImageView = (ImageView) findViewById(R.id.filter_activity_2_image);
+        titleTextView = (TextView) findViewById(R.id.filter_activity_2_title);
 
-        image = (ImageView) findViewById(R.id.filter_activity_2_image);
-        image.setBackgroundResource(filterCategory.getIconId());
-
-        filterTitle = (TextView) findViewById(R.id.filter_activity_2_title);
-        filterTitle.setText(filterCategory.getDisplayString());
+        permanentRadioButton = (RadioButton) findViewById(R.id.filter_activity_2_permanent_radio);
+        oneHourRadioButton = (RadioButton) findViewById(R.id.filter_activity_2_time_limit_radio);
+        maleRadioButton = (RadioButton) findViewById(R.id.filter_activity_2_male_radiobutton);
+        femaleRadioButton = (RadioButton) findViewById(R.id.filter_activity_2_female_radiobutton);
 
         interestsRecyclerView = (RecyclerView) findViewById(R.id.create_filter_2_recycler_view);
 
-        final String[] interestList = filterCategory.getInterests();
-        interestsRecyclerView.setAdapter(new RecyclerView.Adapter() {
+        /*
+         * Set view data
+         */
+        iconImageView.setBackgroundResource(filter.getIconId());
+        titleTextView.setText(filter.getDisplayString());
+
+        interestsRecyclerView.setAdapter(createAdapter());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.checkmark_menu, menu);
+
+        //Set enabled state of done button if form is complete
+        MenuItem menuItem = menu.findItem(R.id.action_done);
+        if (menuItem != null) {
+            boolean enabled = isFormComplete();
+
+            menuItem.setEnabled(enabled);
+            menuItem.getIcon().setAlpha(enabled ? 255 : 102);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_done:
+                createFilter();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isFormComplete() {
+        return (permanentRadioButton.isChecked() || oneHourRadioButton.isChecked())
+                && (maleRadioButton.isChecked() || femaleRadioButton.isChecked());
+    }
+
+    public void createFilter() {
+        if (!isFormComplete()) {
+            return;
+        }
+
+        Toast.makeText(this, "Create", Toast.LENGTH_LONG).show();
+    }
+
+    public void onFilter2RadioButtonClicked(View view) {
+        invalidateOptionsMenu();
+    }
+
+    private RecyclerView.Adapter createAdapter() {
+        return new RecyclerView.Adapter() {
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -78,7 +148,7 @@ public class CreateFilterActivity2 extends BaseActivity {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 final FilterInterestCell filterInterestCell = (FilterInterestCell) holder.itemView;
-                final String interest = interestList[position];
+                final Interest interest = interests[position];
 
                 filterInterestCell.setViewData(interest);
                 filterInterestCell.setOnClickListener(new View.OnClickListener() {
@@ -87,10 +157,10 @@ public class CreateFilterActivity2 extends BaseActivity {
 
                         if (v.isSelected()) {
                             filterInterestCell.setSelected(false);
-                            listOfInterests.remove(interest);
+                            selectedInterests.remove(interest);
                         } else {
                             filterInterestCell.setSelected(true);
-                            listOfInterests.add(interest);
+                            selectedInterests.add(interest);
                         }
                     }
                 });
@@ -98,38 +168,8 @@ public class CreateFilterActivity2 extends BaseActivity {
 
             @Override
             public int getItemCount() {
-                return interestList.length;
+                return interests.length;
             }
-        });
-    }
-
-    public void onFilter2RadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch (view.getId()) {
-            case R.id.filter_activity_2_permanent_radio:
-                permanentButtonChecked = toggleBool(checked);
-                break;
-            case R.id.filter_activity_2_time_limit_radio:
-                oneHourButtonChecked = toggleBool(checked);
-                break;
-            case R.id.filter_activity_2_male_radiobutton:
-                maleRadioButtonChecked = toggleBool(checked);
-                break;
-            case R.id.filter_activity_2_female_radiobutton:
-                femaleRadioButtonChecked = toggleBool(checked);
-                break;
-            default:
-                Log.d(TAG, "Random radio button click. Not sure what happened??");
-                break;
-        }
-    }
-
-    private boolean toggleBool(boolean radioButtonValue) {
-        if (radioButtonValue == true) {
-            return false;
-        } else {
-            return true;
-        }
+        };
     }
 }

@@ -1,6 +1,6 @@
 package com.kwala.app.models;
 
-import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.enums.Filter;
 import com.kwala.app.enums.MatchState;
 import com.kwala.app.models.generic.RString;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
@@ -62,12 +62,12 @@ public class RMatch extends RealmObject {
         this.filterValues = filterValues;
     }
 
-    public ArrayList<FilterCategory> getFilters() {
+    public ArrayList<Filter> getFilters() {
         RealmList<RString> values = getFilterValues();
-        ArrayList<FilterCategory> filters = new ArrayList<>(values.size());
+        ArrayList<Filter> filters = new ArrayList<>(values.size());
 
         for (RString value : values) {
-            filters.add(FilterCategory.fromNetworkString(value.getValue()));
+            filters.add(Filter.fromNetworkString(value.getValue()));
         }
 
         return filters;

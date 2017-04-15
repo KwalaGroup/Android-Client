@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kwala.app.R;
-import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.enums.Filter;
 import com.kwala.app.helpers.navigation.BaseToolbarActivity;
 
 /**
@@ -33,7 +33,7 @@ public class CreateFilterActivity extends BaseToolbarActivity {
 
         filtersRecyclerView = (RecyclerView) findViewById(R.id.create_filter_recycler_view);
 
-        final FilterCategory[] filterCategories = FilterCategory.supportedCategories;
+        final Filter[] filterCategories = Filter.supportedCategories;
 
         filtersRecyclerView.setAdapter(new RecyclerView.Adapter() {
             @Override
@@ -45,15 +45,15 @@ public class CreateFilterActivity extends BaseToolbarActivity {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 final FilterCategoryCell filterCategoryCell = (FilterCategoryCell) holder.itemView;
-                final FilterCategory filterCategory = filterCategories[position];
+                final Filter filter = filterCategories[position];
 
-                filterCategoryCell.setViewData(filterCategory);
+                filterCategoryCell.setViewData(filter);
 
                 filterCategoryCell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Log.d(TAG, "Click");
-                        Intent intent = CreateFilterActivity2.newIntent(CreateFilterActivity.this, filterCategory);
+                        Intent intent = CreateFilterActivity2.newIntent(CreateFilterActivity.this, filter);
                         startActivity(intent);
                     }
                 });

@@ -1,6 +1,6 @@
 package com.kwala.app.models;
 
-import com.kwala.app.enums.FilterCategory;
+import com.kwala.app.enums.Filter;
 import com.kwala.app.enums.Gender;
 import com.kwala.app.service.realm.RealmWrites;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
@@ -48,11 +48,11 @@ public class RFilter extends RealmObject {
         this.categoryValue = categoryValue;
     }
 
-    public FilterCategory getCategory() {
-        return FilterCategory.fromNetworkString(getCategoryValue());
+    public Filter getCategory() {
+        return Filter.fromNetworkString(getCategoryValue());
     }
 
-    public void setCategory(FilterCategory category) {
+    public void setCategory(Filter category) {
         setCategoryValue(category.getNetworkString());
     }
 
@@ -86,25 +86,25 @@ public class RFilter extends RealmObject {
 
                 RFilter filter = realm.createObject(RFilter.class, "1");
                 filter.setActive(true);
-                filter.setCategory(FilterCategory.LOVE_INTEREST);
+                filter.setCategory(Filter.LOVE_INTEREST);
                 filter.setGenderValue("Both");
                 filters.add(filter);
 
                 filter = realm.createObject(RFilter.class, "2");
                 filter.setActive(true);
-                filter.setCategory(FilterCategory.COFFEE_BUDDY);
+                filter.setCategory(Filter.COFFEE_BUDDY);
                 filter.setGenderValue("Female");
                 filters.add(filter);
 
                 filter = realm.createObject(RFilter.class, "3");
                 filter.setActive(true);
-                filter.setCategory(FilterCategory.WORKOUT_BUDDY);
+                filter.setCategory(Filter.WORKOUT_BUDDY);
                 filter.setGenderValue("Male");
                 filters.add(filter);
 
                 filter = realm.createObject(RFilter.class, "4");
                 filter.setActive(false);
-                filter.setCategory(FilterCategory.BUDDY);
+                filter.setCategory(Filter.BUDDY);
                 filter.setGenderValue("Male");
                 filters.add(filter);
 
