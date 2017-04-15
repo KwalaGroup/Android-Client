@@ -12,6 +12,7 @@ import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldN
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -30,7 +31,6 @@ public class RMatch extends RealmObject {
     @Required private String matchStateValue;
     @Required private Date expirationDate;
 
-    @Required private String userId;
     @Required private String firstName;
     @Required private String lastName;
     @Required private String profileImageId;
@@ -82,14 +82,6 @@ public class RMatch extends RealmObject {
         this.expirationDate = expirationDate;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -104,6 +96,10 @@ public class RMatch extends RealmObject {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return String.format(Locale.US, "%s %s", getFirstName(), getLastName());
     }
 
     public String getProfileImageId() {

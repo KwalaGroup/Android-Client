@@ -167,7 +167,6 @@ public class RealmSyncs {
         match.setMatchStateValue(jsonObject.getString("status"));
         match.setExpirationDate(new Date(jsonObject.getLong("expires_at")));
 
-        match.setUserId(jsonObject.getString("id"));
         match.setFirstName(jsonObject.getString("first_name"));
         match.setLastName(jsonObject.getString("last_name"));
         match.setProfileImageId(jsonObject.getString("image_id"));

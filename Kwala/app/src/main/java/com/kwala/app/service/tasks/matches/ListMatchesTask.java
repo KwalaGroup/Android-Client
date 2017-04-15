@@ -30,7 +30,7 @@ public class ListMatchesTask extends NetworkTask<Void> {
     @Override
     protected Void parse(JSONObject jsonObject) throws JSONException {
 
-        final JSONArray matchesJSONArray = jsonObject.getJSONArray("matches");
+        final JSONArray matchesJSONArray = jsonObject.getJSONArray("results");
 
         return RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
             @Override

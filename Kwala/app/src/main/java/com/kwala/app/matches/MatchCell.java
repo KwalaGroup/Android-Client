@@ -9,7 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kwala.app.R;
+import com.kwala.app.enums.Filter;
+import com.kwala.app.helpers.KwalaImages;
 import com.kwala.app.models.RMatch;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * @author muchow@hello.com
@@ -65,12 +70,17 @@ public class MatchCell extends RelativeLayout {
             return;
         }
 
-//        KwalaImages.with(profileImageView).setProfileImageId(match.getProfileImageId());
-//
-//        filterImageView.setImageResource(match.getFilterCategory().getIconId());
-//
-//        nameTextView.setText(match.getFullName());
-//        scoreTextView.setText(String.format(Locale.US, "%d%% match", match.getScore().intValue()));
-//        ageTextView.setText("age: 22");
+        KwalaImages.with(profileImageView).setProfileImageId(match.getProfileImageId());
+
+        ArrayList<Filter> filters = match.getFilters();
+        if (filters.size() > 0) {
+            filterImageView.setImageResource(filters.get(0).getIconId());
+        } else {
+            filterImageView.setImageBitmap(null);
+        }
+
+        nameTextView.setText(match.getFullName());
+        scoreTextView.setText(String.format(Locale.US, "%d%% match", match.getScore().intValue()));
+        ageTextView.setText("age: " + match.getAge());
     }
 }
