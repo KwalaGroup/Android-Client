@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,10 @@ import com.kwala.app.filters.create_filter.CreateFilterActivity;
 import com.kwala.app.helpers.KwalaDialogBuilder;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.models.RFilter;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.realm.RealmQueries;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.filters.DeleteFilterTask;
 
 import io.realm.RealmResults;
 
@@ -97,7 +101,7 @@ public class FiltersFragment extends Fragment {
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Toast.makeText(getActivity(), "Delete", Toast.LENGTH_LONG).show();
+                                            deleteFilter(filter);
                                         }
                                     })
                                     .show();
@@ -125,6 +129,25 @@ public class FiltersFragment extends Fragment {
 
         filtersRecyclerView.setAdapter(adapter);
         resolveLayoutState();
+    }
+
+    private void deleteFilter(@Nullable RFilter filter) {
+        if (filter == null) {
+            return;
+        }
+
+        new DeleteFilterTask(filter.getFilterId()).start(new Task.Callback<Void, NetworkException>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getActivity(), "Filter deleted", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(NetworkException e) {
+                Log.e(TAG, "Error deleting filter", e);
+                Toast.makeText(getActivity(), "Error deleting filter", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void resolveLayoutState() {

@@ -40,7 +40,7 @@ public class OkRequestFactory {
         HttpUrl.Builder builder = baseHttpUrl.newBuilder();
 
         //Add params to query string if Method is GET
-        if (endpoint.getMethod() == Endpoint.Method.GET && endpoint.getParams() != null) {
+        if (endpoint.getParams() != null && useQueryParameters(endpoint)) {
             Iterator<String> iterator = endpoint.getParams().keys();
             while (iterator.hasNext()) {
                 String key = iterator.next();
@@ -53,6 +53,11 @@ public class OkRequestFactory {
         }
 
         return builder.build();
+    }
+
+    private static <T> boolean useQueryParameters(Endpoint<T> endpoint) {
+        return endpoint.getMethod() == Endpoint.Method.GET
+                || endpoint.getMethod() == Endpoint.Method.DELETE;
     }
 
     private static <T> String getMethod(Endpoint<T> endpoint) {

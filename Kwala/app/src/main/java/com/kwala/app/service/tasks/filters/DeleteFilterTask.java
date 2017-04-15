@@ -1,12 +1,16 @@
 package com.kwala.app.service.tasks.filters;
 
+import com.kwala.app.models.RFilter;
 import com.kwala.app.service.endpoints.APIEndpoint;
 import com.kwala.app.service.endpoints.Endpoint;
+import com.kwala.app.service.realm.RealmWrites;
 import com.kwala.app.service.tasks.APIPaths;
 import com.kwala.app.service.tasks.NetworkTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import io.realm.Realm;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -29,6 +33,12 @@ public class DeleteFilterTask extends NetworkTask<Void> {
 
     @Override
     protected Void parse(JSONObject jsonObject) throws JSONException {
-        return null;
+        return RealmWrites.withDefaultRealm().executeTransaction(new RealmWrites.Transaction<Void>() {
+            @Override
+            public Void execute(Realm realm) {
+                RealmWrites.withRealm(realm).deleteIfExists(RFilter.class, filterId);
+                return null;
+            }
+        });
     }
 }
