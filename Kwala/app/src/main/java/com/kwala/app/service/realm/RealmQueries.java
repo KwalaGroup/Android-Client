@@ -2,8 +2,11 @@ package com.kwala.app.service.realm;
 
 import android.support.annotation.MainThread;
 
+import com.kwala.app.enums.MatchState;
+import com.kwala.app.models.RMatch;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.models.RQuizQuestion;
+import com.quarkworks.android.realmtypesafequery.generated.RMatchFieldNames;
 import com.quarkworks.android.realmtypesafequery.generated.RMessageFieldNames;
 import com.quarkworks.android.realmtypesafequery.generated.RQuizQuestionFieldNames;
 
@@ -41,6 +44,9 @@ public class RealmQueries {
         Generics
      */
     public <T extends RealmModel> T get(Class<T> clazz, String primaryKey) {
+        if (primaryKey == null) {
+            primaryKey = "";
+        }
         String primaryKeyFieldName = realm.getSchema().get(clazz.getSimpleName()).getPrimaryKey();
         return realm.where(clazz).equalTo(primaryKeyFieldName, primaryKey).findFirst();
     }
@@ -55,6 +61,16 @@ public class RealmQueries {
     public RealmResults<RQuizQuestion> getQuizQuestions() {
         return realm.where(RQuizQuestion.class)
                 .findAllSorted(RQuizQuestionFieldNames.QUESTION_ID, Sort.ASCENDING);
+    }
+
+    /*
+     * Matches
+     */
+    public RealmResults<RMatch> getMatches() {
+        return realm.where(RMatch.class)
+                .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.EXPIRED.getNetworkValue())
+                .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENT.getNetworkValue())
+                .findAllSorted(RMatchFieldNames.EXPIRATION_DATE);
     }
 
     /*

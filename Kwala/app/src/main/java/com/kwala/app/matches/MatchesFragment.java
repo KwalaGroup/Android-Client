@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,11 @@ import com.kwala.app.helpers.KwalaDialogBuilder;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.matches.chat.ChatActivity;
 import com.kwala.app.models.RMatch;
+import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.realm.RealmQueries;
+import com.kwala.app.service.tasks.Task;
+import com.kwala.app.service.tasks.matches.AcceptMatchTask;
+import com.kwala.app.service.tasks.matches.RejectMatchTask;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -57,7 +62,7 @@ public class MatchesFragment extends Fragment {
         /*
          * Set up adapter
          */
-        matches = RealmQueries.withMainRealm().getAll(RMatch.class);
+        matches = RealmQueries.withMainRealm().getMatches();
 
         matches.addChangeListener(new RealmChangeListener<RealmResults<RMatch>>() {
             @Override
@@ -80,6 +85,7 @@ public class MatchesFragment extends Fragment {
                 matchCell.setViewData(getItem(position));
             }
         };
+
         matchesRecyclerView.setAdapter(adapter);
         resolveLayoutState();
     }
@@ -108,7 +114,12 @@ public class MatchesFragment extends Fragment {
         }
 
         @Override
-        public boolean onLongClick(MatchCell matchCell) {
+        public boolean onLongClick(final MatchCell matchCell) {
+            final String matchId = matchCell.getMatchId();
+            if (matchId == null) {
+                return false;
+            }
+
             KwalaDialogBuilder.with(getActivity())
                     .setTitle("Reject match")
                     .setMessage("Are you sure you want to reject your match with this user?\n\nThis action is irreversible and you will not be able to match with this person again in the future.")
@@ -116,8 +127,18 @@ public class MatchesFragment extends Fragment {
                     .setPositiveButton("Reject", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //TODO: reject action
-                            Toast.makeText(getActivity(), "Rejected", Toast.LENGTH_LONG).show();
+                            new RejectMatchTask(matchId).start(new Task.Callback<Void, NetworkException>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Do nothing
+                                }
+
+                                @Override
+                                public void onFailure(NetworkException e) {
+                                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, "Error rejecting match", e);
+                                }
+                            });
                         }
                     })
                     .show();
@@ -137,8 +158,18 @@ public class MatchesFragment extends Fragment {
         public void onHeartClicked(MatchCell matchCell) {
             String matchId = matchCell.getMatchId();
             if (matchId != null) {
-                //TODO: accept action
-                Toast.makeText(getActivity(), "Accept sent", Toast.LENGTH_LONG).show();
+                new AcceptMatchTask(matchId).start(new Task.Callback<Void, NetworkException>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //Do nothing
+                    }
+
+                    @Override
+                    public void onFailure(NetworkException e) {
+                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "Error accepting match", e);
+                    }
+                });
             }
         }
     };

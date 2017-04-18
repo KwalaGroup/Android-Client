@@ -24,7 +24,8 @@ public class ListMatchesTask extends NetworkTask<Void> {
 
     @Override
     protected Endpoint<JSONObject> buildEndpoint() {
-        return new APIEndpoint(APIPaths.MATCHES, Endpoint.Method.GET);
+        return new APIEndpoint(APIPaths.MATCHES, Endpoint.Method.GET)
+                .shouldLog(false);
     }
 
     @Override

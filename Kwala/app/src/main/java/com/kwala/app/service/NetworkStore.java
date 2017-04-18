@@ -115,8 +115,9 @@ public class NetworkStore {
                         if (!endpoint.shouldLog()) {
                             Log.e(TAG, "Silent endpoint failed");
                             Log.d(TAG, "Request: " + response);
-                            Log.d(TAG, "Response: " + response);
                         }
+
+                        Log.d(TAG, "Response: " + response);
 
                         callback.failure(new NetworkException(response.code(), response.message()));
                         return;

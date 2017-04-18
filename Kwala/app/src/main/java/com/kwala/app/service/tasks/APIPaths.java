@@ -31,4 +31,8 @@ public final class APIPaths {
     public static final String FILTERS = "/filters";
 
     public static final String MATCHES = "/matches";
+    public static final class Matches {
+        public static final String ACCEPT = MATCHES + "/accept";
+        public static final String REJECT = MATCHES + "/reject";
+    }
 }
