@@ -51,6 +51,11 @@ dependencies {
         exclude group: 'com.android.support';
     }
 
+    //Dynamic ViewPager
+    compile ('com.github.QuarkWorks:DynamicViewPager-Android:0.9.6') {
+        exclude group: 'com.android.support';
+    }
+
     //Fancy Realm adapters
     compile 'io.realm:android-adapters:1.4.0'
 

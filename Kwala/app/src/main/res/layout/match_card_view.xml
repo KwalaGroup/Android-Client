@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#88000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                />
+
+            <ImageView
+                android:id="@+id/match_card_view_profile_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+
+                tools:src="@drawable/brittany"
+                android:adjustViewBounds="true"
+                />
+
+        </LinearLayout>
+
+        <com.kwala.app.helpers.views.KwalaTextView
+            android:id="@+id/match_card_view_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            tools:text="@string/test_full_name"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            />
+
+        <com.kwala.app.helpers.views.KwalaTextView
+            android:id="@+id/match_card_view_age_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            tools:text="Age: 23"
+            android:textSize="16sp"
+            android:textColor="@color/kDarkGray"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -110,7 +110,11 @@ public class MatchesFragment extends Fragment {
     private final MatchCell.Listener matchCellListener = new MatchCell.Listener() {
         @Override
         public void onClick(MatchCell matchCell) {
-            //TODO: show profile dialog
+            String matchId = matchCell.getMatchId();
+            if (matchId != null) {
+                Intent intent = MatchCardPagerActivity.newIntent(getActivity(), matchId);
+                startActivity(intent);
+            }
         }
 
         @Override
