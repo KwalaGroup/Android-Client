@@ -114,6 +114,8 @@ public class RealmSyncs {
 
         RealmList<RFilter> filters = new RealmList<>();
 
+        realm.delete(RFilter.class);
+
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject filterJsonObject = jsonArray.getJSONObject(i);
 
@@ -143,6 +145,8 @@ public class RealmSyncs {
 
     public RealmList<RMatch> syncMatches(JSONArray jsonArray) throws JSONException {
         RealmList<RMatch> matches = new RealmList<>();
+
+        realm.delete(RMatch.class);
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject matchJSONObject = jsonArray.getJSONObject(i);
