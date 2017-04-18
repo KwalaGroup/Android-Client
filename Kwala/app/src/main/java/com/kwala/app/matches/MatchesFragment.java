@@ -1,6 +1,7 @@
 package com.kwala.app.matches;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.kwala.app.R;
+import com.kwala.app.helpers.KwalaDialogBuilder;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.matches.chat.ChatActivity;
 import com.kwala.app.models.RMatch;
@@ -41,7 +44,7 @@ public class MatchesFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /*
@@ -67,28 +70,16 @@ public class MatchesFragment extends Fragment {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 MatchCell matchCell = new MatchCell(parent.getContext());
+                matchCell.setListener(matchCellListener);
                 return new RecyclerView.ViewHolder(matchCell) {};
             }
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 MatchCell matchCell = (MatchCell) holder.itemView;
-                final RMatch match = getItem(position);
-
                 matchCell.setViewData(getItem(position));
-
-                matchCell.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (match != null) {
-                            Intent intent = ChatActivity.newIntent(getActivity(), match.getMatchId());
-                            startActivity(intent);
-                        }
-                    }
-                });
             }
         };
-
         matchesRecyclerView.setAdapter(adapter);
         resolveLayoutState();
     }
@@ -106,4 +97,49 @@ public class MatchesFragment extends Fragment {
             emptyStateLayout.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * Listeners
+     */
+    private final MatchCell.Listener matchCellListener = new MatchCell.Listener() {
+        @Override
+        public void onClick(MatchCell matchCell) {
+            //TODO: show profile dialog
+        }
+
+        @Override
+        public boolean onLongClick(MatchCell matchCell) {
+            KwalaDialogBuilder.with(getActivity())
+                    .setTitle("Reject match")
+                    .setMessage("Are you sure you want to reject your match with this user?\n\nThis action is irreversible and you will not be able to match with this person again in the future.")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("Reject", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //TODO: reject action
+                            Toast.makeText(getActivity(), "Rejected", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .show();
+            return true;
+        }
+
+        @Override
+        public void onChatClicked(MatchCell matchCell) {
+            String matchId = matchCell.getMatchId();
+            if (matchId != null) {
+                Intent intent = ChatActivity.newIntent(getActivity(), matchId);
+                startActivity(intent);
+            }
+        }
+
+        @Override
+        public void onHeartClicked(MatchCell matchCell) {
+            String matchId = matchCell.getMatchId();
+            if (matchId != null) {
+                //TODO: accept action
+                Toast.makeText(getActivity(), "Accept sent", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 }
