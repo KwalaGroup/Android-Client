@@ -9,7 +9,7 @@ import com.kwala.app.R;
  */
 public enum Filter {
     UNKNOWN("UNKNOWN", "Unknown", 0, new Interest[]{}),
-    LOVE_INTEREST("LOVE_INTEREST", "Love Interest", R.drawable.filter_heart_icon, new Interest[] { Interest.MARRIAGE, Interest.DATING, Interest.CASUAL, Interest.MUTUALLY_EXCLUSIVE }),
+    LOVE_INTEREST("LOVE_INTEREST", "Love Interest", R.drawable.filter_heart_icon_light, new Interest[] { Interest.MARRIAGE, Interest.DATING, Interest.CASUAL, Interest.MUTUALLY_EXCLUSIVE }),
     COFFEE_BUDDY("COFFEE_BUDDY", "Coffee Buddy", R.drawable.filter_coffee_icon, new Interest[] { Interest.TEA_NOT_COFFEE, Interest.POUR_OVER, Interest.LATTES, Interest.JUST_COFFEE }),
     WORKOUT_BUDDY("WORKOUT_BUDDY", "Workout Buddy", R.drawable.filter_weights_icon, new Interest[] {Interest.YOGA, Interest.BODYBUILDING, Interest.POWER_LIFTING, Interest.RUNNING, Interest.BIKING, Interest.TRIATHLONS }),
     STUDY_BUDDY("STUDY_BUDDY", "Study Buddy", R.drawable.filter_pencil_icon, new Interest[] { Interest.CHEMISTRY, Interest.PHYSICS, Interest.MATH, Interest.OPERATING_SYSTEMS, Interest.ACADEMIC_INTEGRITY }),

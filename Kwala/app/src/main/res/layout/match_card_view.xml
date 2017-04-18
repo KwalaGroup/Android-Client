@@ -1,42 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#88000000">
+    android:layout_height="wrap_content"
+    tools:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_background"
+        android:background="@drawable/card_background_top"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/match_card_view_profile_image"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            android:layout_marginBottom="30dp"
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="25"
-                />
-
-            <ImageView
-                android:id="@+id/match_card_view_profile_image"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-
-                tools:src="@drawable/brittany"
-                android:adjustViewBounds="true"
-                />
-
-        </LinearLayout>
+            tools:src="@drawable/brittany"
+            android:adjustViewBounds="true"
+            />
 
         <com.kwala.app.helpers.views.KwalaTextView
             android:id="@+id/match_card_view_name_text"
@@ -60,6 +49,85 @@
             android:gravity="center"
             />
 
+        <ImageView
+            android:id="@+id/match_card_view_filter_image"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+
+            tools:src="@drawable/filter_heart_icon_dark"
+            />
+
+        <com.kwala.app.helpers.views.KwalaTextView
+            android:id="@+id/match_card_view_bio_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+
+            tools:text="@string/test_description"
+            android:textSize="14sp"
+            android:textColor="@color/kDarkGray"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:gravity="center"
+            />
+
+        <com.kwala.app.helpers.views.KwalaTextView
+            android:id="@+id/match_card_view_score_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+
+            tools:text="80% Match"
+            android:textSize="14sp"
+            android:textColor="@color/kDarkGray"
+            android:gravity="center"
+            />
+
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/match_card_view_reject_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:background="@drawable/match_card_bot_left_button"
+            android:text="Reject"
+            android:textSize="14sp"
+            android:textColor="@color/kDarkGray"
+            android:textAllCaps="false"
+            />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            />
+
+        <Button
+            android:id="@+id/match_card_view_accept_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:background="@drawable/match_card_bot_right_button"
+            android:text="Accept"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAllCaps="false"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

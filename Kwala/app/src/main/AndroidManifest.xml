@@ -28,32 +28,29 @@
         </activity>
 
         <activity android:name=".login.LandingActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".login.LoginActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize">
-        </activity>
-        <activity android:name=".registration.RegistrationActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize">
-        </activity>
-        <activity android:name=".registration.RegistrationActivity2">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <activity android:name=".main.MainActivity">
-        </activity>
-        <activity android:name=".filters.create_filter.CreateFilterActivity">
-        </activity>
-        <activity android:name=".filters.create_filter.CreateFilterActivity2">
-        </activity>
-        <activity android:name=".quiz.take_quiz.TakeQuizActivity">
-        </activity>
+        <activity android:name=".login.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <activity android:name=".registration.RegistrationActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <activity android:name=".registration.RegistrationActivity2" />
+
+        <activity android:name=".main.MainActivity" />
+        <activity android:name=".filters.create_filter.CreateFilterActivity" />
+        <activity android:name=".filters.create_filter.CreateFilterActivity2" />
+        <activity android:name=".quiz.take_quiz.TakeQuizActivity" />
+
+        <activity android:name=".matches.MatchCardPagerActivity"
+            android:theme="@style/AppTheme.Transparent" />
+
         <activity android:name=".matches.chat.ChatActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
-        <activity android:name=".matches.MatchCardPagerActivity" />
+            android:theme="@style/Base.Theme.AppCompat" />
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
