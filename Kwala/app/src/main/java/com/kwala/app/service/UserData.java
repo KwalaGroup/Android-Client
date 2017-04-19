@@ -32,7 +32,7 @@ public class UserData {
         private static final String GENDER = "gender";
         private static final String AGE = "age";
         private static final String BIO = "bio";
-        private static final String COLOR = "color";
+        private static final String PROFILE_COLOR = "profile_color";
     }
 
     private static UserData userData;
@@ -174,18 +174,18 @@ public class UserData {
     }
 
     @Nullable
-    public synchronized String getColor() {
-        return sharedPreferences.getString(Keys.COLOR, null);
+    public synchronized String getProfileColor() {
+        return sharedPreferences.getString(Keys.PROFILE_COLOR, null);
     }
 
     @ColorInt
-    public synchronized int getColorAsInt() {
-        String colorHex = getColor();
+    public synchronized int getProfileColorAsInt() {
+        String colorHex = getProfileColor();
         return Tools.hexToColorInt(colorHex == null ? "ffa9deef" : colorHex);
     }
 
-    public synchronized UserData setColor(@Nullable String color) {
-        sharedPreferences.edit().putString(Keys.COLOR, color).apply();
+    public synchronized UserData setProfileColor(@Nullable String profileColor) {
+        sharedPreferences.edit().putString(Keys.PROFILE_COLOR, profileColor).apply();
         return this;
     }
 
@@ -207,6 +207,6 @@ public class UserData {
 
         setBio(jsonObject.optString("bio", null));
 
-        setColor(jsonObject.getString("color"));
+        setProfileColor(jsonObject.getString("color"));
     }
 }

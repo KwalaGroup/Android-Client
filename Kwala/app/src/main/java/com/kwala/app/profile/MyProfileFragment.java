@@ -79,6 +79,7 @@ public class MyProfileFragment extends BaseFragment {
 
         UserData userData = UserData.getInstance();
 
+        Tools.applyProfileColorToView(profileImageLayout, userData.getProfileColorAsInt());
         KwalaImages kwalaImages = KwalaImages.with(profileImageLayout.getImageView());
         if (croppedImageUri != null) {
             kwalaImages.setProfileImageUri(croppedImageUri);
@@ -93,7 +94,7 @@ public class MyProfileFragment extends BaseFragment {
         ageTextView.setText(Tools.formatString(getActivity(), R.string.profile_age_formatted, age == null ? "?" : "" + age));
 
         GradientDrawable colorDrawable = (GradientDrawable) colorImageView.getDrawable();
-        colorDrawable.setColor(userData.getColorAsInt());
+        colorDrawable.setColor(userData.getProfileColorAsInt());
 
         bioTextView.setText(userData.getBio());
     }

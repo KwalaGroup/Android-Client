@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.target.Target;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -30,15 +32,15 @@ public class KwalaImages {
         return new KwalaImages(imageView);
     }
 
-    public void setProfileImageId(String profileImageId) {
-        Glide.with(context)
+    public Target<GlideDrawable> setProfileImageId(String profileImageId) {
+        return Glide.with(context)
                 .load(getImageUrl(profileImageId))
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(imageView);
     }
 
-    public void setProfileImageUri(Uri imageUri) {
-        Glide.with(context)
+    public Target<GlideDrawable> setProfileImageUri(Uri imageUri) {
+        return Glide.with(context)
                 .load(imageUri)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .bitmapTransform(new CropCircleTransformation(context))

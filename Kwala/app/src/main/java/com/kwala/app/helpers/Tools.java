@@ -1,13 +1,17 @@
 package com.kwala.app.helpers;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
+import com.kwala.app.R;
 
 import org.json.JSONObject;
 
@@ -61,6 +65,15 @@ public class Tools {
 
     public static String colorIntToHex(@ColorInt int colorInt) {
         return Integer.toHexString(colorInt);
+    }
+
+    public static void applyProfileColorToView(View view, @ColorInt int profileColor) {
+        if (view.getBackground() == null) {
+            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.white_oval));
+        }
+
+        view.getBackground().mutate()
+                .setColorFilter(profileColor, PorterDuff.Mode.SRC_ATOP);
     }
 
     public static JSONObject dataSnapshotToJSONObject(@Nullable DataSnapshot dataSnapshot) {
