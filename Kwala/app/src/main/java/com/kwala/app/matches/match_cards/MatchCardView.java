@@ -133,7 +133,7 @@ public class MatchCardView extends RelativeLayout {
         nameTextView.setText(match.getFullName());
         ageTextView.setText(String.format(Locale.US, "Age: %d", match.getAge()));
         bioTextView.setText(match.getBio());
-        scoreTextView.setText(String.format(Locale.US, "%d%% match", match.getScore().intValue()));
+        scoreTextView.setText(String.format(Locale.US, "%d%% match", match.getScoreAsPercentage().intValue()));
 
         MatchState matchState = match.getMatchState();
         if (matchState == MatchState.SUCCESS) {

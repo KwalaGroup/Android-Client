@@ -126,7 +126,7 @@ public class MatchCell extends RelativeLayout {
         }
 
         nameTextView.setText(match.getFullName());
-        scoreTextView.setText(String.format(Locale.US, "%d%% match", match.getScore().intValue()));
+        scoreTextView.setText(String.format(Locale.US, "%d%% match", match.getScoreAsPercentage().intValue()));
 
         MatchState matchState = match.getMatchState();
         if (matchState == MatchState.SUCCESS) {

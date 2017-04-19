@@ -54,6 +54,10 @@ public class RMatch extends RealmObject {
         return score;
     }
 
+    public Double getScoreAsPercentage() {
+        return getScore() * 100.0;
+    }
+
     public void setScore(Double score) {
         this.score = score;
     }
