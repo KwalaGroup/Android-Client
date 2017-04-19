@@ -13,7 +13,6 @@ import com.kwala.app.R;
 import com.kwala.app.enums.Filter;
 import com.kwala.app.enums.MatchState;
 import com.kwala.app.helpers.KwalaImages;
-import com.kwala.app.helpers.Tools;
 import com.kwala.app.models.RMatch;
 
 import java.util.ArrayList;
@@ -117,8 +116,7 @@ public class MatchCell extends RelativeLayout {
 
         matchId = match.getMatchId();
 
-        Tools.applyProfileColorToView(profileImageView, match.getProfileColorAsInt());
-        KwalaImages.with(profileImageView).setProfileImageId(match.getProfileImageId());
+        KwalaImages.with(profileImageView).setProfileImageId(match.getProfileImageId(), match.getProfileColorAsInt());
 
         ArrayList<Filter> filters = match.getFilters();
         if (filters.size() > 0) {
