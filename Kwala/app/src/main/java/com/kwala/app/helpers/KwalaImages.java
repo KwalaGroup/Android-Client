@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.kwala.app.R;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -34,11 +35,12 @@ public class KwalaImages {
         return new KwalaImages(imageView);
     }
 
-    public Target<GlideDrawable> setProfileImageId(String profileImageId, @ColorInt final int profileColor) {
+    public void setProfileImageId(String profileImageId, @ColorInt final int profileColor) {
         imageView.setBackground(null);
 
-        return Glide.with(context)
+        Glide.with(context)
                 .load(getImageUrl(profileImageId))
+                .placeholder(R.drawable.kwala_head_placeholder)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -55,17 +57,17 @@ public class KwalaImages {
                 .into(imageView);
     }
 
-    public Target<GlideDrawable> setProfileImageId(String profileImageId) {
+    public void setProfileImageId(String profileImageId) {
         imageView.setBackground(null);
 
-        return Glide.with(context)
+        Glide.with(context)
                 .load(getImageUrl(profileImageId))
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(imageView);
     }
 
-    public Target<GlideDrawable> setProfileImageUri(Uri imageUri) {
-        return Glide.with(context)
+    public void setProfileImageUri(Uri imageUri) {
+        Glide.with(context)
                 .load(imageUri)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .bitmapTransform(new CropCircleTransformation(context))
