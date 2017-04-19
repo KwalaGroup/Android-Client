@@ -85,8 +85,15 @@ public class MatchesFragment extends Fragment {
                 MatchCell matchCell = (MatchCell) holder.itemView;
                 matchCell.setViewData(getItem(position));
             }
+
+            @Override
+            public long getItemId(int index) {
+                RMatch match = getItem(index);
+                return match == null ? index : match.getMatchId().hashCode();
+            }
         };
 
+        adapter.setHasStableIds(true);
         matchesRecyclerView.setAdapter(adapter);
         resolveLayoutState();
     }
