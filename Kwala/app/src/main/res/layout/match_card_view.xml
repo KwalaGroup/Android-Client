@@ -91,6 +91,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/match_card_view_respond_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -126,6 +127,17 @@
             android:textSize="14sp"
             android:textColor="@color/colorPrimaryDark"
             android:textAllCaps="false"
+            />
+
+        <ImageButton
+            android:id="@+id/match_card_view_chat_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:background="@drawable/match_card_bot_right_button"
+            android:src="@drawable/chat_bubble"
+            android:visibility="gone"
             />
 
     </LinearLayout>

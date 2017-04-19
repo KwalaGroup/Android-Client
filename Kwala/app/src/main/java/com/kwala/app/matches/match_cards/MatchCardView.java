@@ -1,4 +1,4 @@
-package com.kwala.app.matches;
+package com.kwala.app.matches.match_cards;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,11 +39,23 @@ public class MatchCardView extends RelativeLayout {
 
     private Button rejectButton;
     private Button acceptButton;
+    private ImageButton chatButton;
 
     /*
         Data
      */
     @Nullable private String matchId;
+
+    /*
+        Listener
+     */
+    public interface Listener {
+        void onRejectClicked(MatchCardView matchCardView);
+        void onAcceptClicked(MatchCardView matchCardView);
+        void onChatClicked(MatchCardView matchCardView);
+    }
+
+    @Nullable private Listener listener;
 
     /*
         Constructors
@@ -77,13 +90,20 @@ public class MatchCardView extends RelativeLayout {
 
         rejectButton = (Button) findViewById(R.id.match_card_view_reject_button);
         acceptButton = (Button) findViewById(R.id.match_card_view_accept_button);
+        chatButton = (ImageButton) findViewById(R.id.match_card_view_chat_button);
 
-        rejectButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        rejectButton.setOnClickListener(rejectClickListener);
+        acceptButton.setOnClickListener(acceptClickListener);
+        chatButton.setOnClickListener(chatClickListener);
+    }
 
-            }
-        });
+    public void setListener(@Nullable Listener listener) {
+        this.listener = listener;
+    }
+
+    @Nullable
+    public String getMatchId() {
+        return matchId;
     }
 
     public void setViewData(@Nullable RMatch match) {
@@ -117,16 +137,45 @@ public class MatchCardView extends RelativeLayout {
 
         MatchState matchState = match.getMatchState();
         if (matchState == MatchState.SUCCESS) {
-//            chatImageView.setVisibility(VISIBLE);
-//            heartImageView.setVisibility(GONE);
-            //TODO: show chat button
+            chatButton.setVisibility(VISIBLE);
+            acceptButton.setVisibility(GONE);
         } else {
-//            chatImageView.setVisibility(GONE);
-//            heartImageView.setVisibility(VISIBLE);
+            chatButton.setVisibility(GONE);
+            acceptButton.setVisibility(VISIBLE);
 
-//            boolean hearted = matchState == MatchState.ACCEPT_SENT;
-//            heartImageView.setImageResource(hearted ? R.drawable.heart_fill : R.drawable.heart_outline);
-//            heartImageView.setEnabled(!hearted);
+            boolean acceptEnabled = matchState == MatchState.NEW;
+            acceptButton.setEnabled(acceptEnabled);
+            acceptButton.setAlpha(acceptEnabled ? 1.0f : 0.4f);
         }
     }
+
+    /**
+     * Listeners
+     */
+    private final OnClickListener rejectClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onRejectClicked(MatchCardView.this);
+            }
+        }
+    };
+
+    private final OnClickListener acceptClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onAcceptClicked(MatchCardView.this);
+            }
+        }
+    };
+
+    private final OnClickListener chatClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onChatClicked(MatchCardView.this);
+            }
+        }
+    };
 }

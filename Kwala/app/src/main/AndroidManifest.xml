@@ -43,7 +43,7 @@
         <activity android:name=".filters.create_filter.CreateFilterActivity2" />
         <activity android:name=".quiz.take_quiz.TakeQuizActivity" />
 
-        <activity android:name=".matches.MatchCardPagerActivity"
+        <activity android:name=".matches.match_cards.MatchCardPagerActivity"
             android:theme="@style/AppTheme.Transparent" />
 
         <activity android:name=".matches.chat.ChatActivity"

@@ -1,7 +1,8 @@
-package com.kwala.app.matches;
+package com.kwala.app.matches.match_cards;
 
 import android.view.ViewGroup;
 
+import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.models.RMatch;
 import com.quarkworks.dynamicviewpager.DynamicPagerAdapter;
 
@@ -15,9 +16,11 @@ public class MatchCardPagerAdapter extends DynamicPagerAdapter {
     private static final String TAG = MatchCardPagerAdapter.class.getSimpleName();
 
     private RealmResults<RMatch> matches;
+    private MatchCardView.Listener matchCardListener;
 
-    public MatchCardPagerAdapter(RealmResults<RMatch> matches) {
+    public MatchCardPagerAdapter(RealmResults<RMatch> matches, BaseActivity activity) {
         this.matches = matches;
+        this.matchCardListener = new DefaultMatchCardListener(activity);
     }
 
     @Override
@@ -29,6 +32,7 @@ public class MatchCardPagerAdapter extends DynamicPagerAdapter {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         MatchCardView matchCardView = (MatchCardView) viewHolder.view;
+        matchCardView.setListener(matchCardListener);
         matchCardView.setViewData(matches.get(position));
     }
 

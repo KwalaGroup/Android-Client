@@ -1,4 +1,4 @@
-package com.kwala.app.matches;
+package com.kwala.app.matches.match_cards;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.models.RMatch;
 import com.kwala.app.service.realm.RealmQueries;
 
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 /**
@@ -20,6 +21,8 @@ public class MatchCardPagerActivity extends BaseActivity {
     private static final String TAG = MatchCardPagerActivity.class.getSimpleName();
 
     private static final String MATCH_ID_KEY = "match_id";
+
+    private MatchCardPagerAdapter pagerAdapter;
 
     public static Intent newIntent(Context context, String matchId) {
         Intent intent = new Intent(context, MatchCardPagerActivity.class);
@@ -48,7 +51,7 @@ public class MatchCardPagerActivity extends BaseActivity {
 
         String matchId = getIntent().getStringExtra(MATCH_ID_KEY);
 
-        RealmResults<RMatch> matches = RealmQueries.withMainRealm().getMatches();
+        final RealmResults<RMatch> matches = RealmQueries.withMainRealm().getMatches();
         int currentItem = 0;
         for (int i = 0; i < matches.size(); i++) {
             RMatch match = matches.get(i);
@@ -58,8 +61,17 @@ public class MatchCardPagerActivity extends BaseActivity {
             }
         }
 
-        MatchCardPagerAdapter pagerAdapter = new MatchCardPagerAdapter(matches);
+        pagerAdapter = new MatchCardPagerAdapter(matches, this);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(currentItem);
+
+        matches.addChangeListener(new RealmChangeListener<RealmResults<RMatch>>() {
+            @Override
+            public void onChange(RealmResults<RMatch> element) {
+                if (pagerAdapter != null) {
+                    pagerAdapter.updateData(matches);
+                }
+            }
+        });
     }
 }

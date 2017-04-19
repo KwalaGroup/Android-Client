@@ -16,6 +16,7 @@ import com.kwala.app.R;
 import com.kwala.app.helpers.KwalaDialogBuilder;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.matches.chat.ChatActivity;
+import com.kwala.app.matches.match_cards.MatchCardPagerActivity;
 import com.kwala.app.models.RMatch;
 import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.realm.RealmQueries;
