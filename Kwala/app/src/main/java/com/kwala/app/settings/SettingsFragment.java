@@ -1,7 +1,7 @@
 package com.kwala.app.settings;
 
 import android.app.Fragment;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,17 +12,23 @@ import android.widget.TextView;
 
 import com.kwala.app.BuildConfig;
 import com.kwala.app.R;
+import com.kwala.app.login.LandingActivity;
+import com.kwala.app.service.DataStore;
+import com.kwala.app.service.LocationService;
+import com.kwala.app.service.tasks.auth.LogoutTask;
 
 import java.util.Locale;
 
 import de.jonasrottmann.realmbrowser.RealmBrowser;
 import io.realm.Realm;
 
+import static android.view.View.GONE;
+
 /**
  * @author jacobamuchow@gmail.com
  */
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = SettingsFragment.class.getSimpleName();
 
     public static SettingsFragment newInstance() {
@@ -39,31 +45,52 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        View debugOptionsLayout = view.findViewById(R.id.settings_debug_options_layout);
+        View realmBrowserCell = view.findViewById(R.id.settings_realm_browser_cell);
+
         TextView versionTextView = (TextView) view.findViewById(R.id.settings_version_text);
         Button signOutButton = (Button) view.findViewById(R.id.settings_logout_button);
 
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvenirNext-Medium.ttf");
-        versionTextView.setTypeface(typeface);
-
         versionTextView.setText(String.format(Locale.US, "%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
 
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                new LogoutTask().start(null);
-//
-//                //Stop location update service
-//                Intent intent = new Intent(getActivity(), LocationService.class);
-//                getActivity().stopService(intent);
-//
-//                DataStore.getInstance().clearAllData();
-//
-//                intent = LandingActivity.newIntent(getActivity());
-//                startActivity(intent);
-//                getActivity().finishAffinity();
+        if (BuildConfig.DEBUG) {
+            debugOptionsLayout.setVisibility(View.VISIBLE);
 
+            realmBrowserCell.setOnClickListener(this);
+        } else {
+            debugOptionsLayout.setVisibility(GONE);
+        }
+
+        signOutButton.setOnClickListener(this);
+    }
+
+    private void logout() {
+        new LogoutTask().start(null);
+
+        //Stop location update service
+        Intent intent = new Intent(getActivity(), LocationService.class);
+        getActivity().stopService(intent);
+
+        DataStore.getInstance().clearAllData();
+
+        intent = LandingActivity.newIntent(getActivity());
+        startActivity(intent);
+        getActivity().finishAffinity();
+    }
+
+    /**
+     * Listeners
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.settings_realm_browser_cell:
                 RealmBrowser.startRealmModelsActivity(getActivity(), Realm.getDefaultInstance().getConfiguration());
-            }
-        });
+                break;
+
+            case R.id.settings_logout_button:
+                logout();
+                break;
+        }
     }
 }

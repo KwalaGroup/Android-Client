@@ -6,29 +6,107 @@
     android:layout_height="match_parent"
     tools:background="@drawable/background">
 
-    <RelativeLayout
-        android:id="@+id/do_not_disturb_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:orientation="vertical">
 
-        <com.kwala.app.helpers.views.KwalaTextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
 
-            android:text="Do not disturb"
-            android:textSize="20sp"
-            android:textColor="@color/kWhite"
+            <com.kwala.app.helpers.views.KwalaTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Do not disturb"
+                android:textSize="20sp"
+                android:textColor="@color/kWhite"
+                />
+
+            <com.kwala.app.helpers.views.KwalaSwitch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+
+                android:checked="true"/>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/matches_fragment_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/kWhite"
             />
 
-        <com.kwala.app.helpers.views.KwalaSwitch
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/settings_debug_options_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
 
-            android:checked="true"/>
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-    </RelativeLayout>
+            <com.kwala.app.helpers.views.KwalaTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+
+                android:text="Debug Options"
+                android:textColor="@color/kDarkGray"
+                android:gravity="center"
+                />
+
+            <RelativeLayout
+                android:id="@+id/settings_realm_browser_cell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <com.kwala.app.helpers.views.KwalaTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Realm Browser"
+                    android:textSize="20sp"
+                    android:textColor="@color/kWhite"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+
+                    android:src="@drawable/forward_arrow"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/kWhite"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.kwala.app.helpers.views.KwalaTextView
         android:id="@+id/settings_version_text"
