@@ -169,6 +169,9 @@ public class RMatch extends RealmObject {
     }
 
     public void setFilterValues(RealmList<RString> filterValues) {
+        if (this.filterValues != null) {
+            this.filterValues.deleteAllFromRealm();
+        }
         this.filterValues = filterValues;
     }
 
@@ -188,6 +191,9 @@ public class RMatch extends RealmObject {
     }
 
     public void setInterestValues(RealmList<RString> interestValues) {
+        if (this.interestValues != null) {
+            this.interestValues.deleteAllFromRealm();
+        }
         this.interestValues = interestValues;
     }
 

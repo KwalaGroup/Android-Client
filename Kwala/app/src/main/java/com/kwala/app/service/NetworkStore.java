@@ -11,6 +11,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.bumptech.glide.Glide;
 import com.kwala.app.helpers.KwalaConstants;
 import com.kwala.app.main.KwalaApplication;
 import com.kwala.app.service.endpoints.APIEndpoint;
@@ -97,6 +98,16 @@ public class NetworkStore {
 
     public void clearData() {
         kwalaCookieStore.removeAll();
+
+        final Glide glide = Glide.get(KwalaApplication.getInstance());
+        glide.clearMemory();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                glide.clearDiskCache();
+            }
+        }).start();
     }
 
     public <T> EndpointRequest<T> performRequest(final Endpoint<T> endpoint, final EndpointRequest.Callback<T> callback) {
