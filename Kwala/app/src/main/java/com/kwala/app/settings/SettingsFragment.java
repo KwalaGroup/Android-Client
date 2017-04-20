@@ -1,7 +1,6 @@
 package com.kwala.app.settings;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +12,11 @@ import android.widget.TextView;
 
 import com.kwala.app.BuildConfig;
 import com.kwala.app.R;
-import com.kwala.app.login.LandingActivity;
-import com.kwala.app.service.DataStore;
-import com.kwala.app.service.LocationService;
-import com.kwala.app.service.tasks.auth.LogoutTask;
 
 import java.util.Locale;
+
+import de.jonasrottmann.realmbrowser.RealmBrowser;
+import io.realm.Realm;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -52,17 +50,19 @@ public class SettingsFragment extends Fragment {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LogoutTask().start(null);
+//                new LogoutTask().start(null);
+//
+//                //Stop location update service
+//                Intent intent = new Intent(getActivity(), LocationService.class);
+//                getActivity().stopService(intent);
+//
+//                DataStore.getInstance().clearAllData();
+//
+//                intent = LandingActivity.newIntent(getActivity());
+//                startActivity(intent);
+//                getActivity().finishAffinity();
 
-                //Stop location update service
-                Intent intent = new Intent(getActivity(), LocationService.class);
-                getActivity().stopService(intent);
-
-                DataStore.getInstance().clearAllData();
-
-                intent = LandingActivity.newIntent(getActivity());
-                startActivity(intent);
-                getActivity().finishAffinity();
+                RealmBrowser.startRealmModelsActivity(getActivity(), Realm.getDefaultInstance().getConfiguration());
             }
         });
     }

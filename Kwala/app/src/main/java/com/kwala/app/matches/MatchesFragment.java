@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.kwala.app.R;
+import com.kwala.app.enums.MatchState;
 import com.kwala.app.helpers.KwalaDialogBuilder;
 import com.kwala.app.helpers.views.KRealmRecyclerViewAdapter;
 import com.kwala.app.matches.chat.ChatActivity;
@@ -83,7 +84,16 @@ public class MatchesFragment extends Fragment {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 MatchCell matchCell = (MatchCell) holder.itemView;
-                matchCell.setViewData(getItem(position));
+                RMatch match = getItem(position);
+
+                //Show divider if current match state != SUCCESS && above match state == SUCCESS
+                boolean showDivider = false;
+                if (position > 0 && match != null && match.getMatchState() != MatchState.SUCCESS) {
+                    RMatch aboveMatch = getItem(position-1);
+                    showDivider = aboveMatch != null && aboveMatch.getMatchState() == MatchState.SUCCESS;
+                }
+
+                matchCell.setViewData(getItem(position), showDivider);
             }
 
             @Override

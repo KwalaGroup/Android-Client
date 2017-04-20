@@ -56,6 +56,11 @@ dependencies {
         exclude group: 'com.android.support';
     }
 
+    //Realm Browser
+    debugCompile 'com.github.jonasrottmann.realm-browser:realm-browser:0.0.11'
+    testCompile 'com.github.jonasrottmann.realm-browser:realm-browser-no-op:0.0.11'
+    releaseCompile 'com.github.jonasrottmann.realm-browser:realm-browser-no-op:0.0.11'
+
     //Fancy Realm adapters
     compile 'io.realm:android-adapters:1.4.0'
 

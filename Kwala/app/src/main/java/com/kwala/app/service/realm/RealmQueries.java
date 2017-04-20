@@ -67,12 +67,13 @@ public class RealmQueries {
      * Matches
      */
     public RealmResults<RMatch> getMatches() {
+
         return realm.where(RMatch.class)
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.EXPIRED.getNetworkValue())
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENDING.getNetworkValue())
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENT.getNetworkValue())
-                .findAllSorted(RMatchFieldNames.EXPIRATION_DATE, Sort.ASCENDING,
-                        RMatchFieldNames.SORT_WEIGHT, Sort.DESCENDING);
+                .findAllSorted(new String[] { RMatchFieldNames.SORT_WEIGHT, RMatchFieldNames.SCORE, RMatchFieldNames.EXPIRATION_DATE },
+                               new Sort[]   { Sort.DESCENDING,              Sort.DESCENDING,        Sort.ASCENDING });
     }
 
     /*

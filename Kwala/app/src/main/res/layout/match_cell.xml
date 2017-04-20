@@ -6,17 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-
     tools:background="@drawable/background">
+
+    <View
+        android:id="@+id/match_cell_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@color/kWhite"
+        android:visibility="gone"
+        />
 
     <ImageView
         android:id="@+id/match_cell_profile_image"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginRight="10dp"
 
         android:padding="1dp"
@@ -84,6 +93,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="30dp"
         android:orientation="vertical">
 
         <ImageView

@@ -27,6 +27,8 @@ public class MatchCell extends RelativeLayout {
     /*
         References
      */
+    private View dividerView;
+
     private ImageView profileImageView;
     private TextView nameTextView;
     private TextView scoreTextView;
@@ -76,6 +78,7 @@ public class MatchCell extends RelativeLayout {
         /*
          * Get view references
          */
+        dividerView = findViewById(R.id.match_cell_divider);
         profileImageView = (ImageView) findViewById(R.id.match_cell_profile_image);
         nameTextView = (TextView) findViewById(R.id.match_cell_name_text);
         scoreTextView = (TextView) findViewById(R.id.match_cell_score_text);
@@ -102,7 +105,9 @@ public class MatchCell extends RelativeLayout {
         this.listener = listener;
     }
 
-    public void setViewData(@Nullable RMatch match) {
+    public void setViewData(@Nullable RMatch match, boolean showDivider) {
+        dividerView.setVisibility(showDivider ? VISIBLE : GONE);
+
         if (match == null) {
             matchId = null;
             profileImageView.setBackground(null);
