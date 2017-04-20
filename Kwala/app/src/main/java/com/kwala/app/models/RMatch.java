@@ -42,6 +42,8 @@ public class RMatch extends RealmObject {
     private RealmList<RString> filterValues;
     private RealmList<RString> interestValues;
 
+    private int sortWeight; //Client
+
     public String getMatchId() {
         return matchId;
     }
@@ -68,6 +70,8 @@ public class RMatch extends RealmObject {
 
     public void setMatchStateValue(String matchStateValue) {
         this.matchStateValue = matchStateValue;
+        //Used to pin successful matches to the top of the match list
+        setSortWeight(matchStateValue.equals(MatchState.SUCCESS.getNetworkValue()) ? 1 : 0);
     }
 
     public MatchState getMatchState() {
@@ -196,5 +200,13 @@ public class RMatch extends RealmObject {
         }
 
         return interests;
+    }
+
+    public int getSortWeight() {
+        return sortWeight;
+    }
+
+    public void setSortWeight(int sortWeight) {
+        this.sortWeight = sortWeight;
     }
 }

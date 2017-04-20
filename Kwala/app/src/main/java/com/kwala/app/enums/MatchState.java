@@ -6,7 +6,9 @@ package com.kwala.app.enums;
 
 public enum MatchState {
     NEW("NEW"),
+    REJECT_SENDING("REJECT_SENDING"), //client
     REJECT_SENT("REJECT_SENT"),
+    ACCEPT_SENDING("ACCEPT_SENDING"), //client
     ACCEPT_SENT("ACCEPT_SENT"),
     SUCCESS("SUCCESS"),
     EXPIRED("EXPIRED");

@@ -69,8 +69,10 @@ public class RealmQueries {
     public RealmResults<RMatch> getMatches() {
         return realm.where(RMatch.class)
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.EXPIRED.getNetworkValue())
+                .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENDING.getNetworkValue())
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENT.getNetworkValue())
-                .findAllSorted(RMatchFieldNames.EXPIRATION_DATE);
+                .findAllSorted(RMatchFieldNames.EXPIRATION_DATE, Sort.ASCENDING,
+                        RMatchFieldNames.SORT_WEIGHT, Sort.DESCENDING);
     }
 
     /*
