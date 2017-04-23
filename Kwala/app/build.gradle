@@ -52,7 +52,7 @@ dependencies {
     }
 
     //Dynamic ViewPager
-    compile ('com.github.QuarkWorks:DynamicViewPager-Android:0.9.6') {
+    compile ('com.github.QuarkWorks:DynamicPagerAdapter-Android:0.9.7') {
         exclude group: 'com.android.support';
     }
 
