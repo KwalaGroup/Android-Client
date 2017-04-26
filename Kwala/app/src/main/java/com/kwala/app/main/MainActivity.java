@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
 
         pagerAdapter = createAdapter();
+        viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private PagerAdapter createAdapter() {
-        return new FragmentStatePagerAdapter(getFragmentManager()) {
+        return new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {

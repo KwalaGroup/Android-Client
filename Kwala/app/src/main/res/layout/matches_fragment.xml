@@ -83,4 +83,18 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/matches_fragment_loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.kwala.app.helpers.views.KwalaProgressSpinner
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
 </RelativeLayout>

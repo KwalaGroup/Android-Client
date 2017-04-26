@@ -23,6 +23,7 @@ import com.kwala.app.service.endpoints.NetworkException;
 import com.kwala.app.service.realm.RealmQueries;
 import com.kwala.app.service.tasks.Task;
 import com.kwala.app.service.tasks.matches.AcceptMatchTask;
+import com.kwala.app.service.tasks.matches.ListMatchesTask;
 import com.kwala.app.service.tasks.matches.RejectMatchTask;
 
 import io.realm.RealmChangeListener;
@@ -41,8 +42,10 @@ public class MatchesFragment extends Fragment {
     private RecyclerView matchesRecyclerView;
     private View normalLayout;
     private View emptyStateLayout;
+    private View loadingLayout;
 
     private RealmResults<RMatch> matches;
+    private boolean networkPending = false;
 
     @Nullable
     @Override
@@ -60,11 +63,29 @@ public class MatchesFragment extends Fragment {
         matchesRecyclerView = (RecyclerView) view.findViewById(R.id.matches_fragment_recycler_view);
         normalLayout = view.findViewById(R.id.matches_fragment_normal_layout);
         emptyStateLayout = view.findViewById(R.id.matches_fragment_empty_layout);
+        loadingLayout = view.findViewById(R.id.matches_fragment_loading_layout);
 
         /*
          * Set up adapter
          */
         matches = RealmQueries.withMainRealm().getMatches();
+        if (matches.isEmpty()) {
+            networkPending = true;
+
+            new ListMatchesTask().start(new Task.Callback<Void, NetworkException>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    networkPending = false;
+                    resolveLayoutState();
+                }
+
+                @Override
+                public void onFailure(NetworkException e) {
+                    networkPending = false;
+                    resolveLayoutState();
+                }
+            });
+        }
 
         matches.addChangeListener(new RealmChangeListener<RealmResults<RMatch>>() {
             @Override
@@ -105,6 +126,11 @@ public class MatchesFragment extends Fragment {
 
         adapter.setHasStableIds(true);
         matchesRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         resolveLayoutState();
     }
 
@@ -115,10 +141,12 @@ public class MatchesFragment extends Fragment {
 
         if (matches.isEmpty()) {
             normalLayout.setVisibility(View.GONE);
-            emptyStateLayout.setVisibility(View.VISIBLE);
+            emptyStateLayout.setVisibility(networkPending ? View.GONE : View.VISIBLE);
+            loadingLayout.setVisibility(networkPending ? View.VISIBLE : View.GONE);
         } else {
             normalLayout.setVisibility(View.VISIBLE);
             emptyStateLayout.setVisibility(View.GONE);
+            loadingLayout.setVisibility(View.GONE);
         }
     }
 
