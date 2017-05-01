@@ -8,6 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -64,6 +65,9 @@ public class Tools {
 
     @ColorInt
     public static int hexToColorInt(String hexString) {
+        if (TextUtils.isEmpty(hexString)) {
+            hexString = "ffa9deef";
+        }
         return Long.valueOf(hexString, 16).intValue();
     }
 

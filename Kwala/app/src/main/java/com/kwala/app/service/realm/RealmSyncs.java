@@ -186,11 +186,11 @@ public class RealmSyncs {
 
         match.setFirstName(jsonObject.getString("first_name"));
         match.setLastName(jsonObject.getString("last_name"));
-        match.setProfileImageId(jsonObject.getString("image_id"));
+        match.setProfileImageId(jsonObject.optString("image_id"));
         match.setGenderValue(jsonObject.getString("gender"));
         match.setAge(jsonObject.getInt("age"));
-        match.setProfileColor(jsonObject.getString("color"));
-        match.setBio(jsonObject.getString("bio"));
+        match.setProfileColor(jsonObject.optString("color"));
+        match.setBio(jsonObject.optString("bio"));
 
         JSONArray filtersJSONArray = jsonObject.getJSONArray("filters");
         RealmList<RString> filterValues = syncStringList(filtersJSONArray);

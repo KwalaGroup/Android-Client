@@ -181,7 +181,7 @@ public class UserData {
     @ColorInt
     public synchronized int getProfileColorAsInt() {
         String colorHex = getProfileColor();
-        return Tools.hexToColorInt(colorHex == null ? "ffa9deef" : colorHex);
+        return Tools.hexToColorInt(TextUtils.isEmpty(colorHex) ? "ffa9deef" : colorHex);
     }
 
     public synchronized UserData setProfileColor(@Nullable String profileColor) {
