@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.SimpleTextWatcher;
+import com.kwala.app.helpers.Tools;
 import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.helpers.views.KwalaProgressSpinner;
@@ -35,6 +36,7 @@ public class RegistrationActivity extends BaseActivity {
     private boolean networkPending = false;
 
     public static Intent newIntent(Context context) {
+        RegistrationData.getInstance().clearAll();
         return new Intent(context, RegistrationActivity.class);
     }
 
@@ -122,6 +124,7 @@ public class RegistrationActivity extends BaseActivity {
             });
 
             networkPending = true;
+            Tools.setKeyboardVisibility(false, getBaseActivity());
             updateViews();
         }
     };

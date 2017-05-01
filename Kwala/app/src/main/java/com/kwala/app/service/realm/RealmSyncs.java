@@ -2,6 +2,8 @@ package com.kwala.app.service.realm;
 
 import android.util.Log;
 
+import com.kwala.app.enums.MatchState;
+import com.kwala.app.enums.SyncStatus;
 import com.kwala.app.models.FBMessage;
 import com.kwala.app.models.RFilter;
 import com.kwala.app.models.RMatch;
@@ -19,6 +21,7 @@ import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 
 /**
  * @author jacobamuchow@gmail.com
@@ -146,7 +149,10 @@ public class RealmSyncs {
     public RealmList<RMatch> syncMatches(JSONArray jsonArray) throws JSONException {
         RealmList<RMatch> matches = new RealmList<>();
 
-        realm.delete(RMatch.class);
+        RealmResults<RMatch> oldMatches = RealmQueries.withRealm(realm).getAll(RMatch.class);
+        for (RMatch match : oldMatches) {
+            match.setSyncStatus(SyncStatus.DELETED);
+        }
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject matchJSONObject = jsonArray.getJSONObject(i);
@@ -167,8 +173,15 @@ public class RealmSyncs {
         String matchId = jsonObject.getString("match_id");
         RMatch match = RealmWrites.withRealm(realm).findOrCreate(RMatch.class, matchId);
 
+        match.setSyncStatus(SyncStatus.VALID);
+
+        //Sometimes a list returns while accepting / rejecting a person
+        MatchState matchState = MatchState.fromNetworkValue(jsonObject.getString("status"));
+        if (matchState != MatchState.NEW) {
+            match.setMatchState(matchState);
+        }
+
         match.setScore(jsonObject.getDouble("score"));
-        match.setMatchStateValue(jsonObject.getString("status"));
         match.setExpirationDate(new Date(jsonObject.getLong("expires_at")));
 
         match.setFirstName(jsonObject.getString("first_name"));

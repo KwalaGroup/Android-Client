@@ -2,6 +2,8 @@ package com.kwala.app.service;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -250,17 +252,22 @@ public class NetworkStore {
     };
 
     private void forceLogout() {
-        KwalaApplication application = KwalaApplication.getInstance();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                KwalaApplication application = KwalaApplication.getInstance();
 
-        //Stop location update service
-        Intent intent = new Intent(application, LocationService.class);
-        application.stopService(intent);
+                //Stop location update service
+                Intent intent = new Intent(application, LocationService.class);
+                application.stopService(intent);
 
-        DataStore.getInstance().clearAllData();
+                DataStore.getInstance().clearAllData();
 
-        //Restart the app
-        intent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        application.startActivity(intent);
+                //Restart the app
+                intent = application.getPackageManager().getLaunchIntentForPackage(application.getPackageName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                application.startActivity(intent);
+            }
+        });
     }
 }

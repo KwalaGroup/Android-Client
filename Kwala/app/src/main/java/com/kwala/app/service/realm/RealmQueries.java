@@ -3,6 +3,7 @@ package com.kwala.app.service.realm;
 import android.support.annotation.MainThread;
 
 import com.kwala.app.enums.MatchState;
+import com.kwala.app.enums.SyncStatus;
 import com.kwala.app.models.RMatch;
 import com.kwala.app.models.RMessage;
 import com.kwala.app.models.RQuizQuestion;
@@ -69,8 +70,8 @@ public class RealmQueries {
     public RealmResults<RMatch> getMatches() {
 
         return realm.where(RMatch.class)
+                .notEqualTo(RMatchFieldNames.SYNC_STATUS_VALUE, SyncStatus.DELETED.getId())
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.EXPIRED.getNetworkValue())
-                .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENDING.getNetworkValue())
                 .notEqualTo(RMatchFieldNames.MATCH_STATE_VALUE, MatchState.REJECT_SENT.getNetworkValue())
                 .findAllSorted(new String[] { RMatchFieldNames.SORT_WEIGHT, RMatchFieldNames.SCORE, RMatchFieldNames.EXPIRATION_DATE },
                                new Sort[]   { Sort.DESCENDING,              Sort.DESCENDING,        Sort.ASCENDING });

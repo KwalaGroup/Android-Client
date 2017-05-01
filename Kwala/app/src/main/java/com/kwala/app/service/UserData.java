@@ -207,6 +207,6 @@ public class UserData {
 
         setBio(jsonObject.optString("bio", null));
 
-        setProfileColor(jsonObject.getString("color"));
+        setProfileColor(jsonObject.optString("color", null));
     }
 }

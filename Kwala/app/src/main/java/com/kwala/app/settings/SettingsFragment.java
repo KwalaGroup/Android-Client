@@ -1,6 +1,7 @@
 package com.kwala.app.settings;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.kwala.app.BuildConfig;
 import com.kwala.app.R;
+import com.kwala.app.helpers.KwalaDialogBuilder;
 import com.kwala.app.login.LandingActivity;
 import com.kwala.app.service.DataStore;
 import com.kwala.app.service.LocationService;
@@ -71,17 +73,28 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void logout() {
-        new LogoutTask().start(null);
 
-        //Stop location update service
-        Intent intent = new Intent(getActivity(), LocationService.class);
-        getActivity().stopService(intent);
+        new KwalaDialogBuilder(getActivity())
+                .setTitle("Sign out")
+                .setMessage("Are sure you want to sign out?")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new LogoutTask().start(null);
 
-        DataStore.getInstance().clearAllData();
+                        //Stop location update service
+                        Intent intent = new Intent(getActivity(), LocationService.class);
+                        getActivity().stopService(intent);
 
-        intent = LandingActivity.newIntent(getActivity());
-        startActivity(intent);
-        getActivity().finishAffinity();
+                        DataStore.getInstance().clearAllData();
+
+                        intent = LandingActivity.newIntent(getActivity());
+                        startActivity(intent);
+                        getActivity().finishAffinity();
+                    }
+                })
+                .show();
     }
 
     /**

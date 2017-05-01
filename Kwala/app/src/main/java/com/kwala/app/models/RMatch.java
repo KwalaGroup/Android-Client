@@ -6,6 +6,7 @@ import com.kwala.app.enums.Filter;
 import com.kwala.app.enums.Gender;
 import com.kwala.app.enums.Interest;
 import com.kwala.app.enums.MatchState;
+import com.kwala.app.enums.SyncStatus;
 import com.kwala.app.helpers.Tools;
 import com.kwala.app.models.generic.RString;
 import com.quarkworks.android.realmtypesafequery.annotations.GenerateRealmFieldNames;
@@ -42,7 +43,9 @@ public class RMatch extends RealmObject {
     private RealmList<RString> filterValues;
     private RealmList<RString> interestValues;
 
-    private int sortWeight; //Client
+    //Client
+    private int sortWeight;
+    private int syncStatusValue;
 
     public String getMatchId() {
         return matchId;
@@ -214,5 +217,21 @@ public class RMatch extends RealmObject {
 
     public void setSortWeight(int sortWeight) {
         this.sortWeight = sortWeight;
+    }
+
+    public int getSyncStatusValue() {
+        return syncStatusValue;
+    }
+
+    public void setSyncStatusValue(int syncStatusValue) {
+        this.syncStatusValue = syncStatusValue;
+    }
+
+    public SyncStatus getSyncStatus() {
+        return SyncStatus.fromId(getSyncStatusValue());
+    }
+
+    public void setSyncStatus(SyncStatus syncStatus) {
+        setSyncStatusValue(syncStatus.getId());
     }
 }

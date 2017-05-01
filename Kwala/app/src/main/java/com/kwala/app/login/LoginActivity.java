@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.kwala.app.R;
 import com.kwala.app.helpers.SimpleTextWatcher;
+import com.kwala.app.helpers.Tools;
 import com.kwala.app.helpers.navigation.BaseActivity;
 import com.kwala.app.helpers.views.KwalaEditText;
 import com.kwala.app.helpers.views.KwalaProgressSpinner;
@@ -115,6 +116,7 @@ public class LoginActivity extends BaseActivity {
             });
 
             networkPending = true;
+            Tools.setKeyboardVisibility(false, getBaseActivity());
             updateViews();
         }
     };

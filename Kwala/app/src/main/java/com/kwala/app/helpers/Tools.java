@@ -1,7 +1,9 @@
 package com.kwala.app.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.os.IBinder;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -9,9 +11,11 @@ import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.firebase.database.DataSnapshot;
 import com.kwala.app.R;
+import com.kwala.app.main.KwalaApplication;
 
 import org.json.JSONObject;
 
@@ -88,5 +92,26 @@ public class Tools {
     public static String formatString(Context context, @StringRes int stringId, Object... args) {
         String string = context.getString(stringId);
         return String.format(Locale.US, string, args);
+    }
+
+    public static void setKeyboardVisibility(boolean visible, Activity activity) {
+        setKeyboardVisibility(visible, activity.findViewById(android.R.id.content));
+    }
+
+    public static void setKeyboardVisibility(boolean visible, @Nullable View view) {
+        if (view != null) {
+            setKeyboardVisibility(visible, view.getWindowToken());
+        }
+    }
+
+    private static void setKeyboardVisibility(boolean visible, IBinder token) {
+        InputMethodManager inputMethodManager = (InputMethodManager) KwalaApplication.getInstance()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (visible) {
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        } else {
+            inputMethodManager.hideSoftInputFromWindow(token, 0);
+        }
     }
 }
